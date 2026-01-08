@@ -1,35 +1,33 @@
-# The Cinematic Architect // The Renaissance Interface
+# The Cinematic Architect // The Cyber-Renaissance
 
-> "Study the science of art. Study the art of science. Develop your senses — learn how to see." — Leonardo da Vinci
+> "Simplicity is the ultimate sophistication." — Leonardo da Vinci (but digitized)
 
-This skill instructs the agent to build **"Living Blueprints"**. We blend the cleanliness of Swiss Design with the structural beauty of Da Vinci's engineering sketches.
+This skill blends the **Structural Purity** of Swiss Design with the **Raw Power** of Brutalist Engineering. We are drawing blueprints for a machine that breathes.
 
-## 1. The Aesthetic: "Technical Humanism"
-We do not hide the code; we celebrate the structure.
-*   **The Canvas:** High-quality paper texture or stark Swiss white (`#F2F2F0`).
-*   **The Line:** Thin, precise 1px borders (`border-black/10`). Use them to draw grids, guides, and connection lines.
-*   **The Object:** 3D Wireframes. Not solid blocks, but **skeletons** of geometry. We see *through* the object to understand how it works.
+## 1. The Aesthetic: "Technical Humanism v2.0"
+We celebrate the code as much as the layout.
+*   **The Blueprint (Light):** A precise technical drawing. 1px lines, perfect kerning, black ink on stone paper.
+*   **The Hologram (Dark):** The blueprint activated. Glowing lines, floating data, vibrant RGB interference.
 
-## 2. The "Vitruvian Object" (CSS 3D)
-The centerpiece is always a geometric study that comes to life.
-*   **Composition:** A mix of **Platonic Solids** (Cube, Pyramid) and **Organic Curves** (Rings, Orbits).
-*   **Material:**
-    *   *Wireframe:* `border: 1px solid black`.
-    *   *Glass:* `bg-white/10` + `backdrop-blur`.
-    *   *Ink:* Textures that look like hand-drawn sketches or technical markings ("Fig. A", "Axis-Z").
-*   **Motion:** The object should rotate heavily (Gyroscopic) and expand on scroll (Exploded View) to show its internal components.
+## 2. The "Vitruvian Object" (Dual State)
+Our 3D objects and focal points must adapt to the reality shift.
+*   **Light Mode:** Wireframe, Glass, Pencil Sketches. The object is a physical prototype.
+*   **Dark Mode:** Laser, Neon, Void. The object is a data simulation.
+*   **Motion:** High-velocity rotation on scroll. The object should feel like a gyroscope stabilizing the page.
 
-## 3. Kinetic Typography
-Text is treated as physical matter within the blueprint.
-*   **Hybrid Fonts:** 
-    *   *Engineering:* Sans-Serif (Manrope/Inter) for structural data.
-    *   *Humanity:* Serif Italic (Playfair/Instrument) for the "Soul" and emotional concepts.
-*   **Interaction:** Text layers should float at different Z-depths, allowing the user to scroll *between* the meaning and the structure.
+## 3. Kinetic Typography: "The Wall"
+Text is our primary texture.
+*   **Scale:** Massive (`12em+`). It should feel architectural, like a billboard or a monolith.
+*   **Structure:**
+    *   *Solid:* For asserting truth (Light Mode).
+    *   *Hollow:* For questioning reality (Dark Mode).
+*   **Behavior:** The text layer is not flat. It has depth. In Dark Mode, the RGB channels split (`translate-x`) to reveal the digital nature of the font.
 
-## 4. The "Deconstruction" Scroll
-As the user scrolls, the interface should **disassemble** to reveal the truth inside.
-*   *Static:* A perfect, compact diagram.
-*   *Scroll:* The components float apart (Z-axis separation). The "Soul" (Core) is revealed.
+## 4. The "Lateral Slam"
+We reject the gentle fade-in. We prefer the **Collision**.
+*   **The Move:** Elements slide in from `±120%` horizontally.
+*   **The Rhythm:** Left -> Right -> Center -> Left. A syncopated rhythm that forces the eye to scan the entire canvas.
+*   **The Force:** High velocity start, slow friction stop (`power4.out`).
 
 ## 5. Example Prompt for the AI
-*"Build a 'Skills' section. Use the Renaissance style. Skills are orbiting rings around a central core. It looks like a planetary map. On scroll, the rings align to form a tunnel."*
+*"Create a Hero section. Swiss Style light mode, Cyberpunk dark mode. Typography is massive (12em) and scattered. On load, the words slam in from the sides. In dark mode, the text glitches and splits into RGB layers."*

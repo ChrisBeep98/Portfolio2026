@@ -9,28 +9,49 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // INTRO ANIMATION
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      // OPTIMIZED GPU TIMELINE
+      const tl = gsap.timeline({ 
+        defaults: { 
+          ease: "power4.out",
+          force3D: true
+        } 
+      });
 
-      tl.from(".slice-text", {
-        yPercent: 100,
+      tl.from(".reveal-left", {
+        xPercent: -120,
         opacity: 0,
+        duration: 1.8,
         stagger: 0.1,
-        duration: 1.5,
-      })
-      .from(".hero-detail", {
+      }, 0);
+
+      tl.from(".reveal-right", {
+        xPercent: 120,
+        opacity: 0,
+        duration: 1.8,
+        stagger: 0.1,
+      }, 0.1);
+
+      tl.from(".reveal-center", {
+        xPercent: -120,
+        opacity: 0,
+        duration: 1.8,
+      }, 0.2);
+
+      tl.from(".hero-detail", {
         y: 20,
         opacity: 0,
         stagger: 0.1,
         duration: 1,
-      }, "-=1.0");
+      }, "-=1.2");
 
-      // BACKGROUND MOTION
+      // GPU ACCELERATED BACKGROUND ANIMATION
+      // Moving the background position creates the infinite floor effect
       gsap.to(".neon-grid", {
         backgroundPosition: "0px 100px",
         ease: "none",
         repeat: -1,
-        duration: 4,
+        duration: 2, // Faster for more energy
+        force3D: true
       });
 
     }, containerRef);
@@ -39,6 +60,7 @@ export default function Hero() {
   }, []);
 
   const typographySize = "text-[12em]";
+  const gpuClass = "will-change-[transform,opacity]";
 
   return (
     <section 
@@ -47,12 +69,28 @@ export default function Hero() {
     >
       <ThemeToggle />
 
-      {/* --- BACKGROUNDS --- */}
-      <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-20 transition-opacity duration-700">
-        <div className="neon-grid absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,0,0.1)_1px,transparent_1px)] bg-[size:50px_50px] [perspective:500px] [transform:rotateX(60deg)_scale(2)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]" />
+      {/* --- BACKGROUNDS (REFACTORED) --- */}
+      
+      {/* 1. DARK MODE: CYBER GRID (Robust 3D Setup) */}
+      <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-30 transition-opacity duration-700 overflow-hidden">
+        {/* 3D Container Wrapper */}
+        <div className="absolute inset-0 [perspective:1000px]">
+          {/* The Infinite Floor: Oversized & Rotated */}
+          <div 
+            className="neon-grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] h-[200vh] bg-[size:50px_50px] origin-center [transform:rotateX(60deg)] will-change-transform"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `
+            }}
+          />
+        </div>
+        {/* Vignette/Fade to blend into black at the top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505] pointer-events-none" />
       </div>
 
+      {/* 2. LIGHT MODE: SWISS GRID */}
       <div className="absolute inset-0 pointer-events-none opacity-100 dark:opacity-0 transition-opacity duration-700">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
@@ -63,16 +101,16 @@ export default function Hero() {
       {/* --- KINETIC TYPOGRAPHY --- */}
       <div className="relative z-10 flex flex-col w-full max-w-[75vw] mx-auto leading-[0.82] mix-blend-normal dark:mix-blend-screen transition-all duration-700">
         
-        {/* L1: CHRISTIAN -> LEFT */}
         <div className="slice-text w-full text-left overflow-hidden">
-          <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40`}>
-            Christian
-          </h1>
+          <div className={`reveal-left inline-block ${gpuClass}`}>
+            <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40`}>
+              Christian
+            </h1>
+          </div>
         </div>
 
-        {/* L2: SANDOVAL -> RIGHT */}
         <div className="slice-text w-full text-right overflow-hidden relative">
-          <div className="inline-block relative">
+          <div className={`reveal-right inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
               Sandoval
             </h1>
@@ -85,16 +123,16 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* L3: UX-UI.DESIGNER -> CENTER */}
         <div className="slice-text w-full text-center overflow-hidden">
-          <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40`}>
-            UX-UI.DESIGNER
-          </h1>
+          <div className={`reveal-center inline-block ${gpuClass}`}>
+            <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40`}>
+              UX-UI.DESIGNER
+            </h1>
+          </div>
         </div>
 
-        {/* L4: FRONTEND -> LEFT */}
         <div className="slice-text w-full text-left overflow-hidden relative">
-           <div className="inline-block relative">
+           <div className={`reveal-left inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
               Frontend
             </h1>
@@ -107,11 +145,12 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* L5: DEVELOPER -> RIGHT */}
         <div className="slice-text w-full text-right overflow-hidden">
-          <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20`}>
-            Developer
-          </h1>
+          <div className={`reveal-right inline-block ${gpuClass}`}>
+            <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20`}>
+              Developer
+            </h1>
+          </div>
         </div>
 
       </div>

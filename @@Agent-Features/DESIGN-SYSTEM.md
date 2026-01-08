@@ -1,54 +1,67 @@
-# PORTFOLIO DESIGN SYSTEM // THE SWISS ATELIER v3.0
+# PORTFOLIO DESIGN SYSTEM // THE DUALITY ARCHITECT v4.0
 
 > **SINGLE SOURCE OF TRUTH**
-> Focus: Light, Typography, Architecture.
+> Focus: Bipolar Aesthetic (Swiss Order vs. Cyber Chaos), Massive Scale, Structural Tension.
 
 ---
 
-## 🎨 1. COLOR PALETTE (Light & Material)
+## 🌗 1. THE DUALITY ENGINE (Theme System)
 
-### 1.1 CANVAS (The Gallery Wall)
-*   **Surface:** `#F2F2F0` (Stone-100/Warm Grey). This is the default background.
-*   **Paper:** `#FFFFFF` (Pure White). Used for cards or floating panels.
+The interface is not just a color change; it is a **Reality Shift**.
 
-### 1.2 INK (The Contrast)
-*   **Ink-Black:** `#1a1a1a` (Primary Text). High contrast, harsh, readable.
-*   **Ink-Grey:** `#666666` (Secondary Text).
+### 1.1 STATE A: THE SWISS ATELIER (Light Mode)
+*   **Concept:** The Physical Gallery. Order, Paper, Ink.
+*   **Surface:** `#F2F2F0` (Stone-100/Warm Grey).
+*   **Ink:** `#000000` (Pure Black). Solid, heavy, permanent.
+*   **Atmosphere:** Grainy noise (`opacity: 0.04`), grid lines, architectural precision.
 
-### 1.3 SOUL (Refraction)
-*   Colors are used to simulate light passing through glass/prisms.
-*   **Prism-Orange:** `rgba(249, 115, 22, 0.2)`
-*   **Prism-Blue:** `rgba(59, 130, 246, 0.2)`
-*   **Prism-Purple:** `rgba(168, 85, 247, 0.2)`
-*   *Usage:* Always with `backdrop-blur` and `mix-blend-mode: multiply` or `overlay`.
-
----
-
-## ✒️ 2. TYPOGRAPHY (The Structure)
-
-We use a **Hybrid System** to represent Engineering (Sans) vs. Soul (Serif).
-
-### 2.1 FONT FAMILIES
-*   **Structure (Sans):** `Manrope` or `Inter`. Bold, Geometric, Tracking-Tighter. Used for Names, Headlines.
-*   **Soul (Serif):** `Playfair Display`, `Instrument Serif`, or `Newsreader`. Italic, Light. Used for the "Manifesto" and emotional words.
-
-### 2.2 SCALE (Editorial)
-*   **Massive:** `text-[12vw]` or `text-9xl`. For the Hero Anchor.
-*   **Micro:** `text-xs` + `tracking-widest` + `uppercase`. For metadata (Est. 2026, Role, Lat/Long).
+### 1.2 STATE B: THE CYBER VOID (Dark Mode)
+*   **Concept:** The Digital Subconscious. Chaos, Neon, Data.
+*   **Surface:** `#050505` (Deep Void).
+*   **Ink:** **Hollow & Glitched**. Text becomes transparent or outlined.
+*   **Atmosphere:** Infinite 3D Neon Grids, RGB Splitting (Red/Cyan), `mix-blend-screen` vibration.
 
 ---
 
-## 📐 3. LAYOUT & SPACING (The Breath)
+## ✒️ 2. TYPOGRAPHY (The Super-Structure)
 
-*   **Elasticity:** Continue using `em` for global scaling.
-*   **Whitespace:** Double the previous gaps. In a gallery, the empty wall is as important as the art.
-    *   `--section-gap`: `12em` (was 8em).
-*   **Grid:** 12-Column Grid is standard, but we purposefully leave columns 4-8 empty to create visual tension.
+Text is the primary architectural material. Images are secondary.
+
+### 2.1 SCALE & PRESENCE
+*   **The Wall:** `text-[12em]` is the standard for Hero elements.
+*   **The Zig-Zag:** Typography is never stacked linearly. It follows a scattered pattern:
+    *   *Line 1:* Left
+    *   *Line 2:* Right
+    *   *Line 3:* Center
+    *   *Line 4:* Left...
+
+### 2.2 THE SHIFT (Typography Behavior)
+*   **In Light:** Text is a **Solid Wall**. Heavy `font-black`.
+*   **In Dark:** Text is a **Ghost**.
+    *   Fill: `transparent`.
+    *   Stroke: `2px` (Cyan/Magenta).
+    *   Effect: **RGB Displacement**. Duplicated layers shifted `±2px` horizontally to create a vibrating holographic effect.
 
 ---
 
-## ⚡ 4. PHYSICS (The Feel)
+## 📐 3. LAYOUT & PHYSICS (The Kinetic Space)
 
-*   **Rotation:** Use 3D rotation (`rotateX`, `rotateY`) on scroll to simulate physical objects tumbling.
-*   **Grain:** Always apply a subtle `noise.svg` overlay (`opacity: 0.04`) to give the screen texture.
-*   **Parallax:** Text and Images move at different speeds AND different directions (Y-axis vs X-axis).
+### 3.1 SCATTERED GRID
+*   **Asymmetry:** We adhere to a "Scattered Layout". Elements are pushed to the extremes (`max-w-[75vw]`) to create tension in the center.
+*   **Margins:** desktop `px-[7em]`, mobile `px-[2em]`.
+
+### 3.2 GPU MOTION
+*   **Entrance:** "Lateral Slam". Elements do not fade in; they **slide** aggressively from off-screen (`xPercent: ±120`).
+*   **Optimization:** All animations must use `force3D: true` and `will-change: transform`.
+*   **Scroll:** Parallax is mandatory but must be hardware accelerated.
+
+---
+
+## 🎨 4. COLOR CODES
+
+*   **Swiss-Ink:** `#1a1a1a`
+*   **Swiss-Paper:** `#F2F2F0`
+*   **Cyber-Red:** `#ef4444` (Glitch Layer A)
+*   **Cyber-Blue:** `#3b82f6` (Glitch Layer B)
+*   **Cyber-Cyan:** `#06b6d4` (Outlines)
+*   **Cyber-Pink:** `#ec4899` (Accents)

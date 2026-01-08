@@ -1,28 +1,43 @@
-# SKILL: FRONTEND ARCHITECT // THE SWISS ATELIER
+# SKILL: FRONTEND ARCHITECT // THE BINARY SOUL
 
-> "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away." — Antoine de Saint-Exupéry
+> "The test of a first-rate intelligence is the ability to hold two opposed ideas in mind at the same time and still retain the ability to function." — F. Scott Fitzgerald
 
-This skill guides the creation of **High-End, Gallery-Grade Interfaces**. We are moving away from "Dark Mode/Neon/Cyberpunk" aesthetics towards **Architectural Light, Swiss Typography, and Physicality**.
+This skill instructs the creation of interfaces that exist in **Superposition**. We are builders of two worlds: The Gallery (Light) and The Simulation (Dark).
 
 ---
 
-## 1. The Aesthetic: "The White Cube"
-The screen is a physical space, like a modern art gallery in Zürich or Tokyo.
-*   **Base:** Warm Light (`#F2F2F0`, `Stone-50`). Never pure white, never pitch black background.
-*   **Contrast:** Sharp, heavy typography in Jet Black (`#1a1a1a`).
-*   **Soul:** Color comes from **Refraction** (Prisms, Glass, overlap) and **Motion**, not from decoration.
+## 1. The Aesthetic: "Architectural Duality"
+We no longer choose between Minimalism and Futurism. We implement both as contrast states.
+
+*   **Thesis (Light):** The screen is Paper. It respects gravity, ink, and texture. It is static and timeless.
+*   **Antithesis (Dark):** The screen is Light. It respects vector math, luminescence, and distortion. It is fluid and ephemeral.
 
 ## 2. Design Thinking Principles
-*   **Gravity & Physics:** Elements should feel like they have weight. If they float, they float because of a force (magnetism, wind).
-*   **Asymmetry is King:** Center alignment is boring. Use the edges. Create tension between a massive title on the left and a tiny detail on the right.
-*   **The "Impossible Object":** Every major section should feature one element that defies standard web layout (e.g., a CSS 3D Prism, a text that breaks into liquid, a layout that rotates 90deg).
 
-## 3. The "Anti-Tech" Mandate
-*   ❌ **FORBIDDEN:** Matrix code effects, scanlines, neon glows on black backgrounds, "System Boot" sequences, gratuitous data dashboards.
-*   ✅ **REQUIRED:** Serif/Sans contrast, massive whitespace, subtle grain, noise textures, fluid animation, architectural grid lines (visible or felt).
+### 2.1 The "Hollow" Mandate
+*   In the Dark Realm, mass must be removed. Solids become outlines. Content becomes context.
+*   **Technique:** Use `text-transparent` with `-webkit-text-stroke` and `mix-blend-mode` to create weightless structures.
+
+### 2.2 The Kinetic Entry
+*   Static loading is forbidden.
+*   **The Slam:** Content must enter the viewport with physical force. Use `power4.out` easings.
+*   **Directionality:** If one element enters Left, the next must enter Right. Create a crossfire of information.
+
+### 2.3 Hardware Sovereignty
+*   We render on the GPU, not the CPU.
+*   Properties like `top`, `left`, `margin` are forbidden for animation.
+*   **ONLY** `transform (translate3d, scale, rotate)` and `opacity` are allowed in animation loops.
+
+## 3. The "Switch" as a Feature
+The Theme Toggle is not a utility; it is a **Portal**.
+*   It should be prominent.
+*   Triggering it should feel like changing the laws of physics of the page.
+*   Sound design (if applicable) should reflect this shift (Paper crumple vs. Power up).
 
 ## 4. Operational Workflow
-1.  **Clean the Canvas:** Start with Light.
-2.  **Place the Anchor:** Drop the biggest typographic element possible.
-3.  **Break the Grid:** Shift elements to create an "Editorial" look.
-4.  **Inject the Soul:** Add the "Impossible Object" (The Prism, The Fluid, The Distortion).
+1.  **Build the Skeleton:** Layout must work in monochrome.
+2.  **Define the Mass:** Set the massive typography (12em+).
+3.  **Split the Reality:**
+    *   *Layer 1:* Apply the Swiss styling.
+    *   *Layer 2:* Apply the Cyber overrides (Glitch, Stroke, Neon).
+4.  **Optimize the Engine:** Ensure 120fps via `will-change` and `force3D`.

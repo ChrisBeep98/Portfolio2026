@@ -85,7 +85,8 @@ Use these **Spring Physics** for all motion components.
 
 | Component | Class | Spans |
 | :--- | :--- | :--- |
-| **Spotlight** | `.bento-spotlight` | `col-span-12 md:col-span-8` |
+| **Spotligh
+t** | `.bento-spotlight` | `col-span-12 md:col-span-8` |
 | **Sidebar** | `.bento-side` | `col-span-12 md:col-span-4` |
 | **Card** | `.bento-card` | `col-span-12 md:col-span-6` |
 
