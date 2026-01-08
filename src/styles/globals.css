@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-primary: #a855f7;
+
+  /* Elastic Spacing System */
+  --spacing-frame: 3em; /* Desktop default */
+}
+
+:root {
+  --background: #050505;
+  --foreground: #EDEDED;
+  --surface: rgba(255, 255, 255, 0.03);
+  
+  /* Core Spacing Scale (Elastic) */
+  --px-frame: 3em;
+  --section-gap: 8em;
+  --block-gap: 2em;
+  --content-gap: 1em;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --px-frame: 0.75em;
+    --section-gap: 5em;
+    --block-gap: 1.5em;
+    --content-gap: 0.75em;
+  }
+}
+
+/* Base Styles */
+@layer base {
+  body {
+    @apply bg-background text-foreground font-display antialiased selection:bg-primary/30;
+    overflow-x: hidden;
+  }
+}
+
+/* Utility Classes - The Glass Engine */
+@layer utilities {
+  .px-frame {
+    padding-left: var(--px-frame);
+    padding-right: var(--px-frame);
+  }
+
+  .section-gap {
+    padding-top: var(--section-gap);
+    padding-bottom: var(--section-gap);
+  }
+
+  .glass-engine {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .text-display-xl {
+    @apply text-8xl md:text-[12vw] font-bold tracking-[-0.04em] leading-[0.85];
+  }
+
+  .text-mono {
+    @apply font-mono text-xs uppercase tracking-[0.2em] opacity-50;
+  }
+}
+
+/* Custom Animations */
+.noise-bg {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 50;
+}
