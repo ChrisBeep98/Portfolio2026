@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-display: "Manrope", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -13,16 +15,24 @@
   --spacing-frame: 3em; /* Desktop default */
 }
 
+/* Light Mode (Default) */
 :root {
-  --background: #050505;
-  --foreground: #EDEDED;
-  --surface: rgba(255, 255, 255, 0.03);
+  --background: #F2F2F0; /* Swiss Light Grey */
+  --foreground: #050505; /* Deep Black */
+  --surface: rgba(0, 0, 0, 0.03);
   
   /* Core Spacing Scale (Elastic) */
   --px-frame: 3em;
   --section-gap: 8em;
   --block-gap: 2em;
   --content-gap: 1em;
+}
+
+/* Dark Mode Overrides */
+.dark {
+  --background: #050505;
+  --foreground: #EDEDED;
+  --surface: rgba(255, 255, 255, 0.03);
 }
 
 @media (max-width: 768px) {
@@ -55,7 +65,7 @@
   }
 
   .glass-engine {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface);
     backdrop-filter: blur(12px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
@@ -66,6 +76,17 @@
 
   .text-mono {
     @apply font-mono text-xs uppercase tracking-[0.2em] opacity-50;
+  }
+  
+  /* Custom Outlines */
+  .text-stroke-cyan {
+    -webkit-text-stroke: 2px #06b6d4;
+  }
+  .text-stroke-pink {
+    -webkit-text-stroke: 2px #ec4899;
+  }
+  .text-stroke-black {
+    -webkit-text-stroke: 2px #000000;
   }
 }
 
