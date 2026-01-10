@@ -18,16 +18,16 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 0. RESET STATE (Hidden & Small)
+      // 0. RESET STATE
       gsap.set(planetRef.current, { scale: 0.2, opacity: 0 }); 
       gsap.set(".orbit-ring", { scale: 0.5, opacity: 0 });
 
       // 1. INTRO ANIMATION (Genesis)
       const loadTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       
-      // Text Entry (Original "Lateral Slam")
+      // Text Entry (RESTORED ORIGINAL LATERAL SLAM)
       loadTl.from(".reveal-left", { xPercent: -120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
-      loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
+      loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0.1);
       loadTl.from(".reveal-center", { xPercent: -120, opacity: 0, duration: 1.8 }, 0.2);
       loadTl.from(".hero-detail", { y: 20, opacity: 0, stagger: 0.1, duration: 1 }, "-=1.2");
 
@@ -48,18 +48,17 @@ export default function Hero() {
         ease: "back.out(1.2)"
       }, "-=1.8");
 
-      // 2. IDLE ANIMATION (Perpetual 2D Orbits)
-      // Orbit 1: Fast
-      gsap.to(".orbit-1", { rotationZ: 360, duration: 25, repeat: -1, ease: "none" });
-      gsap.to(".node-1", { rotationZ: -360, duration: 25, repeat: -1, ease: "none" });
+      // 2. IDLE ANIMATION (Ferris Wheel Orbit)
+      const orbits = [
+        { ring: ".orbit-1", sat: ".node-1", dur: 25 },
+        { ring: ".orbit-2", sat: ".node-2", dur: 35 },
+        { ring: ".orbit-3", sat: ".node-3", dur: 45 }
+      ];
 
-      // Orbit 2: Medium
-      gsap.to(".orbit-2", { rotationZ: -360, duration: 35, repeat: -1, ease: "none" });
-      gsap.to(".node-2", { rotationZ: 360, duration: 35, repeat: -1, ease: "none" });
-
-      // Orbit 3: Slow
-      gsap.to(".orbit-3", { rotationZ: 360, duration: 45, repeat: -1, ease: "none" });
-      gsap.to(".node-3", { rotationZ: -360, duration: 45, repeat: -1, ease: "none" });
+      orbits.forEach(({ ring, sat, dur }) => {
+        gsap.to(ring, { rotation: 360, duration: dur, repeat: -1, ease: "none" });
+        gsap.to(sat, { rotation: -360, duration: dur, repeat: -1, ease: "none" });
+      });
 
       // Subtle Planet Breath
       gsap.to(planetRef.current, {
@@ -68,14 +67,6 @@ export default function Hero() {
         yoyo: true,
         repeat: -1,
         ease: "sine.inOut"
-      });
-
-      // Background Animation
-      gsap.to(".neon-grid", {
-        backgroundPosition: "0px 200px",
-        duration: 20,
-        repeat: -1,
-        ease: "none"
       });
 
     }, containerRef);
@@ -97,17 +88,14 @@ export default function Hero() {
     className: string,
     nodeClass: string
   }) => (
-    <div className={`absolute ${className}`}>
-      <div 
-        className={`flex items-center gap-3 px-4 py-2 rounded-full border-2 shadow-xl ${nodeClass}`}
-        style={{
-          backgroundColor: "var(--satellite-bg)",
-          borderColor: "var(--satellite-border)",
-          color: "var(--satellite-text)",
-        }}
-      >
-        <Icon className="w-5 h-5" />
-        <span className="text-sm font-black tracking-wider uppercase whitespace-nowrap">{label}</span>
+    <div className={`absolute ${className} ${nodeClass}`}>
+      <div className="
+        flex items-center gap-3 px-5 py-2.5 rounded-full border shadow-lg transition-all duration-700
+        bg-white border-black text-black
+        dark:bg-white/5 dark:border-white/10 dark:text-white/90 dark:backdrop-blur-xl
+      ">
+        <Icon className="w-4 h-4 opacity-80" />
+        <span className="text-xs font-bold tracking-[0.15em] uppercase whitespace-nowrap opacity-90">{label}</span>
       </div>
     </div>
   );
@@ -120,19 +108,14 @@ export default function Hero() {
       <ThemeToggle />
 
       <style jsx>{`
-        section {
-          --planet-bg: radial-gradient(circle at 30% 30%, #ffffff, #d1d1d1);
-          --planet-shadow: 0 30px 60px rgba(0,0,0,0.2);
-          --satellite-bg: #ffffff;
-          --satellite-border: #000000;
-          --satellite-text: #000000;
+        .planet-surface {
+          background: radial-gradient(circle at 35% 35%, #ffffff, #e0e0e0);
+          box-shadow: inset -10px -10px 20px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.1);
         }
-        .dark section {
-          --planet-bg: radial-gradient(circle at 30% 30%, #333, #000);
-          --planet-shadow: 0 0 80px rgba(0,0,0,0.8);
-          --satellite-bg: #000000;
-          --satellite-border: #ffffff;
-          --satellite-text: #ffffff;
+        :global(.dark) .planet-surface {
+          background: radial-gradient(circle at 35% 35%, #333333, #000000);
+          box-shadow: inset 0 0 20px rgba(255,255,255,0.05), 0 0 60px rgba(0,0,0,0.8);
+          border: 1px solid rgba(255,255,255,0.05);
         }
       `}</style>
 
@@ -140,10 +123,8 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-30 transition-opacity duration-700 overflow-hidden">
         <div className="absolute inset-0 [perspective:1000px]">
           <div 
-            className="neon-grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] h-[200vh] bg-[size:50px_50px] origin-center [transform:rotateX(60deg)] will-change-transform"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`
-            }}
+            className="neon-grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] h-[200vh] bg-[size:50px_50px] origin-center [transform:rotateX(60deg)]"
+            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)` }}
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]" />
@@ -154,7 +135,7 @@ export default function Hero() {
         <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       </div>
 
-      {/* --- KINETIC TYPOGRAPHY (ORIGINAL RESTORED) --- */}
+      {/* --- KINETIC TYPOGRAPHY (RESTORED TO ORIGINAL PERFECTION) --- */}
       <div className="relative z-10 flex flex-col w-full max-w-[75vw] mx-auto leading-[0.82] mix-blend-normal dark:mix-blend-screen transition-all duration-700 pointer-events-none">
         
         <div className="slice-text w-full text-left overflow-hidden">
@@ -211,35 +192,22 @@ export default function Hero() {
 
       </div>
 
-      {/* --- THE 2D PLANETARY SYSTEM (Superimposed) --- */}
+      {/* --- THE PLANETARY SYSTEM (SUPERIMPOSED) --- */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="relative w-[400px] h-[400px] flex items-center justify-center">
           
-          {/* THE PLANET */}
-          <div 
-            ref={planetRef}
-            className="absolute rounded-full z-10"
-            style={{
-              width: "200px",
-              height: "200px",
-              background: "var(--planet-bg)",
-              boxShadow: "var(--planet-shadow)",
-            }}
-          />
+          <div ref={planetRef} className="absolute rounded-full z-10 planet-surface transition-all duration-1000" style={{ width: "200px", height: "200px" }} />
 
-          {/* ORBIT 1: TECHNICAL */}
           <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
             <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
           </div>
 
-          {/* ORBIT 2: DESIGN */}
           <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
           </div>
 
-          {/* ORBIT 3: CREATIVE */}
           <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
             <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
@@ -254,20 +222,6 @@ export default function Hero() {
           <span className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-700">Role</span>
           <span className="text-black dark:text-white font-mono text-xs uppercase tracking-widest opacity-60">Full Stack</span>
         </div>
-        <div className="hero-detail flex flex-col gap-1 text-right">
-          <span className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-700">Mode</span>
-          <span className="text-black dark:text-white font-mono text-xs uppercase tracking-widest opacity-60">
-            <span className="hidden dark:inline">Cyber</span>
-            <span className="inline dark:hidden">Swiss</span>
-          </span>
-        </div>
-      </div>
-
-      {/* --- FOOTER --- */}
-      <div className="absolute bottom-12 text-center w-full max-w-lg mx-auto hero-detail px-[2em] lg:px-[7em] mix-blend-difference z-30">
-        <p className="text-black/80 dark:text-white/80 font-medium text-lg leading-relaxed mix-blend-normal dark:mix-blend-overlay transition-colors duration-700">
-          Con <span className="text-black dark:text-white font-black uppercase italic text-2xl">ALMA</span>.
-        </p>
       </div>
 
     </section>
