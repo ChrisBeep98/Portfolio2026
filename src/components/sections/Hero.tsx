@@ -18,7 +18,7 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 0. RESET STATE
+      // 0. RESET STATE (2D Pure)
       gsap.set(planetRef.current, { scale: 0.2, opacity: 0 }); 
       gsap.set(".orbit-ring", { scale: 0.5, opacity: 0 });
 
@@ -26,7 +26,7 @@ export default function Hero() {
       const loadTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       
       loadTl.from(".reveal-left", { xPercent: -120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
-      loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0.1);
+      loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
       loadTl.from(".reveal-center", { xPercent: -120, opacity: 0, duration: 1.8 }, 0.2);
       loadTl.from(".hero-detail", { y: 20, opacity: 0, stagger: 0.1, duration: 1 }, "-=1.2");
 
@@ -45,7 +45,8 @@ export default function Hero() {
         ease: "back.out(1.2)"
       }, "-=1.8");
 
-      // 2. IDLE ANIMATION (Invisible Orbits)
+      // 2. IDLE ANIMATION (2D Orbits)
+      // Standard 'rotation' in GSAP targets the Z-axis (2D)
       const orbits = [
         { ring: ".orbit-1", sat: ".node-1", dur: 25 },
         { ring: ".orbit-2", sat: ".node-2", dur: 35 },
@@ -71,7 +72,6 @@ export default function Hero() {
   }, []);
 
   const typographySize = "text-[12em]";
-  const gpuClass = "will-change-[transform,opacity]";
 
   const Satellite = ({ 
     icon: Icon, 
@@ -117,12 +117,6 @@ export default function Hero() {
 
       {/* --- BACKGROUNDS --- */}
       <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-30 transition-opacity duration-700 overflow-hidden">
-        <div className="absolute inset-0 [perspective:1000px]">
-          <div 
-            className="neon-grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] h-[200vh] bg-[size:50px_50px] origin-center [transform:rotateX(60deg)]"
-            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)` }}
-          />
-        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]" />
       </div>
 
@@ -134,14 +128,14 @@ export default function Hero() {
       {/* --- KINETIC TYPOGRAPHY --- */}
       <div className="relative z-10 flex flex-col w-full max-w-[75vw] mx-auto leading-[0.82] mix-blend-normal dark:mix-blend-screen transition-all duration-700 pointer-events-none">
         <div className="slice-text w-full text-left overflow-hidden">
-          <div className={`reveal-left inline-block ${gpuClass}`}>
+          <div className="reveal-left inline-block">
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40`}>
               Christian
             </h1>
           </div>
         </div>
         <div className="slice-text w-full text-right overflow-hidden relative">
-          <div className={`reveal-right inline-block relative ${gpuClass}`}>
+          <div className="reveal-right inline-block relative">
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
               Sandoval
             </h1>
@@ -154,14 +148,14 @@ export default function Hero() {
           </div>
         </div>
         <div className="slice-text w-full text-center overflow-hidden">
-          <div className={`reveal-center inline-block ${gpuClass}`}>
+          <div className="reveal-center inline-block">
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40`}>
               UX-UI.DESIGNER
             </h1>
           </div>
         </div>
         <div className="slice-text w-full text-left overflow-hidden relative">
-           <div className={`reveal-left inline-block relative ${gpuClass}`}>
+           <div className="reveal-left inline-block relative">
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
               Frontend
             </h1>
@@ -174,7 +168,7 @@ export default function Hero() {
           </div>
         </div>
         <div className="slice-text w-full text-right overflow-hidden">
-          <div className={`reveal-right inline-block ${gpuClass}`}>
+          <div className="reveal-right inline-block">
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20`}>
               Developer
             </h1>
@@ -182,24 +176,24 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* --- THE PLANETARY SYSTEM (NO ORBIT LINES) --- */}
+      {/* --- THE PLANETARY SYSTEM (2D PURE) --- */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="relative w-[400px] h-[400px] flex items-center justify-center">
           
           <div ref={planetRef} className="absolute rounded-full z-10 planet-surface transition-all duration-1000" style={{ width: "200px", height: "200px" }} />
 
-          {/* ORBIT RINGS (Borders Removed) */}
-          <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border-none">
+          {/* ORBIT RINGS (Flat Layout) */}
+          <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px]">
             <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
             <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
           </div>
 
-          <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border-none">
+          <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px]">
             <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
           </div>
 
-          <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border-none">
+          <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px]">
             <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
             <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
           </div>
