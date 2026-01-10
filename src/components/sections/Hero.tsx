@@ -34,9 +34,9 @@ export default function Hero() {
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
       // -- PLANET INTRO --
-      // Grows to 0.1 (Small state) and STAYS there initially
+      // Grows to 0.3 (Starting state) and STAYS there initially
       tl.to(planetRef.current, {
-        scale: 0.1,
+        scale: 0.3,
         opacity: 1,
         duration: 1,
         ease: "back.out(1.7)",
@@ -54,10 +54,10 @@ export default function Hero() {
 
       // 2. THE HEARTBEAT FUNCTION (Clean & Isolated)
       function startHeartbeat() {
-        // Explicitly animate from current state (0.1) to 1 and back
+        // Explicitly animate from current state (0.3) to 0.7 and back
         gsap.to(planetRef.current, {
-          scale: 1,
-          duration: 1.6, // Slower, cinematic breathing pace
+          scale: 0.7,
+          duration: 2.6, // Slower, cinematic breathing pace
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut", // Smooth transition
