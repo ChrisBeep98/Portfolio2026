@@ -18,35 +18,53 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 0. RESET STATE (2D Pure)
-      gsap.set(planetRef.current, { scale: 0.2, opacity: 0 }); 
-      gsap.set(".orbit-ring", { scale: 0.5, opacity: 0 });
+      // 0. INITIAL STATE
+      gsap.set(planetRef.current, { scale: 0, opacity: 0 });
+      gsap.set(".orbit-ring", { scale: 0, opacity: 0 });
+      gsap.set(".hero-detail", { y: 20, opacity: 0 });
+      gsap.set([".reveal-left", ".reveal-right", ".reveal-center"], { opacity: 0 }); // Ensure text is hidden initially
 
-      // 1. INTRO ANIMATION
-      const loadTl = gsap.timeline({ defaults: { ease: "power4.out" } });
-      
-      loadTl.from(".reveal-left", { xPercent: -120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
-      loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
-      loadTl.from(".reveal-center", { xPercent: -120, opacity: 0, duration: 1.8 }, 0.2);
-      loadTl.from(".hero-detail", { y: 20, opacity: 0, stagger: 0.1, duration: 1 }, "-=1.2");
+      // 1. MASTER TIMELINE
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-      loadTl.to(planetRef.current, {
+      // -- TEXT REVEAL SEQUENCE --
+      tl.to(".reveal-left", { xPercent: 0, opacity: 1, duration: 1.5, stagger: 0.1 })
+        .to(".reveal-right", { xPercent: 0, opacity: 1, duration: 1.5, stagger: 0.1 }, "<")
+        .to(".reveal-center", { xPercent: 0, opacity: 1, duration: 1.5 }, "<0.2")
+        .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
+
+      // -- PLANET INTRO --
+      // Grows to 0.1 (Small state) and STAYS there initially
+      tl.to(planetRef.current, {
+        scale: 0.1,
+        opacity: 1,
+        duration: 1,
+        ease: "back.out(1.7)",
+        onComplete: startHeartbeat // <--- TRIGGER LOOP ONLY AFTER INTRO
+      }, "-=1.2");
+
+      // -- RINGS INTRO --
+      tl.to(".orbit-ring", {
         scale: 1,
         opacity: 1,
-        duration: 2,
-        ease: "elastic.out(1, 0.6)"
-      }, "-=1.5");
-
-      loadTl.to(".orbit-ring", {
-        scale: 1,
-        opacity: 1,
-        duration: 1.8,
+        duration: 1.5,
         stagger: 0.1,
-        ease: "back.out(1.2)"
-      }, "-=1.8");
+        ease: "elastic.out(1, 0.75)"
+      }, "-=0.8");
 
-      // 2. IDLE ANIMATION (2D Orbits)
-      // Standard 'rotation' in GSAP targets the Z-axis (2D)
+      // 2. THE HEARTBEAT FUNCTION (Clean & Isolated)
+      function startHeartbeat() {
+        // Explicitly animate from current state (0.1) to 1 and back
+        gsap.to(planetRef.current, {
+          scale: 1,
+          duration: 1.6, // Slower, cinematic breathing pace
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut", // Smooth transition
+        });
+      }
+
+      // 3. ORBIT ROTATIONS (Standard background loop)
       const orbits = [
         { ring: ".orbit-1", sat: ".node-1", dur: 25 },
         { ring: ".orbit-2", sat: ".node-2", dur: 35 },
@@ -56,14 +74,6 @@ export default function Hero() {
       orbits.forEach(({ ring, sat, dur }) => {
         gsap.to(ring, { rotation: 360, duration: dur, repeat: -1, ease: "none" });
         gsap.to(sat, { rotation: -360, duration: dur, repeat: -1, ease: "none" });
-      });
-
-      gsap.to(planetRef.current, {
-        scale: 1.05,
-        duration: 3,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut"
       });
 
     }, containerRef);
@@ -180,7 +190,7 @@ export default function Hero() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="relative w-[400px] h-[400px] flex items-center justify-center">
           
-          <div ref={planetRef} className="absolute rounded-full z-10 planet-surface transition-all duration-1000" style={{ width: "200px", height: "200px" }} />
+          <div ref={planetRef} className="absolute rounded-full z-10 planet-surface" style={{ width: "200px", height: "200px" }} />
 
           {/* ORBIT RINGS (Flat Layout) */}
           <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px]">
