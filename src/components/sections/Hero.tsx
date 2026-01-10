@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { 
   Code, 
@@ -13,8 +12,6 @@ import {
   Terminal 
 } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const planetRef = useRef<HTMLDivElement>(null);
@@ -22,25 +19,27 @@ export default function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // 0. RESET STATE (Hidden & Small)
-      gsap.set(planetRef.current, { scale: 0.2, opacity: 0, y: 100 }); 
+      gsap.set(planetRef.current, { scale: 0.2, opacity: 0 }); 
       gsap.set(".orbit-ring", { scale: 0.5, opacity: 0 });
 
       // 1. INTRO ANIMATION (Genesis)
       const loadTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       
+      // Text Entry (Original "Lateral Slam")
       loadTl.from(".reveal-left", { xPercent: -120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
       loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
-      loadTl.from(".reveal-center", { scale: 0, opacity: 0, duration: 1.8 }, 0.2);
+      loadTl.from(".reveal-center", { xPercent: -120, opacity: 0, duration: 1.8 }, 0.2);
       loadTl.from(".hero-detail", { y: 20, opacity: 0, stagger: 0.1, duration: 1 }, "-=1.2");
 
+      // The Birth of the Core
       loadTl.to(planetRef.current, {
         scale: 1,
         opacity: 1,
-        y: 0,
         duration: 2,
         ease: "elastic.out(1, 0.6)"
       }, "-=1.5");
 
+      // The Birth of the Orbits
       loadTl.to(".orbit-ring", {
         scale: 1,
         opacity: 1,
@@ -49,46 +48,34 @@ export default function Hero() {
         ease: "back.out(1.2)"
       }, "-=1.8");
 
-      // 2. IDLE ANIMATION (Flat 2D Orbits + Counter-Rotation)
+      // 2. IDLE ANIMATION (Perpetual 2D Orbits)
       // Orbit 1: Fast
-      gsap.to(".orbit-1", { rotationZ: 360, duration: 20, repeat: -1, ease: "none" });
-      gsap.to(".node-1", { rotationZ: -360, duration: 20, repeat: -1, ease: "none" });
+      gsap.to(".orbit-1", { rotationZ: 360, duration: 25, repeat: -1, ease: "none" });
+      gsap.to(".node-1", { rotationZ: -360, duration: 25, repeat: -1, ease: "none" });
 
       // Orbit 2: Medium
-      gsap.to(".orbit-2", { rotationZ: -360, duration: 30, repeat: -1, ease: "none" });
-      gsap.to(".node-2", { rotationZ: 360, duration: 30, repeat: -1, ease: "none" });
+      gsap.to(".orbit-2", { rotationZ: -360, duration: 35, repeat: -1, ease: "none" });
+      gsap.to(".node-2", { rotationZ: 360, duration: 35, repeat: -1, ease: "none" });
 
       // Orbit 3: Slow
-      gsap.to(".orbit-3", { rotationZ: 360, duration: 40, repeat: -1, ease: "none" });
-      gsap.to(".node-3", { rotationZ: -360, duration: 40, repeat: -1, ease: "none" });
+      gsap.to(".orbit-3", { rotationZ: 360, duration: 45, repeat: -1, ease: "none" });
+      gsap.to(".node-3", { rotationZ: -360, duration: 45, repeat: -1, ease: "none" });
 
-      // 3. SCROLL INTERACTION
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=150%",
-          scrub: 1,
-          pin: true,
-        },
-        defaults: { ease: "none" }
+      // Subtle Planet Breath
+      gsap.to(planetRef.current, {
+        scale: 1.05,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
       });
 
-      scrollTl.to(".slice-text:has(.reveal-left)", { xPercent: -160, opacity: 0 }, 0);
-      scrollTl.to(".slice-text:has(.reveal-right)", { xPercent: 160, opacity: 0 }, 0);
-      scrollTl.to(".slice-text:has(.reveal-center)", { scale: 0.8, opacity: 0 }, 0);
-
-      scrollTl.to(planetRef.current, { scale: 1.2, duration: 1 }, 0);
-      scrollTl.to(".orbit-ring", {
-        scale: 2.5, // Fly towards camera
-        opacity: 0,
-        duration: 1
-      }, 0);
-
+      // Background Animation
       gsap.to(".neon-grid", {
         backgroundPosition: "0px 200px",
-        ease: "none",
-        scrollTrigger: { trigger: containerRef.current, start: "top top", end: "+=150%", scrub: true }
+        duration: 20,
+        repeat: -1,
+        ease: "none"
       });
 
     }, containerRef);
@@ -99,7 +86,6 @@ export default function Hero() {
   const typographySize = "text-[12em]";
   const gpuClass = "will-change-[transform,opacity]";
 
-  // --- SATELLITE COMPONENT ---
   const Satellite = ({ 
     icon: Icon, 
     label, 
@@ -129,7 +115,7 @@ export default function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-[2em] lg:px-[7em] bg-[#EAEAEA] dark:bg-[#050505] transition-colors duration-700"
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-center px-[2em] lg:px-[7em] bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700"
     >
       <ThemeToggle />
 
@@ -168,8 +154,9 @@ export default function Hero() {
         <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       </div>
 
-      {/* --- KINETIC TYPOGRAPHY --- */}
+      {/* --- KINETIC TYPOGRAPHY (ORIGINAL RESTORED) --- */}
       <div className="relative z-10 flex flex-col w-full max-w-[75vw] mx-auto leading-[0.82] mix-blend-normal dark:mix-blend-screen transition-all duration-700 pointer-events-none">
+        
         <div className="slice-text w-full text-left overflow-hidden">
           <div className={`reveal-left inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40`}>
@@ -177,6 +164,7 @@ export default function Hero() {
             </h1>
           </div>
         </div>
+
         <div className="slice-text w-full text-right overflow-hidden relative">
           <div className={`reveal-right inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
@@ -190,6 +178,7 @@ export default function Hero() {
             </h1>
           </div>
         </div>
+
         <div className="slice-text w-full text-center overflow-hidden">
           <div className={`reveal-center inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40`}>
@@ -197,6 +186,7 @@ export default function Hero() {
             </h1>
           </div>
         </div>
+
         <div className="slice-text w-full text-left overflow-hidden relative">
            <div className={`reveal-left inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
@@ -210,6 +200,7 @@ export default function Hero() {
             </h1>
           </div>
         </div>
+
         <div className="slice-text w-full text-right overflow-hidden">
           <div className={`reveal-right inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20`}>
@@ -217,9 +208,10 @@ export default function Hero() {
             </h1>
           </div>
         </div>
+
       </div>
 
-      {/* --- THE 2D PLANETARY SYSTEM --- */}
+      {/* --- THE 2D PLANETARY SYSTEM (Superimposed) --- */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="relative w-[400px] h-[400px] flex items-center justify-center">
           
@@ -228,27 +220,27 @@ export default function Hero() {
             ref={planetRef}
             className="absolute rounded-full z-10"
             style={{
-              width: "220px",
-              height: "220px",
+              width: "200px",
+              height: "200px",
               background: "var(--planet-bg)",
               boxShadow: "var(--planet-shadow)",
             }}
           />
 
           {/* ORBIT 1: TECHNICAL */}
-          <div className="orbit-ring orbit-1 absolute w-[450px] h-[450px] rounded-full border border-black/5 dark:border-white/10">
+          <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
             <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
           </div>
 
           {/* ORBIT 2: DESIGN */}
-          <div className="orbit-ring orbit-2 absolute w-[620px] h-[620px] rounded-full border border-black/5 dark:border-white/10">
+          <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
           </div>
 
           {/* ORBIT 3: CREATIVE */}
-          <div className="orbit-ring orbit-3 absolute w-[800px] h-[800px] rounded-full border border-black/5 dark:border-white/10">
+          <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border border-black/5 dark:border-white/10">
             <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
             <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
           </div>
@@ -259,10 +251,23 @@ export default function Hero() {
       {/* --- INFO OVERLAY --- */}
       <div className="absolute bottom-12 left-0 w-full flex justify-between px-[2em] lg:px-[7em] pointer-events-none mix-blend-difference z-30">
         <div className="hero-detail flex flex-col gap-1">
+          <span className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-700">Role</span>
+          <span className="text-black dark:text-white font-mono text-xs uppercase tracking-widest opacity-60">Full Stack</span>
+        </div>
+        <div className="hero-detail flex flex-col gap-1 text-right">
+          <span className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-700">Mode</span>
           <span className="text-black dark:text-white font-mono text-xs uppercase tracking-widest opacity-60">
-            System.Core
+            <span className="hidden dark:inline">Cyber</span>
+            <span className="inline dark:hidden">Swiss</span>
           </span>
         </div>
+      </div>
+
+      {/* --- FOOTER --- */}
+      <div className="absolute bottom-12 text-center w-full max-w-lg mx-auto hero-detail px-[2em] lg:px-[7em] mix-blend-difference z-30">
+        <p className="text-black/80 dark:text-white/80 font-medium text-lg leading-relaxed mix-blend-normal dark:mix-blend-overlay transition-colors duration-700">
+          Con <span className="text-black dark:text-white font-black uppercase italic text-2xl">ALMA</span>.
+        </p>
       </div>
 
     </section>
