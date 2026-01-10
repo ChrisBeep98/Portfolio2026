@@ -22,16 +22,14 @@ export default function Hero() {
       gsap.set(planetRef.current, { scale: 0.2, opacity: 0 }); 
       gsap.set(".orbit-ring", { scale: 0.5, opacity: 0 });
 
-      // 1. INTRO ANIMATION (Genesis)
+      // 1. INTRO ANIMATION
       const loadTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       
-      // Text Entry (RESTORED ORIGINAL LATERAL SLAM)
       loadTl.from(".reveal-left", { xPercent: -120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0);
       loadTl.from(".reveal-right", { xPercent: 120, opacity: 0, duration: 1.8, stagger: 0.1 }, 0.1);
       loadTl.from(".reveal-center", { xPercent: -120, opacity: 0, duration: 1.8 }, 0.2);
       loadTl.from(".hero-detail", { y: 20, opacity: 0, stagger: 0.1, duration: 1 }, "-=1.2");
 
-      // The Birth of the Core
       loadTl.to(planetRef.current, {
         scale: 1,
         opacity: 1,
@@ -39,7 +37,6 @@ export default function Hero() {
         ease: "elastic.out(1, 0.6)"
       }, "-=1.5");
 
-      // The Birth of the Orbits
       loadTl.to(".orbit-ring", {
         scale: 1,
         opacity: 1,
@@ -48,7 +45,7 @@ export default function Hero() {
         ease: "back.out(1.2)"
       }, "-=1.8");
 
-      // 2. IDLE ANIMATION (Ferris Wheel Orbit)
+      // 2. IDLE ANIMATION (Invisible Orbits)
       const orbits = [
         { ring: ".orbit-1", sat: ".node-1", dur: 25 },
         { ring: ".orbit-2", sat: ".node-2", dur: 35 },
@@ -60,7 +57,6 @@ export default function Hero() {
         gsap.to(sat, { rotation: -360, duration: dur, repeat: -1, ease: "none" });
       });
 
-      // Subtle Planet Breath
       gsap.to(planetRef.current, {
         scale: 1.05,
         duration: 3,
@@ -135,9 +131,8 @@ export default function Hero() {
         <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       </div>
 
-      {/* --- KINETIC TYPOGRAPHY (RESTORED TO ORIGINAL PERFECTION) --- */}
+      {/* --- KINETIC TYPOGRAPHY --- */}
       <div className="relative z-10 flex flex-col w-full max-w-[75vw] mx-auto leading-[0.82] mix-blend-normal dark:mix-blend-screen transition-all duration-700 pointer-events-none">
-        
         <div className="slice-text w-full text-left overflow-hidden">
           <div className={`reveal-left inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40`}>
@@ -145,7 +140,6 @@ export default function Hero() {
             </h1>
           </div>
         </div>
-
         <div className="slice-text w-full text-right overflow-hidden relative">
           <div className={`reveal-right inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
@@ -159,7 +153,6 @@ export default function Hero() {
             </h1>
           </div>
         </div>
-
         <div className="slice-text w-full text-center overflow-hidden">
           <div className={`reveal-center inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40`}>
@@ -167,7 +160,6 @@ export default function Hero() {
             </h1>
           </div>
         </div>
-
         <div className="slice-text w-full text-left overflow-hidden relative">
            <div className={`reveal-left inline-block relative ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 transition-colors duration-700 text-black dark:text-transparent`}>
@@ -181,7 +173,6 @@ export default function Hero() {
             </h1>
           </div>
         </div>
-
         <div className="slice-text w-full text-right overflow-hidden">
           <div className={`reveal-right inline-block ${gpuClass}`}>
             <h1 className={`${typographySize} font-black tracking-tighter uppercase transition-all duration-700 text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20`}>
@@ -189,26 +180,26 @@ export default function Hero() {
             </h1>
           </div>
         </div>
-
       </div>
 
-      {/* --- THE PLANETARY SYSTEM (SUPERIMPOSED) --- */}
+      {/* --- THE PLANETARY SYSTEM (NO ORBIT LINES) --- */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="relative w-[400px] h-[400px] flex items-center justify-center">
           
           <div ref={planetRef} className="absolute rounded-full z-10 planet-surface transition-all duration-1000" style={{ width: "200px", height: "200px" }} />
 
-          <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border border-black/5 dark:border-white/10">
+          {/* ORBIT RINGS (Borders Removed) */}
+          <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border-none">
             <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
             <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
           </div>
 
-          <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border border-black/5 dark:border-white/10">
+          <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border-none">
             <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
           </div>
 
-          <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border border-black/5 dark:border-white/10">
+          <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border-none">
             <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
             <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
           </div>
