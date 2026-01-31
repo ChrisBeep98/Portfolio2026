@@ -77,7 +77,7 @@ export default function Hero() {
       scrollTl
         .to(".reveal-left", { xPercent: -150, opacity: 0.5, ease: "none" }, 0)
         .to(".reveal-right", { xPercent: 150, opacity: 0.5, ease: "none" }, 0)
-        .to(".reveal-center", { scale: 0.5, opacity: 0, ease: "none" }, 0)
+        .to(".reveal-center", { xPercent: -150, scale: 0.8, opacity: 0.5, ease: "none" }, 0)
         .to(planetRef.current, { yPercent: 40, scale: 1.6, ease: "none" }, 0)
         .to(".orbit-ring", { opacity: 0, scale: 1.2, stagger: 0.05, ease: "none" }, 0);
 

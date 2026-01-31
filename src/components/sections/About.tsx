@@ -16,6 +16,7 @@ interface ContentItem {
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -46,6 +47,20 @@ export default function About() {
         stagger: { each: 0.4 }
       });
 
+      // Horizontal parallax on scroll
+      if (textRef.current) {
+        gsap.to(textRef.current, {
+          x: -100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          }
+        });
+      }
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -58,18 +73,19 @@ export default function About() {
     { type: "text", content: "UX/UI" },
     { type: "text", content: "y" },
     { type: "text", content: "desarrollador" },
-    { type: "accent", icon: Zap, className: "text-purple-500" },
     { type: "text", content: "frontend." },
     { type: "text", content: "Transformo" },
+    { type: "accent", icon: Zap, className: "text-purple-500" },
     { type: "text", content: "ideas" },
     { type: "text", content: "complejas" },
-    { type: "accent", icon: Star, className: "text-cyan-500" },
     { type: "text", content: "en" },
     { type: "text", content: "experiencias" },
+    { type: "accent", icon: Star, className: "text-cyan-500" },
     { type: "text", content: "digitales" },
     { type: "text", content: "limpias," },
     { type: "text", content: "funcionales" },
     { type: "text", content: "y" },
+    { type: "accent", icon: Circle, className: "text-pink-500" },
     { type: "text", content: "memorables." },
     { type: "text", content: "Mi" },
     { type: "text", content: "trabajo" },
@@ -77,6 +93,7 @@ export default function About() {
     { type: "text", content: "en" },
     { type: "text", content: "la" },
     { type: "text", content: "intersección" },
+    { type: "accent", icon: Hexagon, className: "text-yellow-500" },
     { type: "text", content: "entre" },
     { type: "text", content: "estética" },
     { type: "text", content: "y" },
@@ -92,7 +109,7 @@ export default function About() {
       <div className="about-line-top absolute top-0 left-0 w-full h-px bg-black/20 dark:bg-white/20 origin-left" />
 
       <div className="max-w-[1600px] mx-auto w-full relative z-10">
-        <h2 className="text-[7vw] md:text-[5.5vw] lg:text-[4.5vw] font-bold tracking-tighter leading-[1.15] text-black dark:text-white">
+        <h2 ref={textRef} className="text-[7vw] md:text-[5.5vw] lg:text-[4.5vw] font-bold tracking-tighter leading-[1.15] text-black dark:text-white">
           {content.map((item, index) => {
             if (item.type === "text" && item.content) {
               const isSpecial = ["UX/UI", "estética", "tecnología."].includes(item.content);
