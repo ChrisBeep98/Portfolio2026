@@ -102,7 +102,7 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const typographySize = "text-[clamp(2.5rem,12vw,12rem)]";
+  const typographySize = "text-[clamp(2.8rem,12vw,12rem)]";
 
   const Satellite = ({ icon: Icon, label, className, nodeClass }: any) => (
     <div className={`absolute ${className}`}>
