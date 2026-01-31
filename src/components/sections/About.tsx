@@ -118,12 +118,12 @@ export default function About() {
     >
       <div
         ref={containerRef}
-        className="relative min-h-screen w-full flex items-center bg-[#050505] dark:bg-[#F2F2F0] rounded-t-[44px] transition-colors duration-700 py-32 px-[2em] lg:px-[4em] overflow-hidden will-change-transform"
+        className="relative min-h-[70vh] sm:min-h-screen w-full flex items-center bg-[#050505] dark:bg-[#F2F2F0] rounded-t-[44px] transition-colors duration-700 py-16 sm:py-32 px-3.5 sm:px-[2em] lg:px-[4em] overflow-hidden will-change-transform"
       >
         <div className="about-line-top absolute top-0 left-0 w-full h-px bg-white/20 dark:bg-black/20 origin-left" />
 
         <div className="max-w-[1600px] mx-auto w-full relative z-10">
-          <h2 className="text-[7vw] md:text-[5.5vw] lg:text-[4.5vw] font-bold tracking-tighter leading-[1.15] text-white dark:text-black">
+          <h2 className="text-[8.5vw] sm:text-[7.5vw] md:text-[6vw] lg:text-[4vw] lg:font-medium font-bold tracking-tighter leading-[1.15] text-white dark:text-black">
             {content.map((item, index) => {
               if (item.type === "text" && item.content) {
                 const isSpecial = ["UX/UI", "estética", "tecnología."].includes(item.content);
