@@ -77,12 +77,12 @@ export default function Hero() {
           ease: "power2.inOut" 
         }, 0)
         .to(planetRef.current, { 
-          scale: isMobile ? 1 : 1.15,
+          scale: isMobile ? 0.7 : 1.15,
           opacity: 1,
           ease: "power2.inOut" 
         }, 0.1) 
         .to(".orbit-ring", { 
-          scale: isMobile ? 0.8 : 1,
+          scale: isMobile ? 0.6 : 1,
           opacity: 0.6, 
           stagger: 0.05, 
           ease: "power2.inOut" 
