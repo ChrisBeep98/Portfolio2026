@@ -51,35 +51,38 @@ export default function Hero() {
         }
       });
 
+      const isMobile = window.innerWidth < 768;
+
       scrollTl
         // Fase A: Salida de texto
         .to(".reveal-left", { xPercent: -150, opacity: 0, ease: "none" }, 0)
         .to(".reveal-right", { xPercent: 150, opacity: 0, ease: "none" }, 0)
         .to(".reveal-center", { xPercent: -150, opacity: 0, ease: "none" }, 0)
         
-        // Fase B: Imagen toma el 100vh IZQUIERDO
+        // Fase B: Imagen (DESAPARECE en mobile, SE EXPANDE en desktop)
         .to(imageWrapperRef.current, { 
-          left: 0, bottom: 0, top: 0, x: 0, y: 0,
-          height: "100vh",
-          width: "40vw",
+          left: 0, bottom: 0, top: isMobile ? "auto" : 0, x: 0, y: isMobile ? 100 : 0,
+          height: isMobile ? "25vh" : "100vh",
+          width: isMobile ? "100vw" : "40vw",
           borderRadius: "0px",
-          opacity: 1, 
+          opacity: isMobile ? 0 : 1, 
           ease: "power2.inOut" 
         }, 0)
         
-        // Fase C: REVELACIÓN DEL ORBE Y TAGS (Acto 2)
+        // Fase C: REVELACIÓN DEL ORBE Y TAGS
         .to(systemRef.current, { 
-          x: "20vw", 
+          x: isMobile ? 0 : "20vw", 
+          y: isMobile ? 0 : 0, 
           opacity: 1,
           ease: "power2.inOut" 
         }, 0)
         .to(planetRef.current, { 
-          scale: 1.15,
+          scale: isMobile ? 1 : 1.15,
           opacity: 1,
           ease: "power2.inOut" 
-        }, 0.1) // Aparece un poco después de que el texto empiece a abrirse
+        }, 0.1) 
         .to(".orbit-ring", { 
-          scale: 1,
+          scale: isMobile ? 0.8 : 1,
           opacity: 0.6, 
           stagger: 0.05, 
           ease: "power2.inOut" 
@@ -99,7 +102,7 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const typographySize = "text-[clamp(4rem,12vw,12rem)]";
+  const typographySize = "text-[clamp(2.5rem,12vw,12rem)]";
 
   const Satellite = ({ icon: Icon, label, className, nodeClass }: any) => (
     <div className={`absolute ${className}`}>
@@ -112,10 +115,10 @@ export default function Hero() {
 
   return (
     <div ref={containerRef} className="relative w-full h-[300vh]">
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
         
-        {/* --- KINETIC TYPOGRAPHY --- */}
-        <div className="relative z-10 flex flex-col w-full leading-[0.82] pointer-events-none px-[2em] lg:px-[7em]">
+        {/* --- KINETIC TYPOGRAPHY (Centrado en el espacio superior en Mobile) --- */}
+        <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0">
           <div className="w-full text-left"><div className="reveal-left inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
           <div className="w-full text-right relative">
             <div className="reveal-right inline-block relative">
@@ -139,7 +142,7 @@ export default function Hero() {
         {/* --- IMAGE WRAPPER --- */}
         <div 
           ref={imageWrapperRef}
-          className="absolute left-[2em] lg:left-[7em] bottom-[10vh] w-[16vw] h-[30vh] z-20 pointer-events-auto"
+          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto"
         >
           <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
             <img 
