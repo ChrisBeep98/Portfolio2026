@@ -18,31 +18,30 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const planetRef = useRef<HTMLDivElement>(null);
   const systemRef = useRef<HTMLDivElement>(null);
+  const imageWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // 1. ESTADO INICIAL
+      // 1. ESTADO INICIAL (Orbe y tags ocultos)
       gsap.set([".reveal-left", ".reveal-right", ".reveal-center"], { opacity: 0, xPercent: 0 });
       gsap.set(planetRef.current, { scale: 0, opacity: 0 });
       gsap.set(".orbit-ring", { scale: 0, opacity: 0 });
-      gsap.set(".reveal-image", { y: 100, opacity: 0, scale: 1.1 });
+      gsap.set(imageWrapperRef.current, { y: 100, opacity: 0, scale: 1.1 });
       gsap.set(".hero-detail", { y: 20, opacity: 0 });
 
-      // 2. TIMELINE DE ENTRADA (Intro)
+      // 2. TIMELINE DE ENTRADA (Intro - Solo texto e imagen)
       const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
       introTl
         .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
         .to(".reveal-right", { opacity: 1, duration: 1.2, stagger: 0.1 }, "<")
         .to(".reveal-center", { opacity: 1, duration: 1.2 }, "<0.2")
-        .to(planetRef.current, { scale: 0.3, opacity: 1, duration: 1.5, ease: "back.out(1.5)" }, "-=1")
-        .to(".reveal-image", { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1.2")
-        .to(".orbit-ring", { scale: 1, opacity: 1, duration: 1.2, stagger: 0.1 }, "-=1")
+        .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
-      // 3. TIMELINE DE SCROLL (ACTO 2 - LAYOUT BINARIO PERFECTO)
+      // 3. TIMELINE DE SCROLL (ACTO 2 - APARECEN ORBE Y TAGS)
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -58,44 +57,40 @@ export default function Hero() {
         .to(".reveal-right", { xPercent: 150, opacity: 0, ease: "none" }, 0)
         .to(".reveal-center", { xPercent: -150, opacity: 0, ease: "none" }, 0)
         
-        // Fase B: Imagen ocupa el 50% IZQUIERDO perfectamente
-        .to(".reveal-image", { 
-          x: "-18vw", // Ajustado para llegar al borde absoluto
-          y: 0,
-          top: "-5em", // Sube hasta el tope
+        // Fase B: Imagen toma el 100vh IZQUIERDO
+        .to(imageWrapperRef.current, { 
+          left: 0, bottom: 0, top: 0, x: 0, y: 0,
           height: "100vh",
-          width: "50vw", // 50% exacto de la pantalla
+          width: "40vw",
           borderRadius: "0px",
           opacity: 1, 
           ease: "power2.inOut" 
         }, 0)
         
-        // Fase C: Orbe se asienta en el centro de la DERECHA (75% del total)
+        // Fase C: REVELACIÓN DEL ORBE Y TAGS (Acto 2)
         .to(systemRef.current, { 
-          x: "25vw", // Desplazamiento al centro de la mitad derecha
-          scale: 1, 
+          x: "20vw", 
           opacity: 1,
           ease: "power2.inOut" 
         }, 0)
         .to(planetRef.current, { 
-          scale: 1.15, // Crecimiento sutil solicitado
+          scale: 1.15,
           opacity: 1,
           ease: "power2.inOut" 
-        }, 0)
+        }, 0.1) // Aparece un poco después de que el texto empiece a abrirse
         .to(".orbit-ring", { 
+          scale: 1,
           opacity: 0.6, 
           stagger: 0.05, 
           ease: "power2.inOut" 
-        }, 0)
+        }, 0.1)
         .to(".hero-detail", { opacity: 0, y: 50 }, 0);
 
-      // 4. BUCLE DE ÓRBITAS CON CONTRA-ROTACIÓN
+      // 4. BUCLE DE ÓRBITAS
       gsap.to(".orbit-1", { rotation: 360, duration: 25, repeat: -1, ease: "none" });
       gsap.to(".node-1", { rotation: -360, duration: 25, repeat: -1, ease: "none" });
-
       gsap.to(".orbit-2", { rotation: -360, duration: 35, repeat: -1, ease: "none" });
       gsap.to(".node-2", { rotation: 360, duration: 35, repeat: -1, ease: "none" });
-
       gsap.to(".orbit-3", { rotation: 360, duration: 45, repeat: -1, ease: "none" });
       gsap.to(".node-3", { rotation: -360, duration: 45, repeat: -1, ease: "none" });
 
@@ -118,8 +113,7 @@ export default function Hero() {
   return (
     <div ref={containerRef} className="relative w-full h-[300vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
-        <ThemeToggle />
-
+        
         {/* --- KINETIC TYPOGRAPHY --- */}
         <div className="relative z-10 flex flex-col w-full leading-[0.82] pointer-events-none px-[2em] lg:px-[7em]">
           <div className="w-full text-left"><div className="reveal-left inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
@@ -131,26 +125,32 @@ export default function Hero() {
             </div>
           </div>
           <div className="w-full text-center"><div className="reveal-center inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>UX-UI.DESIGNER</h1></div></div>
-          <div className="w-full text-left relative">
+          {/* FRONTEND (Glitch Layered) */}
+          <div className="w-full flex justify-start relative md:pl-[20vw]">
              <div className="reveal-left inline-block relative">
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>Frontend</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-cyan-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>Frontend</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-purple-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>Frontend</h1>
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>& Frontend</h1>
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-cyan-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>& Frontend</h1>
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-purple-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>& Frontend</h1>
             </div>
           </div>
           <div className="w-full text-right"><div className="reveal-right inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20 whitespace-nowrap`}>Developer</h1></div></div>
         </div>
 
-        {/* --- IMAGE LAYER --- */}
-        <div className="absolute inset-0 px-[2em] lg:px-[7em] py-[5em] grid grid-cols-12 grid-rows-6 gap-[1em] pointer-events-none z-20">
-          <div className="col-start-2 row-start-4 col-span-12 md:col-span-2 row-span-3 relative group pointer-events-auto reveal-image opacity-0">
-            <div className="w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5 transition-all duration-300">
-              <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" 
-                alt="Portrait" 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100" 
-              />
-            </div>
+        {/* --- IMAGE WRAPPER --- */}
+        <div 
+          ref={imageWrapperRef}
+          className="absolute left-[2em] lg:left-[7em] bottom-[10vh] w-[20vw] h-[35vh] z-20 pointer-events-auto"
+        >
+          <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
+            <img 
+              src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68b22e2584f095b8afb03eec_Generated%20Image%20August%2029%2C%202025%20-%203_03PM.jpeg" 
+              alt="Portrait" 
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100" 
+            />
+          </div>
+          <div className="mt-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] opacity-40">
+            <Camera size={10} />
+            <span>Identity_Ref</span>
           </div>
         </div>
 

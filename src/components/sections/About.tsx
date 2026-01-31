@@ -60,7 +60,7 @@ export default function About() {
       // Parallax effect - container moves up as user scrolls down
       if (containerRef.current && sectionRef.current) {
         gsap.to(containerRef.current, {
-          y: -80,
+          y: -220,
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
