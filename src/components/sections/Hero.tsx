@@ -139,7 +139,7 @@ export default function Hero() {
         {/* --- IMAGE WRAPPER --- */}
         <div 
           ref={imageWrapperRef}
-          className="absolute left-[2em] lg:left-[7em] bottom-[10vh] w-[20vw] h-[35vh] z-20 pointer-events-auto"
+          className="absolute left-[2em] lg:left-[7em] bottom-[10vh] w-[16vw] h-[30vh] z-20 pointer-events-auto"
         >
           <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
             <img 
