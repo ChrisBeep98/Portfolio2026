@@ -98,21 +98,26 @@ export default function Process() {
         if (!step) return;
 
         const icon = step.querySelector(".step-icon-inner");
-        if (!card) return;
+        const title = step.querySelector(".step-title");
+        const hollowNum = step.querySelector(".hollow-number");
 
-        const icon = card.querySelector(".card-icon");
-        const glow = card.querySelector(".card-glow");
-
-        card.addEventListener("mouseenter", () => {
-          gsap.to(icon, { scale: 1.1, duration: 0.3, ease: "power2.out" });
-          gsap.to(glow, { opacity: 0.15, scale: 1.1, duration: 0.3, ease: "power2.out" });
+        step.addEventListener("mouseenter", () => {
+          gsap.to(icon, { scale: 1.1, rotation: 5, duration: 0.4, ease: "power2.out" });
+          gsap.to(title, { x: isEven(step) ? 10 : -10, duration: 0.3, ease: "power2.out" });
+          gsap.to(hollowNum, { opacity: 0.15, scale: 1.05, duration: 0.4, ease: "power2.out" });
         });
 
-        card.addEventListener("mouseleave", () => {
-          gsap.to(icon, { scale: 1, duration: 0.3, ease: "power2.out" });
-          gsap.to(glow, { opacity: 0, scale: 1, duration: 0.3, ease: "power2.out" });
+        step.addEventListener("mouseleave", () => {
+          gsap.to(icon, { scale: 1, rotation: 0, duration: 0.4, ease: "power2.out" });
+          gsap.to(title, { x: 0, duration: 0.3, ease: "power2.out" });
+          gsap.to(hollowNum, { opacity: 0.05, scale: 1, duration: 0.4, ease: "power2.out" });
         });
       });
+
+      function isEven(element: Element) {
+        const index = stepsRef.current.findIndex(ref => ref?.contains(element));
+        return index % 2 === 0;
+      }
 
     }, sectionRef);
 
@@ -123,82 +128,81 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative w-full bg-background py-32 md:py-40"
+      className="relative w-full bg-background py-32 md:py-40 overflow-hidden"
     >
-      <div className="px-frame max-w-7xl mx-auto">
+      {/* Hollow outline decoration - Massive typography */}
+      <div className="absolute top-10 right-0 text-[25vw] font-bold tracking-tighter text-transparent 
+                      [-webkit-text-stroke:1px_hsl(0_0%_50%/0.08)] pointer-events-none select-none leading-none">
+        04
+      </div>
+
+      <div className="px-frame max-w-6xl mx-auto relative z-10">
         {/* Header */}
-        <div className="mb-20 md:mb-28">
+        <div className="mb-20 md:mb-32">
           <div
             ref={lineRef}
             className="h-px bg-foreground/10 mb-8 origin-left"
           />
           <h2
             ref={titleRef}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter"
+            className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter"
           >
             Mi Proceso
           </h2>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Steps - Asymmetric Layout with Hollow Numbers */}
+        <div className="space-y-20 md:space-y-32">
           {steps.map((step, index) => {
             const Icon = step.icon;
+            const isEven = index % 2 === 0;
 
             return (
               <div
                 key={step.id}
-                ref={(el) => { cardsRef.current[index] = el; }}
-                className="group relative p-8 md:p-10 rounded-3xl bg-surface border border-foreground/5 
-                           hover:border-foreground/10 transition-colors duration-500 cursor-pointer overflow-hidden"
+                ref={(el) => { stepsRef.current[index] = el; }}
+                className={`relative flex flex-col md:flex-row gap-8 md:gap-16 items-start cursor-pointer group ${
+                  isEven ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
               >
-                {/* Glow effect */}
-                <div
-                  className="card-glow absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-0 transition-opacity"
-                  style={{ backgroundColor: step.color }}
-                />
-
-                {/* Number badge */}
-                <div
-                  className="card-number absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center
-                             text-xs font-mono font-bold"
-                  style={{
-                    backgroundColor: `${step.color}15`,
-                    color: step.color,
-                  }}
+                {/* Hollow Number Background */}
+                <div 
+                  className={`hollow-number absolute ${isEven ? "-left-4 md:-left-12" : "-right-4 md:-right-12"} 
+                            top-1/2 -translate-y-1/2 text-[15vw] md:text-[10vw] font-bold tracking-tighter 
+                            text-transparent [-webkit-text-stroke:1px_hsl(0_0%_50%/0.1)] 
+                            pointer-events-none select-none opacity-5`}
                 >
                   {step.number}
                 </div>
 
-                {/* Icon */}
-                <div className="card-icon relative w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                  style={{
-                    background: `linear-gradient(135deg, ${step.color}20, ${step.color}05)`,
-                    border: `1px solid ${step.color}30`,
-                  }}
-                >
-                  <Icon
-                    size={28}
-                    style={{ color: step.color }}
-                    strokeWidth={1.5}
-                  />
-                </div>
-
                 {/* Content */}
-                <div className="card-content relative z-10">
-                  <h3 className="text-xl md:text-2xl font-semibold tracking-tight mb-3">
+                <div className={`relative z-10 flex-1 ${isEven ? "md:text-left md:pr-20" : "md:text-right md:pl-20"}`}>
+                  <span className="step-number block font-mono text-xs text-foreground/30 mb-3 tracking-[0.3em] uppercase">
+                    Step {step.number}
+                  </span>
+                  <h3 className="step-title text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 
+                                 group-hover:text-foreground/90 transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="text-foreground/50 text-sm md:text-base leading-relaxed">
+                  <p className="step-desc text-foreground/50 text-base md:text-lg leading-relaxed max-w-lg">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Bottom accent line */}
-                <div
-                  className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-500 ease-out"
-                  style={{ backgroundColor: step.color }}
-                />
+                {/* Icon - Hollow Ring */}
+                <div className="step-icon relative flex-shrink-0 z-10">
+                  <div className="step-icon-inner w-20 h-20 md:w-24 md:h-24 rounded-full 
+                                  border border-foreground/20 flex items-center justify-center bg-background
+                                  group-hover:border-foreground/40 transition-colors duration-500">
+                    <Icon size={28} className="text-foreground/60" strokeWidth={1.5} />
+                  </div>
+                  {/* Animated ring on hover */}
+                  <div className="absolute inset-0 rounded-full border border-foreground/10 scale-110 opacity-0 
+                                  group-hover:scale-125 group-hover:opacity-100 transition-all duration-500" />
+                </div>
+
+                {/* Spacer */}
+                <div className="flex-1 hidden md:block" />
               </div>
             );
           })}

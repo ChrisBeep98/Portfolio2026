@@ -97,7 +97,6 @@ export default function Projects() {
       const leftPanels = desktopLeftRefs.current.filter(Boolean);
       const rightPanels = desktopRightRefs.current.filter(Boolean);
 
-      // Estado inicial tipografía (TODOS ocultos)
       projects.forEach((_, i) => {
         const items = [...(leftPanels[i]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[i]?.querySelectorAll(".reveal-item") || [])];
         gsap.set(items, { y: 60, opacity: 0 });
@@ -106,22 +105,6 @@ export default function Projects() {
       gsap.set([leftPanels.slice(1), rightPanels.slice(1)], { y: "100vh" });
       gsap.set([leftPanels[0], rightPanels[0]], { y: 0, zIndex: 10 });
 
-      // 1. REVELADO ULTRA-ANTICIPADO DE LA PRIMERA TARJETA (Mientras viene del Hero)
-      const firstItems = [...(leftPanels[0]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[0]?.querySelectorAll(".reveal-item") || [])];
-      gsap.to(firstItems, {
-        y: 0,
-        opacity: 1,
-        stagger: 0.08,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 65%", // Más conservador: empieza a mitad de la transición
-          end: "top 10%",  
-          scrub: 1,
-        }
-      });
-
-      // 2. MASTER TIMELINE PARA TRANSICIONES
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -132,6 +115,12 @@ export default function Projects() {
         }
       });
 
+      // Primer revelado en desktop
+      const firstItems = [...(leftPanels[0]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[0]?.querySelectorAll(".reveal-item") || [])];
+      masterTl.to(firstItems, { y: 0, opacity: 1, stagger: 0.08, ease: "power2.out",
+        scrollTrigger: { trigger: containerRef.current, start: "top 65%", end: "top 10%", scrub: 1 }
+      });
+
       projects.forEach((_, i) => {
         if (i === projects.length - 1) return;
         const cL = leftPanels[i], cR = rightPanels[i], nL = leftPanels[i+1], nR = rightPanels[i+1];
@@ -140,33 +129,48 @@ export default function Projects() {
 
         masterTl
           .to(nR, { y: 0, duration: 1.2, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) })
-          .to(cL, { 
-            y: "-100vh", duration: 1.2, ease: "none", 
+          .to(cL, { y: "-100vh", duration: 1.2, ease: "none", 
             onUpdate: function() { if (this.progress() > 0.5) { gsap.set([nL, nR], { zIndex: 20 }); gsap.set([cL, cR], { zIndex: 5 }); } } 
           }, ">-0.4")
           .to(nL, { y: 0, duration: 1.2, ease: "none" }, "<")
-          
           .to(nextItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power2.out" }, ">-1.4")
           .to(currentItems, { y: -30, opacity: 0, duration: 0.4 }, "<")
-
           .to(cR, { y: "-100vh", duration: 1.2, ease: "none" }, ">-0.6");
       });
     });
 
-    // --- MOBILE LOGIC ---
+    // --- MOBILE LOGIC NORMALIZADA ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
+      
       cards.forEach((card, i) => {
+        // Revelado de INFO NORMALIZADO
         gsap.fromTo(card.querySelectorAll(".reveal-item"), 
           { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out",
-            scrollTrigger: { trigger: card, start: "top 75%", toggleActions: "play none none reverse" }
+          { 
+            y: 0, 
+            opacity: 1, 
+            stagger: 0.1, 
+            duration: 0.8, 
+            ease: "power3.out",
+            scrollTrigger: { 
+              trigger: card, 
+              start: "top 65%", // Empieza más tarde, cuando la tarjeta ya está bien entrada
+              toggleActions: "play none none reverse" 
+            } 
           }
         );
+
+        // Efecto Stacking NORMALIZADO
         if (i === cards.length - 1) return;
         const nextCard = cards[i + 1];
         gsap.to(card, { scale: 0.92, opacity: 0.4, ease: "none",
-          scrollTrigger: { trigger: nextCard, start: "top bottom", end: "top top", scrub: true }
+          scrollTrigger: { 
+            trigger: nextCard, 
+            start: "top bottom", 
+            end: "top top", 
+            scrub: true 
+          }
         });
       });
     });
@@ -176,7 +180,7 @@ export default function Projects() {
 
   return (
     <section ref={containerRef} className="relative bg-background transition-colors duration-700">
-      {/* DESKTOP VIEW */}
+      {/* DESKTOP */}
       <div className="hidden md:block" style={{ height: `${projects.length * 350}vh` }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projects.map((project, index) => {
@@ -195,7 +199,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* MOBILE VIEW */}
+      {/* MOBILE */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
