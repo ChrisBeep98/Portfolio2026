@@ -24,6 +24,8 @@ export default function Hero() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+
       // 1. ESTADO INICIAL
       gsap.set([".reveal-left", ".reveal-right", ".reveal-center"], { opacity: 0, xPercent: 0 });
       gsap.set(planetRef.current, { scale: 0, opacity: 0 });
@@ -32,9 +34,7 @@ export default function Hero() {
       gsap.set(".hero-detail", { y: 20, opacity: 0 });
 
       // 2. TIMELINE DE ENTRADA (Intro)
-      const introTl = gsap.timeline({ 
-        defaults: { ease: "power4.out" }
-      });
+      const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
       introTl
         .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
@@ -44,8 +44,6 @@ export default function Hero() {
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
       // 3. TIMELINE DE SCROLL (ACTO 2)
-      const isMobile = window.innerWidth < 768;
-
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -53,10 +51,7 @@ export default function Hero() {
           end: "bottom bottom",
           scrub: 1,
           onEnter: () => {
-            // Si el usuario scrollea antes de que termine la intro, la forzamos a terminar
-            if (introTl.isActive()) {
-              introTl.progress(1);
-            }
+            if (introTl.isActive()) introTl.progress(1);
           }
         }
       });
@@ -73,36 +68,49 @@ export default function Hero() {
           borderRadius: "0px",
           opacity: isMobile ? 0 : 1, 
           ease: "power2.inOut",
-          overwrite: "auto"
+          overwrite: "auto",
+          force3D: true
         }, 0)
         
         .to(systemRef.current, { 
           x: isMobile ? 0 : "20vw", 
-          y: isMobile ? 0 : 0, 
           opacity: 1,
           ease: "power2.inOut",
-          overwrite: "auto"
+          overwrite: "auto",
+          force3D: true
         }, 0)
         .to(planetRef.current, { 
-          scale: isMobile ? 1 : 1.15,
+          scale: isMobile ? 0.7 : 1.15,
           opacity: 1,
-          ease: "power2.inOut" 
+          ease: "power2.inOut",
+          force3D: true
         }, 0.1) 
         .to(".orbit-ring", { 
-          scale: isMobile ? 0.8 : 1,
+          scale: isMobile ? 0.6 : 1,
           opacity: 0.6, 
           stagger: 0.05, 
-          ease: "power2.inOut" 
+          ease: "power2.inOut",
+          force3D: true
         }, 0.1)
         .to(".hero-detail", { opacity: 0, y: 50, overwrite: "auto" }, 0);
 
-      // 4. BUCLE DE ÓRBITAS
-      gsap.to(".orbit-1", { rotation: 360, duration: 25, repeat: -1, ease: "none" });
-      gsap.to(".node-1", { rotation: -360, duration: 25, repeat: -1, ease: "none" });
-      gsap.to(".orbit-2", { rotation: -360, duration: 35, repeat: -1, ease: "none" });
-      gsap.to(".node-2", { rotation: 360, duration: 35, repeat: -1, ease: "none" });
-      gsap.to(".orbit-3", { rotation: 360, duration: 45, repeat: -1, ease: "none" });
-      gsap.to(".node-3", { rotation: -360, duration: 45, repeat: -1, ease: "none" });
+      // 4. BUCLE DE ÓRBITAS OPTIMIZADO
+      [1, 2, 3].forEach(i => {
+        gsap.to(`.orbit-${i}`, { 
+          rotation: i % 2 === 0 ? -360 : 360, 
+          duration: 20 + (i * 10), 
+          repeat: -1, 
+          ease: "none",
+          force3D: true
+        });
+        gsap.to(`.node-${i}`, { 
+          rotation: i % 2 === 0 ? 360 : -360, 
+          duration: 20 + (i * 10), 
+          repeat: -1, 
+          ease: "none",
+          force3D: true
+        });
+      });
 
     }, containerRef);
 
@@ -112,10 +120,10 @@ export default function Hero() {
   const typographySize = "text-[clamp(2.8rem,12vw,12rem)]";
 
   const Satellite = ({ icon: Icon, label, className, nodeClass }: any) => (
-    <div className={`absolute ${className}`}>
-      <div className={`node flex items-center gap-3 px-5 py-2.5 rounded-full border shadow-lg bg-white border-black text-black dark:bg-white/5 dark:border-white/10 dark:text-white/90 dark:backdrop-blur-xl ${nodeClass}`}>
-        <Icon className="w-4 h-4 opacity-80" />
-        <span className="text-xs font-bold tracking-[0.15em] uppercase whitespace-nowrap opacity-90">{label}</span>
+    <div className={`absolute ${className} will-change-transform`}>
+      <div className={`node flex items-center gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-full border bg-white border-black text-black dark:bg-white/5 dark:border-white/10 dark:text-white/90 dark:backdrop-blur-xl ${nodeClass}`}>
+        <Icon className="w-3 h-3 md:w-4 md:h-4 opacity-80" />
+        <span className="text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase whitespace-nowrap opacity-90">{label}</span>
       </div>
     </div>
   );
@@ -125,13 +133,12 @@ export default function Hero() {
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
         
         {/* --- KINETIC TYPOGRAPHY --- */}
-        <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0">
+        <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0 will-change-transform">
           <div className="w-full text-left"><div className="reveal-left inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
           <div className="w-full text-right relative">
             <div className="reveal-right inline-block relative">
               <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>Sandoval</h1>
               <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 right-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-red-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>Sandoval</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 right-0 translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-blue-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>Sandoval</h1>
             </div>
           </div>
           <div className="w-full text-center"><div className="reveal-center inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>UX-UI.DESIGNER</h1></div></div>
@@ -139,8 +146,6 @@ export default function Hero() {
           <div className="w-full flex justify-start relative md:pl-[20vw]">
              <div className="reveal-left inline-block relative">
               <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>& Frontend</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-cyan-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>& Frontend</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-purple-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>& Frontend</h1>
             </div>
           </div>
           <div className="w-full text-right"><div className="reveal-right inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20 whitespace-nowrap`}>Developer</h1></div></div>
@@ -149,43 +154,40 @@ export default function Hero() {
         {/* --- IMAGE WRAPPER --- */}
         <div 
           ref={imageWrapperRef}
-          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto"
+          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto will-change-transform"
         >
           <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
             <img 
               src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68b22e2584f095b8afb03eec_Generated%20Image%20August%2029%2C%202025%20-%203_03PM.jpeg" 
               alt="Portrait" 
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100" 
+              className="w-full h-full object-cover" 
             />
-          </div>
-          <div className="mt-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] opacity-40">
-            <Camera size={10} />
-            <span>Identity_Ref</span>
           </div>
         </div>
 
         {/* --- PLANETARY SYSTEM --- */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div ref={systemRef} className="relative w-[400px] h-[400px] flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 will-change-transform">
+          <div ref={systemRef} className="relative w-[300px] md:w-[400px] h-[300px] md:h-[400px] flex items-center justify-center translate-z-0">
             <div 
               ref={planetRef} 
               className="absolute rounded-full z-10 
-                bg-[radial-gradient(circle_at_35%_35%,#ffffff,#e0e0e0)] 
-                dark:bg-[radial-gradient(circle_at_35%_35%,#333333,#000000)]
-                shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.1),0_20px_40px_rgba(0,0,0,0.2)]
-                dark:border dark:border-white/5" 
-              style={{ width: "200px", height: "200px" }} 
+                bg-black dark:bg-white
+                shadow-2xl will-change-transform" 
+              style={{ width: "120px", height: "120px" }} 
             />
             
-            <div className="orbit-ring orbit-1 absolute w-[420px] h-[420px] rounded-full border border-foreground/10">
+            {/* Anillo 1 */}
+            <div className="orbit-ring orbit-1 absolute w-[280px] md:w-[420px] h-[280px] md:h-[420px] rounded-full border border-foreground/10">
               <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
               <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
             </div>
-            <div className="orbit-ring orbit-2 absolute w-[580px] h-[580px] rounded-full border border-foreground/10">
+            {/* Anillo 2 */}
+            <div className="orbit-ring orbit-2 absolute w-[450px] md:w-[580px] h-[450px] md:h-[580px] rounded-full border border-foreground/10">
               <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
               <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             </div>
-            <div className="orbit-ring orbit-3 absolute w-[750px] h-[750px] rounded-full border border-foreground/10">
+            {/* Anillo 3 (Ahora visible en mobile también) */}
+            <div className="orbit-ring orbit-3 absolute w-[620px] md:w-[750px] h-[620px] md:h-[750px] rounded-full border border-foreground/10">
               <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
               <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
             </div>
