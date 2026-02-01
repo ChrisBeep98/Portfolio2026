@@ -29,19 +29,19 @@ export default function VankProject() {
       // 1. HERO TEXT REVEAL (Mask Effect)
       gsap.fromTo(".hero-title-mask", 
         { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.2 }
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.5 }
       );
       
       gsap.fromTo(".hero-title-text", 
         { y: "100%" },
-        { y: "0%", duration: 1.5, ease: "power4.out", delay: 0.2 }
+        { y: "0%", duration: 1.5, ease: "power4.out", delay: 0.5 }
       );
 
       gsap.from(".hero-subtitle", {
         y: 40,
         opacity: 0,
         duration: 1.2,
-        delay: 0.6,
+        delay: 0.9,
         ease: "power3.out"
       });
 
@@ -55,15 +55,20 @@ export default function VankProject() {
         ease: "power2.out"
       });
 
-      // 3. HERO IMAGE SCALE
-      gsap.from(".hero-img-reveal", {
-        scale: 0.95,
-        y: 40,
-        opacity: 0,
-        duration: 1.5,
-        delay: 0.2,
-        ease: "expo.out"
-      });
+      // 3. HERO IMAGE PARALLAX (Optimized)
+      gsap.fromTo(".hero-parallax-img", 
+        { yPercent: -10, scale: 1.1 },
+        { 
+          yPercent: 10, 
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-img-container",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          } 
+        }
+      );
 
       // 4. SCROLL SPY FOR SIDEBAR
       const sections = ["hero", "contexto", "desafio", "solucion", "resultado", "impacto"];

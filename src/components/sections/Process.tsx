@@ -9,6 +9,92 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Animated Icon Component with Motion Graphics
+function AnimatedIcon({
+  icon: Icon,
+  color,
+  isVisible
+}: {
+  icon: React.ElementType;
+  color: string;
+  isVisible: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const ring1Ref = useRef<HTMLDivElement>(null);
+  const ring2Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !iconRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Continuous floating animation
+      gsap.to(iconRef.current, {
+        y: -4,
+        duration: 2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Subtle rotation
+      gsap.to(iconRef.current, {
+        rotation: 5,
+        duration: 4,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Pulsing rings
+      if (ring1Ref.current && ring2Ref.current) {
+        gsap.to([ring1Ref.current, ring2Ref.current], {
+          scale: 1.5,
+          opacity: 0,
+          duration: 2,
+          stagger: 0.5,
+          repeat: -1,
+          ease: "power2.out"
+        });
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative w-full h-full flex items-center justify-center">
+      {/* Pulsing rings */}
+      <div
+        ref={ring1Ref}
+        className="absolute inset-0 rounded-full border-2 opacity-30"
+        style={{ borderColor: color }}
+      />
+      <div
+        ref={ring2Ref}
+        className="absolute inset-0 rounded-full border opacity-20"
+        style={{ borderColor: color }}
+      />
+      
+      {/* Icon with glow */}
+      <div
+        ref={iconRef}
+        className="relative z-10"
+        style={{
+          filter: `drop-shadow(0 0 8px ${color}60)`
+        }}
+      >
+        <Icon
+          size={24}
+          strokeWidth={1.5}
+          style={{ color }}
+          className="md:w-7 md:h-7"
+        />
+      </div>
+    </div>
+  );
+}
+
 const phases = [
   {
     id: 1,
@@ -128,7 +214,7 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative bg-[#F2F2F0] dark:bg-[#0a0a0a] py-32 md:py-48"
+      className="relative bg-[#E8E8E6] dark:bg-[#0d0d0d] py-32 md:py-48"
     >
       <div className="max-w-5xl mx-auto px-8 md:px-16">
         {/* Header */}
@@ -172,18 +258,17 @@ export default function Process() {
                     </div>
 
                     <div
-                      className="mt-4 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                      className="mt-4 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
                       style={{
                         background: `linear-gradient(135deg, ${phase.iconColor}20, ${phase.iconColor}10)`,
                         border: `2px solid ${phase.iconColor}40`,
                         boxShadow: `0 4px 20px ${phase.iconColor}20`
                       }}
                     >
-                      <Icon
-                        size={24}
-                        strokeWidth={1.5}
-                        style={{ color: phase.iconColor }}
-                        className="md:w-7 md:h-7"
+                      <AnimatedIcon
+                        icon={Icon}
+                        color={phase.iconColor}
+                        isVisible={true}
                       />
                     </div>
                   </div>
