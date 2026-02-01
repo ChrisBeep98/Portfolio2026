@@ -65,11 +65,35 @@ export default function Hero() {
         }
       });
 
-      // Usamos fromTo con immediateRender: false para forzar visibilidad al inicio del scroll
+      // Usamos fromTo con immediateRender: false para garantizar visibilidad absoluta
       scrollTl
-        .fromTo(".reveal-left", { xPercent: 0, opacity: 1 }, { xPercent: -150, opacity: 0, ease: "none", immediateRender: false }, 0)
-        .fromTo(".reveal-right", { xPercent: 0, opacity: 1 }, { xPercent: 150, opacity: 0, ease: "none", immediateRender: false }, 0)
-        .fromTo(".reveal-center", { xPercent: 0, opacity: 1 }, { xPercent: -150, opacity: 0, ease: "none", immediateRender: false }, 0)
+        .fromTo(".reveal-left", 
+          { xPercent: 0, opacity: 1, scale: 1 }, 
+          { 
+            xPercent: isMobile ? -60 : -150, 
+            opacity: 0, 
+            scale: isMobile ? 0.85 : 1,
+            ease: "none", 
+            immediateRender: false 
+          }, 0)
+        .fromTo(".reveal-right", 
+          { xPercent: 0, opacity: 1, scale: 1 }, 
+          { 
+            xPercent: isMobile ? 60 : 150, 
+            opacity: 0, 
+            scale: isMobile ? 0.85 : 1,
+            ease: "none", 
+            immediateRender: false 
+          }, 0)
+        .fromTo(".reveal-center", 
+          { xPercent: 0, opacity: 1, scale: 1 }, 
+          { 
+            xPercent: isMobile ? -60 : -150, 
+            opacity: 0, 
+            scale: isMobile ? 0.85 : 1,
+            ease: "none", 
+            immediateRender: false 
+          }, 0)
         
         .fromTo(imageWrapperRef.current, 
           { 
