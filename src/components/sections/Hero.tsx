@@ -24,15 +24,17 @@ export default function Hero() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // 1. ESTADO INICIAL (Orbe y tags ocultos)
+      // 1. ESTADO INICIAL
       gsap.set([".reveal-left", ".reveal-right", ".reveal-center"], { opacity: 0, xPercent: 0 });
       gsap.set(planetRef.current, { scale: 0, opacity: 0 });
       gsap.set(".orbit-ring", { scale: 0, opacity: 0 });
       gsap.set(imageWrapperRef.current, { y: 100, opacity: 0, scale: 1.1 });
       gsap.set(".hero-detail", { y: 20, opacity: 0 });
 
-      // 2. TIMELINE DE ENTRADA (Intro - Solo texto e imagen)
-      const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      // 2. TIMELINE DE ENTRADA (Intro)
+      const introTl = gsap.timeline({ 
+        defaults: { ease: "power4.out" }
+      });
 
       introTl
         .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
@@ -41,53 +43,58 @@ export default function Hero() {
         .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
-      // 3. TIMELINE DE SCROLL (ACTO 2 - APARECEN ORBE Y TAGS)
+      // 3. TIMELINE DE SCROLL (ACTO 2)
+      const isMobile = window.innerWidth < 768;
+
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
           scrub: 1,
+          onEnter: () => {
+            // Si el usuario scrollea antes de que termine la intro, la forzamos a terminar
+            if (introTl.isActive()) {
+              introTl.progress(1);
+            }
+          }
         }
       });
 
-      const isMobile = window.innerWidth < 768;
-
       scrollTl
-        // Fase A: Salida de texto
-        .to(".reveal-left", { xPercent: -150, opacity: 0, ease: "none" }, 0)
-        .to(".reveal-right", { xPercent: 150, opacity: 0, ease: "none" }, 0)
-        .to(".reveal-center", { xPercent: -150, opacity: 0, ease: "none" }, 0)
+        .to(".reveal-left", { xPercent: -150, opacity: 0, ease: "none", overwrite: "auto" }, 0)
+        .to(".reveal-right", { xPercent: 150, opacity: 0, ease: "none", overwrite: "auto" }, 0)
+        .to(".reveal-center", { xPercent: -150, opacity: 0, ease: "none", overwrite: "auto" }, 0)
         
-        // Fase B: Imagen (DESAPARECE en mobile, SE EXPANDE en desktop)
         .to(imageWrapperRef.current, { 
           left: 0, bottom: 0, top: isMobile ? "auto" : 0, x: 0, y: isMobile ? 100 : 0,
           height: isMobile ? "25vh" : "100vh",
           width: isMobile ? "100vw" : "40vw",
           borderRadius: "0px",
           opacity: isMobile ? 0 : 1, 
-          ease: "power2.inOut" 
+          ease: "power2.inOut",
+          overwrite: "auto"
         }, 0)
         
-        // Fase C: REVELACIÓN DEL ORBE Y TAGS
         .to(systemRef.current, { 
           x: isMobile ? 0 : "20vw", 
           y: isMobile ? 0 : 0, 
           opacity: 1,
-          ease: "power2.inOut" 
+          ease: "power2.inOut",
+          overwrite: "auto"
         }, 0)
         .to(planetRef.current, { 
-          scale: isMobile ? 0.7 : 1.15,
+          scale: isMobile ? 1 : 1.15,
           opacity: 1,
           ease: "power2.inOut" 
         }, 0.1) 
         .to(".orbit-ring", { 
-          scale: isMobile ? 0.6 : 1,
+          scale: isMobile ? 0.8 : 1,
           opacity: 0.6, 
           stagger: 0.05, 
           ease: "power2.inOut" 
         }, 0.1)
-        .to(".hero-detail", { opacity: 0, y: 50 }, 0);
+        .to(".hero-detail", { opacity: 0, y: 50, overwrite: "auto" }, 0);
 
       // 4. BUCLE DE ÓRBITAS
       gsap.to(".orbit-1", { rotation: 360, duration: 25, repeat: -1, ease: "none" });
@@ -117,7 +124,7 @@ export default function Hero() {
     <div ref={containerRef} className="relative w-full h-[300vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
         
-        {/* --- KINETIC TYPOGRAPHY (Centrado en el espacio superior en Mobile) --- */}
+        {/* --- KINETIC TYPOGRAPHY --- */}
         <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0">
           <div className="w-full text-left"><div className="reveal-left inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
           <div className="w-full text-right relative">
@@ -128,7 +135,7 @@ export default function Hero() {
             </div>
           </div>
           <div className="w-full text-center"><div className="reveal-center inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>UX-UI.DESIGNER</h1></div></div>
-          {/* FRONTEND (Glitch Layered) */}
+          {/* FRONTEND */}
           <div className="w-full flex justify-start relative md:pl-[20vw]">
              <div className="reveal-left inline-block relative">
               <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>& Frontend</h1>

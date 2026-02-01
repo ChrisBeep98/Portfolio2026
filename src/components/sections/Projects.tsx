@@ -91,7 +91,7 @@ export default function Projects() {
           trigger: wrapper,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.2,
+          scrub: 1, // Más reactivo
           invalidateOnRefresh: true,
         }
       });
@@ -107,16 +107,15 @@ export default function Projects() {
         // FASE 1: Entra el siguiente panel derecho
         masterTl.to(nR, { 
           y: 0, 
-          duration: 1.5, 
+          duration: 1.2, 
           ease: "none",
           onStart: () => gsap.set(nR, { zIndex: 30 })
         });
 
-        // FASE 2: El SWAP (Entra el siguiente izquierdo, sale el actual izquierdo)
-        // Eliminamos el gap: El swap empieza justo cuando la Fase 1 termina
+        // FASE 2: El SWAP central
         masterTl.to(cL, { 
           y: "-100vh", 
-          duration: 1.5, 
+          duration: 1.2, 
           ease: "none",
           onUpdate: function() {
             if (this.progress() > 0.5) {
@@ -124,20 +123,19 @@ export default function Projects() {
               gsap.set(cL, { zIndex: 5 });
             }
           }
-        })
+        }, ">-0.4") // Mayor solapamiento
         .to(nL, { 
           y: 0, 
-          duration: 1.5, 
+          duration: 1.2, 
           ease: "none" 
         }, "<");
 
         // FASE 3: Sale el panel derecho anterior
-        // Solapamos un poco la salida con el final del swap para eliminar aire
         masterTl.to(cR, { 
           y: "-100vh", 
-          duration: 1.5, 
+          duration: 1.2, 
           ease: "none" 
-        }, ">-0.3");
+        }, ">-0.6"); // Solapamiento agresivo para eliminar aire muerto
       });
 
     }, wrapperRef);
@@ -149,7 +147,7 @@ export default function Projects() {
     <section 
       ref={wrapperRef} 
       className="relative bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700"
-      style={{ height: `${projects.length * 400}vh` }} // Reducido de 500vh a 400vh para más densidad
+      style={{ height: `${projects.length * 300}vh` }} // TRACK DENSO: 300vh
     >
       <div 
         ref={viewportRef}
