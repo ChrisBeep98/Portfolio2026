@@ -133,7 +133,7 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC: Stacked Cards (Optimized) ---
+    // --- MOBILE LOGIC: Stacked Cards (Refined Depth) ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       
@@ -141,7 +141,7 @@ export default function Projects() {
         const inner = card.querySelector(".mobile-card-inner") as HTMLElement;
         const dimmer = card.querySelector(".mobile-card-dimmer") as HTMLElement;
         
-        // 1. Entrance: Animate border radius to 0 only at the very end (last 20% of the journey)
+        // 1. Entrance: Clean radius transition
         if (i > 0) {
           gsap.to(inner, {
             borderTopLeftRadius: 0,
@@ -150,8 +150,8 @@ export default function Projects() {
             ease: "none",
             scrollTrigger: {
               trigger: card,
-              start: "top 20%", // Starts only when the card is near the top
-              end: "top 0%",    // Finishes exactly at the top
+              start: "top 20%",
+              end: "top 0%",
               scrub: true,
             }
           });
@@ -159,7 +159,7 @@ export default function Projects() {
           gsap.set(inner, { borderTopLeftRadius: 0, borderTopRightRadius: 0 });
         }
 
-        // 2. Exit/Stacking: Scale and Dim as the NEXT card comes up
+        // 2. Exit/Stacking: Subtle Scale & Dimming
         if (i < cards.length - 1) {
           const nextCard = cards[i + 1];
           
@@ -173,11 +173,11 @@ export default function Projects() {
           });
 
           exitTl.to(inner, { 
-            scale: 0.94, // Slightly deeper scale for better visual depth
+            scale: 0.96, // Moderate scale for elegant depth
             force3D: true,
             ease: "none",
           }).to(dimmer, {
-            opacity: 0.6,
+            opacity: isDark ? 0.6 : 0.4,
             ease: "none",
           }, 0);
         }
@@ -226,9 +226,9 @@ export default function Projects() {
             style={{ zIndex: index + 1 }}
           >
             <div className="mobile-card-dimmer absolute inset-0 bg-black pointer-events-none z-[100] opacity-0" />
-            <div className="mobile-card-inner w-full h-full bg-background flex flex-col rounded-t-[36px] overflow-hidden border-t border-white/5 will-change-[transform,border-radius] [transform:translateZ(0)]">
-              {/* Performance Optimized Shadow Layer */}
-              <div className="absolute inset-0 -top-10 -z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.3)] pointer-events-none" />
+            <div className="mobile-card-inner w-full h-full bg-background flex flex-col rounded-t-[36px] overflow-hidden border-t border-transparent dark:border-white/20 will-change-[transform,border-radius] [transform:translateZ(0)]">
+              {/* Subtle Glow Shadow: Dark depth paired with a faint light rim for separation */}
+              <div className="absolute inset-0 -top-[1px] -z-10 shadow-[0_-15px_40px_rgba(0,0,0,0.6),0_-2px_10px_rgba(255,255,255,0.05)] pointer-events-none" />
               
               <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center relative">
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">

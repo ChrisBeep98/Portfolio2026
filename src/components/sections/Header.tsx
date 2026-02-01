@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import gsap from "gsap";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Header() {
@@ -11,6 +12,14 @@ export default function Header() {
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        [".header-logo", ".header-right"],
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.2 }
+      );
+    }, headerRef);
+
     const controlHeader = () => {
       const currentScrollY = window.scrollY;
 
@@ -29,7 +38,10 @@ export default function Header() {
     };
 
     window.addEventListener("scroll", controlHeader);
-    return () => window.removeEventListener("scroll", controlHeader);
+    return () => {
+      window.removeEventListener("scroll", controlHeader);
+      ctx.revert();
+    };
   }, [lastScrollY]);
 
   return (
@@ -42,14 +54,14 @@ export default function Header() {
     >
       <div className="w-full pl-[2em] lg:pl-[7em] pr-[1.5em] lg:pr-[6.4em] py-8 flex justify-between items-center pointer-events-auto bg-transparent">
         {/* Logo */}
-        <Link href="/" className="group flex items-center">
+        <Link href="/" className="header-logo group flex items-center opacity-0">
           <span className="font-display font-black tracking-tighter text-2xl text-white">
             CS.
           </span>
         </Link>
 
         {/* Right Group: Nav Links + Menu Icon + Theme Toggle */}
-        <div className="flex items-center gap-10">
+        <div className="header-right flex items-center gap-3 md:gap-10 opacity-0">
           
           {/* Technical Navigation */}
           <nav className="hidden md:flex items-center gap-10">
@@ -69,7 +81,7 @@ export default function Header() {
 
           {/* Interaction Node (Menu Button) */}
           <button 
-            className="flex items-center justify-center text-white transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95"
+            className="flex md:hidden items-center justify-center text-white transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95"
             aria-label="Menu"
           >
             <Menu size={24} strokeWidth={3} />

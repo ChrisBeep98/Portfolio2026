@@ -28,7 +28,7 @@ export default function ThemeToggle() {
     }
   };
 
-  if (!mounted) return null;
+  if (!mounted) return <div className="w-10 h-10" />;
 
   return (
     <button
@@ -38,10 +38,10 @@ export default function ThemeToggle() {
     >
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
         <div className={`absolute transition-all duration-500 transform ${isDark ? "translate-y-10 opacity-0" : "translate-y-0 opacity-100"}`}>
-          <Sun size={20} strokeWidth={2.5} className="group-hover:text-primary transition-colors" />
+          <Sun size={20} strokeWidth={2.5} className="group-hover:text-primary group-active:text-primary transition-colors" />
         </div>
         <div className={`absolute transition-all duration-500 transform ${isDark ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"}`}>
-          <Moon size={20} strokeWidth={2.5} className="group-hover:text-primary transition-colors" />
+          <Moon size={20} strokeWidth={2.5} className="group-hover:text-primary group-active:text-primary transition-colors" />
         </div>
       </div>
     </button>
