@@ -84,8 +84,8 @@ export default function VankProject() {
       {/* 2. ELASTIC HERO - ANIMATED */}
       <header className="px-[0.875em] md:px-[6em] lg:px-[12em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em]">
         <div className="flex flex-col mb-[2em] md:mb-[3em]">
-          <h1 className="hero-text-reveal text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic will-change-transform">
-            VANK<span className="text-primary not-italic">.</span>
+          <h1 className="hero-text-reveal text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
+            VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
           </h1>
           <p className="hero-text-reveal text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
             Una plataforma fintech lista para crecer.
