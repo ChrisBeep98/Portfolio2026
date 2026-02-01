@@ -15,8 +15,8 @@ export default function Header() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         [".header-logo", ".header-right"],
-        { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.2 }
+        { y: -15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 }
       );
     }, headerRef);
 
@@ -24,19 +24,12 @@ export default function Header() {
       const currentScrollY = window.scrollY;
       const difference = currentScrollY - lastScrollY.current;
 
-      // Umbral de tolerancia para evitar parpadeos por micro-movimientos
       const tolerance = 5;
 
       if (currentScrollY < 10) {
         setIsVisible(true);
       } else if (Math.abs(difference) > tolerance) {
-        if (difference > 0) {
-          // Scrolling down
-          setIsVisible(false);
-        } else {
-          // Scrolling up
-          setIsVisible(true);
-        }
+        setIsVisible(difference < 0);
         lastScrollY.current = currentScrollY;
       }
     };
@@ -51,7 +44,7 @@ export default function Header() {
   return (
     <header 
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none transition-all duration-500 ease-in-out mix-blend-difference ${
+      className={`fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none transition-[transform,opacity] duration-500 ease-in-out mix-blend-difference ${
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       }`}
     >
