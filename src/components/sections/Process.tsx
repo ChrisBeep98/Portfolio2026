@@ -12,165 +12,178 @@ if (typeof window !== "undefined") {
 const steps = [
   {
     id: 1,
-    number: "01",
-    title: "Investigación",
-    description: "Análisis profundo de variables para encontrar la esencia del problema.",
+    title: "Discovery",
+    label: "01",
+    desc: "Uncovering the narrative through deep research and empathy.",
     icon: Search,
+    color: "#a855f7"
   },
   {
     id: 2,
-    number: "02",
-    title: "Estructura",
-    description: "Construcción de cimientos lógicos que garantizan una experiencia sólida.",
+    title: "Blueprint",
+    label: "02",
+    desc: "Defining the digital architecture with surgical precision.",
     icon: Layers,
+    color: "#06b6d4"
   },
   {
     id: 3,
-    number: "03",
-    title: "Diseño Visual",
-    description: "Creación de un lenguaje estético que comunica sin necesidad de palabras.",
+    title: "Sculpting",
+    label: "03",
+    desc: "Transforming structure into a breathtaking visual reality.",
     icon: PenTool,
+    color: "#ec4899"
   },
   {
     id: 4,
-    number: "04",
-    title: "Kinetics",
-    description: "El arte del movimiento aplicado para dar vida y alma a la interfaz.",
+    title: "Breathing",
+    label: "04",
+    desc: "Injecting motion to make the interface come alive.",
     icon: Sparkles,
+    color: "#f97316"
   },
 ];
 
 export default function Process() {
-  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const titleLettersRef = useRef<HTMLSpanElement[]>([]);
-  const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. TITLE REVEAL (Kinetic Typography)
-      const titleChars = titleLettersRef.current.filter(Boolean);
-      const titleTrigger = document.getElementById("process-title");
+      const stepItems = gsap.utils.toArray(".process-slide") as HTMLElement[];
 
-      if (titleChars.length && titleTrigger) {
-        gsap.fromTo(titleChars, 
-          { y: 150, opacity: 0, rotateX: -90 },
-          {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 1.5,
-            stagger: 0.05,
-            ease: "expo.out",
-            scrollTrigger: {
-              trigger: titleTrigger,
-              start: "top 90%",
-            }
-          }
-        );
-      }
-
-      // 2. STEPS COREOGRAPHY
-      stepsRef.current.forEach((step) => {
-        if (!step) return;
-
-        const iconBox = step.querySelector(".icon-box");
-        const icon = step.querySelector(".icon-svg");
-        const number = step.querySelector(".step-number");
-        const title = step.querySelector(".step-title");
-        const desc = step.querySelector(".step-desc");
-        const line = step.querySelector(".step-line");
-
-        // Initial States
-        gsap.set([iconBox, icon], { scale: 0, rotate: -45 });
-        gsap.set(line, { scaleX: 0 });
-        gsap.set([title, desc, number], { y: 30, opacity: 0 });
+      stepItems.forEach((slide, i) => {
+        const content = slide.querySelector(".slide-content");
+        const number = slide.querySelector(".slide-number");
+        const bgText = slide.querySelector(".slide-bg-text");
 
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: step,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
+            trigger: slide,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
           }
         });
 
-        tl.to(iconBox, { scale: 1, rotate: 0, duration: 0.8, ease: "back.out(1.7)" })
-          .to(icon, { scale: 1, rotate: 0, duration: 0.6, ease: "power3.out" }, "-=0.6")
-          .to(line, { scaleX: 1, duration: 1, ease: "expo.inOut" }, "-=0.4")
-          .to(number, { y: 0, opacity: 0.1, duration: 0.8 }, "-=0.8")
-          .to([title, desc], { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" }, "-=0.6");
+        tl.fromTo(number, 
+          { y: 100, opacity: 0, rotate: -45 }, 
+          { y: 0, opacity: 1, rotate: 0, duration: 1, ease: "power4.out" }
+        )
+        .fromTo(content, 
+          { x: -50, opacity: 0, skewX: -10 }, 
+          { x: 0, opacity: 1, skewX: 0, duration: 1.2, ease: "expo.out" }, 
+          "-=0.8"
+        );
+
+        // Background Text Parallax
+        gsap.to(bgText, {
+          x: i % 2 === 0 ? "10%" : "-10%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: slide,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
       });
 
-    }, sectionRef);
+      // Liquid Circle Rotation
+      gsap.to(".liquid-circle", {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none"
+      });
+
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
+    <section 
+      ref={containerRef} 
       id="process"
-      className="relative w-full bg-background py-32 md:py-64 overflow-hidden"
+      className="relative bg-background py-32 md:py-64 overflow-hidden transition-colors duration-700"
     >
-      <div ref={containerRef} className="px-frame max-w-7xl mx-auto">
+      {/* UNIQUE DECORATIVE ELEMENT: The Liquid Compass */}
+      <div className="liquid-circle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] border-[1px] border-primary/5 rounded-full pointer-events-none z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-primary/20" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-20 bg-primary/20" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-20 h-px bg-primary/20" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-20 h-px bg-primary/20" />
+      </div>
+
+      <div className="px-frame max-w-[1400px] mx-auto relative z-10">
         
-        {/* MASSIVE KINETIC TITLE */}
-        <div id="process-title" className="mb-48 md:mb-72 flex flex-wrap gap-x-[0.2em] overflow-visible">
-          {"MI PROCESO".split("").map((char, i) => (
-            <span 
-              key={i} 
-              ref={(el) => { if (el) titleLettersRef.current[i] = el; }}
-              className={`inline-block text-7xl md:text-9xl lg:text-[12rem] font-black tracking-tighter uppercase leading-none ${char === " " ? "w-[0.2em]" : ""}`}
-              style={{ perspective: "1000px" }}
-            >
-              {char}
-            </span>
-          ))}
+        {/* Cinematic Header */}
+        <div className="mb-40 md:mb-60">
+          <span className="font-mono text-xs uppercase tracking-[0.6em] text-primary block mb-8">Process</span>
+          <h2 className="text-6xl md:text-[10vw] font-black uppercase tracking-tighter leading-[0.8] mix-blend-difference">
+            How It <br /> <span className="italic font-light opacity-50">Feels.</span>
+          </h2>
         </div>
 
-        {/* MOTION GRAPHICS STEPS */}
-        <div className="flex flex-col gap-32 md:gap-56">
+        {/* Unique Slide Stack */}
+        <div className="flex flex-col gap-40 md:gap-80">
           {steps.map((step, index) => {
             const Icon = step.icon;
+            const isEven = index % 2 === 0;
 
             return (
-              <div
-                key={step.id}
-                ref={(el) => { stepsRef.current[index] = el; }}
-                className="relative flex flex-col md:flex-row items-start md:items-center gap-10 md:gap-24 group"
+              <div 
+                key={step.id} 
+                className={`process-slide relative flex flex-col ${isEven ? "items-start" : "items-end"} w-full`}
               >
-                {/* Number Watermark */}
-                <span className="step-number absolute -top-12 -left-8 text-8xl md:text-[15rem] font-black pointer-events-none select-none opacity-0">
-                  {step.number}
-                </span>
+                {/* Background Large Text (Unique Layer) */}
+                <h2 className="slide-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25vw] font-black uppercase opacity-[0.03] pointer-events-none select-none whitespace-nowrap">
+                  {step.title}
+                </h2>
 
-                {/* Animated Icon Node */}
-                <div className="relative flex-shrink-0">
-                  <div className="icon-box w-20 h-20 md:w-24 md:h-24 border border-foreground/10 flex items-center justify-center bg-background relative z-10">
-                    <div className="icon-svg text-foreground/60 group-hover:text-foreground transition-colors duration-500">
-                      <Icon size={32} strokeWidth={1.2} />
+                <div className={`slide-content relative z-10 flex flex-col ${isEven ? "items-start" : "items-end"} max-w-2xl`}>
+                  <div className="flex items-center gap-8 mb-12">
+                    <span className="slide-number text-6xl md:text-9xl font-black text-transparent [-webkit-text-stroke:1px_var(--color-foreground)] opacity-20">
+                      {step.label}
+                    </span>
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center glass-engine border-none">
+                      <Icon size={32} style={{ color: step.color }} />
                     </div>
                   </div>
-                  {/* Decorative corner accents */}
-                  <div className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-foreground/40" />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b border-r border-foreground/40" />
-                </div>
 
-                {/* Content Block */}
-                <div className="flex-1 relative">
-                  <div className="step-line absolute -top-4 left-0 w-full h-px bg-foreground/10 origin-left" />
-                  
-                  <h3 className="step-title text-4xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-none">
+                  <h3 className={`text-4xl md:text-7xl font-bold uppercase tracking-tighter mb-8 ${isEven ? "text-left" : "text-right"}`}>
                     {step.title}
                   </h3>
-                  <p className="step-desc text-foreground/50 text-xl md:text-2xl font-medium leading-tight max-w-3xl">
-                    {step.description}
+                  
+                  <p className={`text-xl md:text-3xl text-foreground/40 font-medium leading-tight max-w-lg ${isEven ? "text-left" : "text-right"}`}>
+                    {step.desc}
                   </p>
+
+                  {/* Flow Indicator */}
+                  <div className={`mt-16 flex items-center gap-4 ${isEven ? "flex-row" : "flex-row-reverse"}`}>
+                    <div className="w-12 h-px bg-primary" />
+                    <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary">Next_Stage</span>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+
+        {/* Final CTA Portal */}
+        <div className="mt-60 md:mt-96 flex justify-center">
+          <a 
+            href="#contact" 
+            className="group relative flex flex-col items-center"
+          >
+            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-primary/20 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:border-primary">
+              <div className="w-full h-full absolute inset-0 bg-primary opacity-0 blur-3xl group-hover:opacity-10 transition-opacity" />
+              <h2 className="text-xl font-black uppercase tracking-widest text-primary animate-pulse">Go.</h2>
+            </div>
+            <span className="mt-12 text-sm font-bold uppercase tracking-[0.5em] opacity-30 group-hover:opacity-100 transition-all">Start_The_Engine</span>
+          </a>
+        </div>
+
       </div>
     </section>
   );
