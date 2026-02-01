@@ -25,14 +25,16 @@ export default function VankProject() {
       {/* 1. ELASTIC NAVIGATION */}
       <nav className="fixed top-0 left-0 w-full z-[100] px-frame py-[2em] flex justify-between items-center mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-bold text-[0.65em] uppercase tracking-[0.3em]">Proyectos</span>
+          <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+            <ArrowLeft size={14} />
+          </div>
+          <span className="hidden md:block font-bold text-[0.65em] uppercase tracking-[0.3em]">Proyectos</span>
         </Link>
       </nav>
 
       {/* 2. ELASTIC HERO - RESTRUCTURED */}
-      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[8em] pb-[4em] border-b border-foreground/5">
-        <div className="flex flex-col mb-[4em]">
+      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[6em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
+        <div className="flex flex-col mb-[2em] md:mb-[3em]">
           <h1 className="text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic">
             VANK<span className="text-primary not-italic">.</span>
           </h1>
@@ -41,12 +43,12 @@ export default function VankProject() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-20 pt-[4em] border-t border-foreground/10">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[2em] md:pt-[3em] border-t border-foreground/10">
           {/* Left Side: Normalized Summary */}
           <div className="flex flex-col gap-[1.5em]">
-            <span className="font-sans text-[0.85em] italic opacity-40 block mb-[1.5em]">Contexto del proyecto</span>
+            <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em]">Contexto del proyecto</span>
             <p className="text-xl md:text-2xl font-light leading-tight tracking-tight max-w-2xl opacity-80">
-              Una arquitectura financiera diseñada para la escala, combinando rigor técnico con una experiencia líquida que democratiza el acceso a herramientas complejas para la nueva generación de usuarios.
+              Una experiencia financiera construida desde cero, con procesos claros y un sistema de diseño escalable.
             </p>
           </div>
 
