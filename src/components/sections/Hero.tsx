@@ -159,7 +159,7 @@ export default function Hero() {
         {/* --- IMAGE WRAPPER --- */}
         <div 
           ref={imageWrapperRef}
-          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto will-change-transform opacity-0"
+          className="absolute left-[14px] md:left-[7em] bottom-[14vh] md:bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto will-change-transform opacity-0"
         >
           <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
             <img 
@@ -168,7 +168,7 @@ export default function Hero() {
               className="w-full h-full object-cover" 
             />
           </div>
-          <div className="hero-detail mt-4 flex items-center gap-3 opacity-0">
+          <div className="hero-detail mt-2 md:mt-4 flex items-center gap-3 opacity-0">
             <Camera size={14} className="text-black dark:text-white" />
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-black dark:text-white opacity-70">
               Visual Storyteller / 2026
