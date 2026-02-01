@@ -115,7 +115,6 @@ export default function Projects() {
         }
       });
 
-      // Primer revelado más rápido
       const firstItems = [...(leftPanels[0]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[0]?.querySelectorAll(".reveal-item") || [])];
       masterTl.to(firstItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.6, ease: "power2.out" }, 0);
 
@@ -138,6 +137,7 @@ export default function Projects() {
       });
     });
 
+    // --- MOBILE LOGIC (ULTRA OPTIMIZED) ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       cards.forEach((card, i) => {
@@ -158,8 +158,18 @@ export default function Projects() {
         );
         if (i === cards.length - 1) return;
         const nextCard = cards[i + 1];
-        gsap.to(card, { scale: 0.92, opacity: 0.4, ease: "none",
-          scrollTrigger: { trigger: nextCard, start: "top bottom", end: "top top", scrub: true }
+        
+        // Transformación optimizada con force3D y translateZ
+        gsap.to(card, { 
+          scale: 0.95,
+          force3D: true, // Forzar GPU
+          ease: "none",
+          scrollTrigger: { 
+            trigger: nextCard, 
+            start: "top bottom", 
+            end: "top top", 
+            scrub: true 
+          }
         });
       });
     });
@@ -169,7 +179,6 @@ export default function Projects() {
 
   return (
     <section ref={containerRef} className="relative bg-background transition-colors duration-700">
-      {/* DESKTOP VIEW - REDUCED SCROLL DISTANCE */}
       <div className="hidden md:block" style={{ height: `${projects.length * 200}vh` }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projects.map((project, index) => {
@@ -188,13 +197,17 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* MOBILE VIEW */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
             key={`mobile-${project.id}`} 
-            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.15)] dark:shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.25)]"
-            style={{ zIndex: index + 1 }}
+            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.3)]"
+            style={{ 
+              zIndex: index + 1,
+              willChange: "transform", // Optimización de navegador
+              transform: "translateZ(0)", // Forzar GPU
+              backfaceVisibility: "hidden" // Evitar parpadeos
+            } as any}
           >
             <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
               <span className="reveal-item text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
