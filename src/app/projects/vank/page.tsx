@@ -35,7 +35,7 @@ export default function VankProject() {
       </div>
 
       {/* 2. ELASTIC HERO - RESTRUCTURED */}
-      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[6em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
+      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
         <div className="flex flex-col mb-[2em] md:mb-[3em]">
           <h1 className="text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic">
             VANK<span className="text-primary not-italic">.</span>
