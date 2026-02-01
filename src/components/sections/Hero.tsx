@@ -40,7 +40,8 @@ export default function Hero() {
         .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
         .to(".reveal-right", { opacity: 1, duration: 1.2, stagger: 0.1 }, "<")
         .to(".reveal-center", { opacity: 1, duration: 1.2 }, "<0.2")
-        .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1");
+        .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
+        .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
       // 3. TIMELINE DE SCROLL (ACTO 2)
       const scrollTl = gsap.timeline({
@@ -90,7 +91,8 @@ export default function Hero() {
           stagger: 0.05, 
           ease: "power2.inOut",
           force3D: true
-        }, 0.1);
+        }, 0.1)
+        .to(".hero-detail", { opacity: 0, y: 50, overwrite: "auto" }, 0);
 
       // 4. BUCLE DE ÓRBITAS OPTIMIZADO
       [1, 2, 3].forEach(i => {
@@ -160,6 +162,12 @@ export default function Hero() {
               alt="Portrait" 
               className="w-full h-full object-cover" 
             />
+          </div>
+          <div className="hero-detail mt-4 flex items-center gap-3 opacity-0">
+            <Camera size={14} className="text-black dark:text-white" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-black dark:text-white opacity-70">
+              Visual Storyteller / 2026
+            </span>
           </div>
         </div>
 
