@@ -107,9 +107,10 @@ export default function Hero() {
           opacity: 0.6, 
           stagger: 0.05, 
           ease: "power2.inOut",
-          immediateRender: false
+          immediateRender: false,
+          force3D: true
         }, 0.1)
-        .fromTo(".hero-detail", { opacity: 1, y: 0 }, { opacity: 0, y: 50, immediateRender: false }, 0);
+        .fromTo(".hero-detail", { opacity: 1, y: 0 }, { opacity: 0, y: 50, immediateRender: false, force3D: true }, 0);
 
       // 4. BUCLE DE ÓRBITAS OPTIMIZADO
       [1, 2, 3].forEach(i => {
@@ -147,10 +148,10 @@ export default function Hero() {
 
   return (
     <div ref={containerRef} className="relative w-full h-[300vh]">
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col bg-[#F2F2F0] dark:bg-[#050505]">
         
         {/* --- KINETIC TYPOGRAPHY --- */}
-        <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0 will-change-transform">
+        <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0 will-change-[transform,opacity]">
           <div className="w-full text-left"><div className="reveal-left opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
           <div className="w-full text-right relative">
             <div className="reveal-right opacity-0 inline-block relative">

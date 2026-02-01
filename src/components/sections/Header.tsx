@@ -8,7 +8,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,35 +22,38 @@ export default function Header() {
 
     const controlHeader = () => {
       const currentScrollY = window.scrollY;
+      const difference = currentScrollY - lastScrollY.current;
+
+      // Umbral de tolerancia para evitar parpadeos por micro-movimientos
+      const tolerance = 5;
 
       if (currentScrollY < 10) {
-        // Siempre visible en el tope
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        // Scrolling down -> Ocultar
-        setIsVisible(false);
-      } else {
-        // Scrolling up -> Mostrar
-        setIsVisible(true);
+      } else if (Math.abs(difference) > tolerance) {
+        if (difference > 0) {
+          // Scrolling down
+          setIsVisible(false);
+        } else {
+          // Scrolling up
+          setIsVisible(true);
+        }
+        lastScrollY.current = currentScrollY;
       }
-      
-      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", controlHeader);
+    window.addEventListener("scroll", controlHeader, { passive: true });
     return () => {
       window.removeEventListener("scroll", controlHeader);
       ctx.revert();
     };
-  }, [lastScrollY]);
+  }, []);
 
   return (
     <header 
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none transition-transform duration-500 ease-in-out mix-blend-difference ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
+      className={`fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none transition-all duration-500 ease-in-out mix-blend-difference ${
+        isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       }`}
-      style={{ willChange: "transform", transform: isVisible ? "translateY(0)" : "translateY(-100%)" }}
     >
       <div className="w-full pl-[2em] lg:pl-[7em] pr-[1.5em] lg:pr-[6.4em] py-8 flex justify-between items-center pointer-events-auto bg-transparent">
         {/* Logo */}
