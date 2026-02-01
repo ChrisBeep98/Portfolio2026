@@ -1,9 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, ChevronRight, Activity, Command } from "lucide-react";
 import Header from "@/components/sections/Header";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /**
  * VANK CASE STUDY - RECONSTRUCTED & STABILIZED
@@ -20,36 +26,77 @@ const STYLING = {
 };
 
 export default function VankProject() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. HERO TEXT REVEAL
+      gsap.from(".hero-text-reveal", {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+        clearProps: "all"
+      });
+
+      // 2. METADATA STAGGER
+      gsap.from(".meta-reveal", {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.05,
+        delay: 0.4,
+        ease: "power2.out",
+        clearProps: "all"
+      });
+
+      // 3. HERO IMAGE SCALE
+      gsap.from(".hero-img-reveal", {
+        scale: 0.95,
+        y: 40,
+        opacity: 0,
+        duration: 1.5,
+        delay: 0.2,
+        ease: "expo.out",
+        clearProps: "all"
+      });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <main className="bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background overflow-x-hidden">
+    <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background overflow-x-hidden">
       
       {/* 1. GLOBAL HEADER & BACK BUTTON */}
       <Header hideLogo={true} />
       <div className="fixed top-8 left-6 md:left-12 lg:left-20 z-[110] mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
-          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-            <ArrowLeft size={18} />
+          <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+            <ArrowLeft size={14} />
           </div>
-          <span className="hidden md:block font-bold text-[0.65em] uppercase tracking-[0.3em]">Proyectos</span>
+          <span className="hidden font-bold text-[0.65em] uppercase tracking-[0.3em]">Proyectos</span>
         </Link>
       </div>
 
-      {/* 2. ELASTIC HERO - RESTRUCTURED */}
-      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
+      {/* 2. ELASTIC HERO - ANIMATED */}
+      <header className="px-[0.875em] md:px-[6em] lg:px-[12em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em]">
         <div className="flex flex-col mb-[2em] md:mb-[3em]">
-          <h1 className="text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic">
+          <h1 className="hero-text-reveal text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic will-change-transform">
             VANK<span className="text-primary not-italic">.</span>
           </h1>
-          <p className="text-[5vw] lg:text-[2.5rem] font-light tracking-tight mt-[0.8em] md:mt-[0.6em] opacity-60 leading-[0.9] max-w-6xl">
-            Una plataforma fintech <span className="font-medium text-foreground">lista para crecer.</span>
+          <p className="hero-text-reveal text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
+            Una plataforma fintech lista para crecer.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[2em] md:pt-[3em] border-t border-foreground/10">
           {/* Left Side: Normalized Summary */}
           <div className="flex flex-col gap-[1.5em]">
-            <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em]">Contexto del proyecto</span>
-            <p className="text-xl md:text-2xl font-light leading-tight tracking-tight max-w-2xl opacity-80">
+            <span className="meta-reveal font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em] will-change-transform">Contexto del proyecto</span>
+            <p className="meta-reveal text-xl md:text-2xl font-light leading-tight tracking-tight max-w-2xl opacity-80 will-change-transform">
               Una experiencia financiera construida desde cero, con procesos claros y un sistema de diseño escalable.
             </p>
           </div>
@@ -62,7 +109,7 @@ export default function VankProject() {
               { l: "Entregables", v: "MVP, UI Kit" },
               { l: "Ecosistema", v: "Fintech" }
             ].map((item, i) => (
-              <div key={i} className="space-y-[0.5em]">
+              <div key={i} className="meta-reveal space-y-[0.5em] will-change-transform">
                 <h5 className="font-sans text-[0.85em] italic opacity-40 block">{item.l}</h5>
                 <p className="text-sm font-bold uppercase tracking-tight text-foreground/80">{item.v}</p>
               </div>
@@ -71,9 +118,9 @@ export default function VankProject() {
         </div>
       </header>
 
-      {/* 3. HERO IMAGE */}
-      <section className="w-full px-0 md:px-frame py-[1em]">
-        <div className="md:rounded-[2em] overflow-hidden bg-surface shadow-sm">
+      {/* 3. HERO IMAGE - ANIMATED */}
+      <section className="w-full px-0 md:px-[6em] lg:px-[12em] py-[1em]">
+        <div className="hero-img-reveal md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform">
           <img 
             src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
             alt="Vank Dashboard" 

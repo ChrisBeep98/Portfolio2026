@@ -38,13 +38,20 @@ Ensure absolute consistency with the **Elastic Glass Engine (v2.2)**.
 ### 4. 🌗 CHROMATIC DIMENSION
 *   Strict use of semantic variables. No hex codes in components.
 
+### 5. 🎬 ANIMATION INJECTION (GSAP)
+*   **Mandate:** Every tokenized section MUST include entry animations.
+*   **Text (Slide-in):** `from: { y: 20, opacity: 0 }` -> `to: { y: 0, opacity: 1 }` (Staggered by hierarchy).
+*   **Images (Reveal):** `from: { scale: 0.95, opacity: 0, y: 40 }` -> `to: { scale: 1, opacity: 1, y: 0 }` (Clip-path optional).
+*   **Optimization:** Always use `will-change: transform`, `force3D: true`, and `ScrollTrigger` with `fastScrollEnd: true`.
+
 ---
 
 ## 🛠️ OPERATIONAL WORKFLOW
 
 1.  **Check Context:** "Am I at the root layout or a section?"
 2.  **Apply EM Tokens:** Use `.px-frame` and `.section-gap`.
-3.  **Scale Check:** "If I change the parent font-size, does the padding scale?" -> It must.
+3.  **Inject Motion:** Apply GSAP `slide-in` for texts and `scale/reveal` for images.
+4.  **Scale Check:** "If I change the parent font-size, does the padding scale?" -> It must.
 
 ---
 
@@ -62,7 +69,9 @@ Ensure absolute consistency with the **Elastic Glass Engine (v2.2)**.
 | **Elasticity**| `em` usage | ✅ Compliant | Global margins are relative. |
 | **Mobile** | `px-3` (rem) | ⚠️ Violation | Fixed 12px found. Replaced with `px-frame` (0.75em). |
 | **Type** | `text-display` | ✅ Linked | Manrope respected. |
+| **Motion** | `GSAP` | ✅ Injected | Slide-in Bottom applied to texts. |
 
 ## 🛠️ ACTIONABLE INSIGHTS
 1.  **[Critical]:** Replaced fixed `rem` gaps with elastic `em` tokens.
+2.  **[Animation]:** Injected optimized GSAP timelines for visual hierarchy.
 ```
