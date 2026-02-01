@@ -40,8 +40,7 @@ export default function Hero() {
         .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
         .to(".reveal-right", { opacity: 1, duration: 1.2, stagger: 0.1 }, "<")
         .to(".reveal-center", { opacity: 1, duration: 1.2 }, "<0.2")
-        .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
-        .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
+        .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1");
 
       // 3. TIMELINE DE SCROLL (ACTO 2)
       const scrollTl = gsap.timeline({
@@ -91,8 +90,7 @@ export default function Hero() {
           stagger: 0.05, 
           ease: "power2.inOut",
           force3D: true
-        }, 0.1)
-        .to(".hero-detail", { opacity: 0, y: 50, overwrite: "auto" }, 0);
+        }, 0.1);
 
       // 4. BUCLE DE ÓRBITAS OPTIMIZADO
       [1, 2, 3].forEach(i => {
@@ -134,27 +132,27 @@ export default function Hero() {
         
         {/* --- KINETIC TYPOGRAPHY --- */}
         <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-0 w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0 will-change-transform">
-          <div className="w-full text-left"><div className="reveal-left inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
+          <div className="w-full text-left"><div className="reveal-left opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>Christian</h1></div></div>
           <div className="w-full text-right relative">
-            <div className="reveal-right inline-block relative">
+            <div className="reveal-right opacity-0 inline-block relative">
               <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>Sandoval</h1>
               <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 right-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-red-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>Sandoval</h1>
             </div>
           </div>
-          <div className="w-full text-center"><div className="reveal-center inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>UX-UI.DESIGNER</h1></div></div>
+          <div className="w-full text-center"><div className="reveal-center opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>UX-UI.DESIGNER</h1></div></div>
           {/* FRONTEND */}
           <div className="w-full flex justify-start relative md:pl-[20vw]">
-             <div className="reveal-left inline-block relative">
+             <div className="reveal-left opacity-0 inline-block relative">
               <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>& Frontend</h1>
             </div>
           </div>
-          <div className="w-full text-right"><div className="reveal-right inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20 whitespace-nowrap`}>Developer</h1></div></div>
+          <div className="w-full text-right"><div className="reveal-right opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20 whitespace-nowrap`}>Developer</h1></div></div>
         </div>
 
         {/* --- IMAGE WRAPPER --- */}
         <div 
           ref={imageWrapperRef}
-          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto will-change-transform"
+          className="absolute left-[14px] md:left-[7em] bottom-[10vh] w-[60vw] md:w-[16vw] h-[28vh] md:h-[30vh] z-20 pointer-events-auto will-change-transform opacity-0"
         >
           <div className="image-inner-container w-full h-full glass-engine overflow-hidden rounded-sm border border-black/10 dark:border-white/10 relative shadow-2xl bg-black/5 dark:bg-white/5">
             <img 
@@ -172,22 +170,22 @@ export default function Hero() {
               ref={planetRef} 
               className="absolute rounded-full z-10 
                 bg-black dark:bg-white
-                shadow-2xl will-change-transform" 
+                shadow-2xl will-change-transform opacity-0" 
               style={{ width: "120px", height: "120px" }} 
             />
             
             {/* Anillo 1 */}
-            <div className="orbit-ring orbit-1 absolute w-[280px] md:w-[420px] h-[280px] md:h-[420px] rounded-full border border-foreground/10">
+            <div className="orbit-ring orbit-1 opacity-0 absolute w-[280px] md:w-[420px] h-[280px] md:h-[420px] rounded-full border border-foreground/10">
               <Satellite icon={Code} label="React" className="top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-1" />
               <Satellite icon={Cpu} label="Next.js" className="bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" nodeClass="node-1" />
             </div>
             {/* Anillo 2 */}
-            <div className="orbit-ring orbit-2 absolute w-[450px] md:w-[580px] h-[450px] md:h-[580px] rounded-full border border-foreground/10">
+            <div className="orbit-ring orbit-2 opacity-0 absolute w-[450px] md:w-[580px] h-[450px] md:h-[580px] rounded-full border border-foreground/10">
               <Satellite icon={Palette} label="Design" className="left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
               <Satellite icon={Layers} label="UI/UX" className="right-0 top-1/2 translate-x-1/2 -translate-y-1/2" nodeClass="node-2" />
             </div>
             {/* Anillo 3 (Ahora visible en mobile también) */}
-            <div className="orbit-ring orbit-3 absolute w-[620px] md:w-[750px] h-[620px] md:h-[750px] rounded-full border border-foreground/10">
+            <div className="orbit-ring orbit-3 opacity-0 absolute w-[620px] md:w-[750px] h-[620px] md:h-[750px] rounded-full border border-foreground/10">
               <Satellite icon={Sparkles} label="Motion" className="top-[15%] right-[15%]" nodeClass="node-3" />
               <Satellite icon={Terminal} label="Backend" className="bottom-[15%] left-[15%]" nodeClass="node-3" />
             </div>
