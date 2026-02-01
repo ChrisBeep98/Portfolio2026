@@ -114,16 +114,16 @@ export default function Process() {
       <div className="px-frame max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-20 md:mb-28">
-          <div
-            ref={lineRef}
-            className="h-px bg-foreground/10 mb-8 origin-left"
-          />
           <h2
             ref={titleRef}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter md:-translate-x-64 lg:-translate-x-80"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter md:-translate-x-64 lg:-translate-x-80 mb-8"
           >
             Mi Proceso
           </h2>
+          <div
+            ref={lineRef}
+            className="h-px bg-foreground/10 origin-left w-[calc(100%+16rem)] md:w-[calc(100%+20rem)] lg:w-[calc(100%+25rem)] -ml-64 md:-ml-80 lg:-mr-80 md:-mr-64"
+          />
         </div>
 
         {/* Steps */}

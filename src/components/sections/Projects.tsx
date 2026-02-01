@@ -76,7 +76,7 @@ export default function Projects() {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
-    // --- DESKTOP LOGIC (INTACTA) ---
+    // --- DESKTOP LOGIC ---
     mm.add("(min-width: 768px)", () => {
       const leftPanels = desktopLeftRefs.current.filter(Boolean);
       const rightPanels = desktopRightRefs.current.filter(Boolean);
@@ -105,16 +105,13 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC (CON SHADOW UP) ---
+    // --- MOBILE LOGIC ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
-
         const nextCard = cards[i + 1];
-        
-        // Animamos la carta actual para que se hunda y oscurezca cuando la SIGUIENTE entre
         gsap.to(card, {
           scale: 0.92,
           opacity: 0.4,
@@ -164,7 +161,6 @@ export default function Projects() {
             className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.15)] dark:shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.25)]"
             style={{ zIndex: index + 1 }}
           >
-            {/* Contenido */}
             <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                 Project {String(index + 1).padStart(2, '0')}
@@ -187,10 +183,9 @@ export default function Projects() {
               </a>
             </div>
             
-            {/* Imagen */}
-            <div className="h-[45vh] w-full relative grayscale">
+            <div className="h-[45vh] w-full relative">
               <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
             </div>
           </div>
         ))}
@@ -198,8 +193,6 @@ export default function Projects() {
     </section>
   );
 }
-
-/* --- SUB-COMPONENTS (Solo Desktop) --- */
 
 function DesktopContent({ project, index }: { project: Project; index: number }) {
   return (
@@ -236,7 +229,7 @@ function DesktopContent({ project, index }: { project: Project; index: number })
 function DesktopImage({ project }: { project: Project }) {
   return (
     <div className="w-full h-full p-8 lg:p-24 bg-background">
-      <div className="w-full h-full relative overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-1000 group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)]">
+      <div className="w-full h-full relative overflow-hidden rounded-sm transition-all duration-1000 group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)]">
         <img 
           src={project.image} 
           alt={project.title} 
