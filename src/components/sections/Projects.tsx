@@ -69,118 +69,141 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const leftPanelsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const rightPanelsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const desktopLeftRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const desktopRightRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const wrapper = wrapperRef.current;
-      const leftPanels = leftPanelsRef.current.filter(Boolean);
-      const rightPanels = rightPanelsRef.current.filter(Boolean);
+    const mm = gsap.matchMedia();
 
-      if (!wrapper || leftPanels.length < 2) return;
+    // --- DESKTOP LOGIC (INTACTA) ---
+    mm.add("(min-width: 768px)", () => {
+      const leftPanels = desktopLeftRefs.current.filter(Boolean);
+      const rightPanels = desktopRightRefs.current.filter(Boolean);
 
-      // Estado inicial
       gsap.set([leftPanels.slice(1), rightPanels.slice(1)], { y: "100vh" });
       gsap.set([leftPanels[0], rightPanels[0]], { y: 0, zIndex: 10 });
 
       const masterTl = gsap.timeline({
         scrollTrigger: {
-          trigger: wrapper,
+          trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1, // Más reactivo
+          scrub: 1,
           invalidateOnRefresh: true,
         }
       });
 
       projects.forEach((_, i) => {
         if (i === projects.length - 1) return;
-
-        const cL = leftPanels[i];
-        const cR = rightPanels[i];
-        const nL = leftPanels[i + 1];
-        const nR = rightPanels[i + 1];
-
-        // FASE 1: Entra el siguiente panel derecho
-        masterTl.to(nR, { 
-          y: 0, 
-          duration: 1.2, 
-          ease: "none",
-          onStart: () => gsap.set(nR, { zIndex: 30 })
-        });
-
-        // FASE 2: El SWAP central
-        masterTl.to(cL, { 
-          y: "-100vh", 
-          duration: 1.2, 
-          ease: "none",
-          onUpdate: function() {
-            if (this.progress() > 0.5) {
-              gsap.set(nL, { zIndex: 20 });
-              gsap.set(cL, { zIndex: 5 });
-            }
-          }
-        }, ">-0.4") // Mayor solapamiento
-        .to(nL, { 
-          y: 0, 
-          duration: 1.2, 
-          ease: "none" 
-        }, "<");
-
-        // FASE 3: Sale el panel derecho anterior
-        masterTl.to(cR, { 
-          y: "-100vh", 
-          duration: 1.2, 
-          ease: "none" 
-        }, ">-0.6"); // Solapamiento agresivo para eliminar aire muerto
+        const cL = leftPanels[i], cR = rightPanels[i], nL = leftPanels[i+1], nR = rightPanels[i+1];
+        masterTl.to(nR, { y: 0, duration: 1.2, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) });
+        masterTl.to(cL, { y: "-100vh", duration: 1.2, ease: "none", 
+          onUpdate: function() { if (this.progress() > 0.5) { gsap.set(nL, { zIndex: 20 }); gsap.set(cL, { zIndex: 5 }); } } 
+        }, ">-0.4").to(nL, { y: 0, duration: 1.2, ease: "none" }, "<");
+        masterTl.to(cR, { y: "-100vh", duration: 1.2, ease: "none" }, ">-0.6");
       });
+    });
 
-    }, wrapperRef);
+    // --- MOBILE LOGIC (REFACTORIZADA) ---
+    mm.add("(max-width: 767px)", () => {
+      const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
+      
+      cards.forEach((card, i) => {
+        if (i === cards.length - 1) return;
 
-    return () => ctx.revert();
+        const nextCard = cards[i + 1];
+        
+        gsap.to(card, {
+          scale: 0.9,
+          opacity: 0.3,
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextCard,
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+          }
+        });
+      });
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <section 
-      ref={wrapperRef} 
+      ref={containerRef} 
       className="relative bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700"
-      style={{ height: `${projects.length * 300}vh` }} // TRACK DENSO: 300vh
     >
-      <div 
-        ref={viewportRef}
-        className="sticky top-0 h-screen w-full overflow-hidden"
-      >
-        {projects.map((project, index) => {
-          const isEven = index % 2 === 0;
-          return (
-            <div key={project.id} className="absolute inset-0 w-full h-full flex">
-              {/* COLUMNA IZQUIERDA */}
-              <div 
-                ref={(el) => { leftPanelsRef.current[index] = el; }}
-                className="w-1/2 h-full absolute top-0 left-0 overflow-hidden bg-background"
-              >
-                {isEven ? <ContentPanel project={project} index={index} /> : <ImagePanel project={project} />}
+      {/* --- DESKTOP VIEW --- */}
+      <div className="hidden md:block" style={{ height: `${projects.length * 300}vh` }}>
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          {projects.map((project, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <div key={`desktop-${project.id}`} className="absolute inset-0 w-full h-full flex">
+                <div ref={(el) => { desktopLeftRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 left-0 overflow-hidden bg-background">
+                  {isEven ? <DesktopContent project={project} index={index} /> : <DesktopImage project={project} />}
+                </div>
+                <div ref={(el) => { desktopRightRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 right-0 overflow-hidden bg-background border-l border-foreground/5">
+                  {!isEven ? <DesktopContent project={project} index={index} /> : <DesktopImage project={project} />}
+                </div>
               </div>
+            );
+          })}
+        </div>
+      </div>
 
-              {/* COLUMNA DERECHA */}
-              <div 
-                ref={(el) => { rightPanelsRef.current[index] = el; }}
-                className="w-1/2 h-full absolute top-0 right-0 overflow-hidden bg-background border-l border-foreground/5"
-              >
-                {!isEven ? <ContentPanel project={project} index={index} /> : <ImagePanel project={project} />}
+      {/* --- MOBILE VIEW (Ultra Stable Stacking) --- */}
+      <div className="md:hidden flex flex-col">
+        {projects.map((project, index) => (
+          <div 
+            key={`mobile-${project.id}`} 
+            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden"
+            style={{ zIndex: index + 1 }}
+          >
+            {/* Contenido arriba */}
+            <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
+              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
+                Project {String(index + 1).padStart(2, '0')}
+              </span>
+              <h2 className="text-4xl font-black tracking-tighter uppercase mb-6 leading-none text-black dark:text-white">
+                {project.title}
+              </h2>
+              <p className="text-sm text-foreground/60 leading-relaxed mb-8 font-medium line-clamp-4">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tags.slice(0, 3).map((tag) => (
+                  <span key={tag} className="px-3 py-1 text-[9px] font-mono uppercase tracking-widest border border-foreground/10 rounded-full opacity-70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a href={project.link} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
+                Explore <ArrowUpRight size={14} />
+              </a>
+            </div>
+            
+            {/* Imagen abajo */}
+            <div className="h-[45vh] w-full relative grayscale">
+              <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+              <div className="absolute bottom-6 right-6 font-mono text-[8px] uppercase tracking-[0.4em] opacity-30 text-white">
+                REF_{project.id}
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function ContentPanel({ project, index }: { project: Project; index: number }) {
+/* --- SUB-COMPONENTS (Solo Desktop) --- */
+
+function DesktopContent({ project, index }: { project: Project; index: number }) {
   return (
     <div className="w-full h-full flex flex-col justify-center px-[2em] lg:px-[8em]">
       <div className="max-w-xl">
@@ -212,7 +235,7 @@ function ContentPanel({ project, index }: { project: Project; index: number }) {
   );
 }
 
-function ImagePanel({ project }: { project: Project }) {
+function DesktopImage({ project }: { project: Project }) {
   return (
     <div className="w-full h-full p-8 lg:p-24 bg-background">
       <div className="w-full h-full relative overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-1000 group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)]">
