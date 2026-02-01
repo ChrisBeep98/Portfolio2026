@@ -26,12 +26,22 @@ export default function VankProject() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. HERO TEXT REVEAL
-      gsap.from(".hero-text-reveal", {
-        y: 60,
+      // 1. HERO TEXT REVEAL (Mask Effect)
+      gsap.fromTo(".hero-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.2 }
+      );
+      
+      gsap.fromTo(".hero-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.5, ease: "power4.out", delay: 0.2 }
+      );
+
+      gsap.from(".hero-subtitle", {
+        y: 40,
         opacity: 0,
         duration: 1.2,
-        stagger: 0.1,
+        delay: 0.6,
         ease: "power3.out"
       });
 
@@ -133,13 +143,14 @@ export default function VankProject() {
           
           <header id="hero" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[12em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
             <div className="flex flex-col mb-[2em] md:mb-[3em]">
-              <h1 className="hero-text-reveal text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
-                VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
-              </h1>
-              <p className="hero-text-reveal text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
-                Una plataforma fintech lista para crecer.
-              </p>
-            </div>
+                        <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
+                          <h1 className="hero-title-text text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
+                            VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
+                          </h1>
+                        </div>
+                        <p className="hero-subtitle text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
+                          Una plataforma fintech lista para crecer.
+                        </p>            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[8em] md:pt-[8em] border-t border-foreground/10">
               <div className="flex flex-col gap-[1.5em]">

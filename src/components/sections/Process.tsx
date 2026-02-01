@@ -16,6 +16,8 @@ const phases = [
     subtitle: "Discovery",
     description: "Análisis profundo del usuario y contexto. Datos antes de intuición.",
     icon: Search,
+    gradient: "from-violet-500 to-purple-600",
+    iconColor: "#8b5cf6",
   },
   {
     id: 2,
@@ -23,6 +25,8 @@ const phases = [
     subtitle: "Architecture",
     description: "Arquitectura de información. Flujos claros, navegación intuitiva.",
     icon: Layers,
+    gradient: "from-cyan-500 to-blue-600",
+    iconColor: "#06b6d4",
   },
   {
     id: 3,
@@ -30,6 +34,8 @@ const phases = [
     subtitle: "Narrative",
     description: "Cada interfaz cuenta una historia. Diseño emocional intencional.",
     icon: MessageCircle,
+    gradient: "from-pink-500 to-rose-600",
+    iconColor: "#ec4899",
   },
   {
     id: 4,
@@ -37,6 +43,8 @@ const phases = [
     subtitle: "Details",
     description: "Los detalles invisibles. Cada hover calibrado para deleitar.",
     icon: Sparkles,
+    gradient: "from-orange-500 to-red-600",
+    iconColor: "#f97316",
   },
 ];
 
@@ -125,7 +133,7 @@ export default function Process() {
       <div className="max-w-5xl mx-auto px-8 md:px-16">
         {/* Header */}
         <div ref={titleRef} className="mb-32 md:mb-40">
-          <h2 className="title-word text-5xl md:text-7xl font-light tracking-tight text-foreground leading-[1.1]">
+          <h2 className="title-word text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
             Mi Proceso
           </h2>
         </div>
@@ -163,11 +171,19 @@ export default function Process() {
                       </span>
                     </div>
 
-                    <div className="mt-4 w-16 h-16 md:w-20 md:h-20 border border-foreground/20 rounded-full flex items-center justify-center transition-all duration-300 hover:border-foreground/40 hover:scale-110">
+                    <div
+                      className="mt-4 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                      style={{
+                        background: `linear-gradient(135deg, ${phase.iconColor}20, ${phase.iconColor}10)`,
+                        border: `2px solid ${phase.iconColor}40`,
+                        boxShadow: `0 4px 20px ${phase.iconColor}20`
+                      }}
+                    >
                       <Icon
                         size={24}
-                        strokeWidth={1}
-                        className="text-foreground/60 md:w-7 md:h-7"
+                        strokeWidth={1.5}
+                        style={{ color: phase.iconColor }}
+                        className="md:w-7 md:h-7"
                       />
                     </div>
                   </div>
@@ -180,7 +196,7 @@ export default function Process() {
                       {phase.subtitle}
                     </span>
 
-                    <h3 className="phase-title text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
+                    <h3 className="phase-title text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-4">
                       {phase.title}
                     </h3>
 
