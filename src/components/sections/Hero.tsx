@@ -27,19 +27,24 @@ export default function Hero() {
       const isMobile = window.innerWidth < 768;
 
       // 1. ESTADO INICIAL
-      gsap.set([".reveal-left", ".reveal-right", ".reveal-center"], { opacity: 0, xPercent: 0 });
+      gsap.set(".reveal-left", { opacity: 0, xPercent: -100 });
+      gsap.set(".reveal-right", { opacity: 0, xPercent: 100 });
+      gsap.set(".reveal-center", { opacity: 0, y: 30 });
       gsap.set(planetRef.current, { scale: 0, opacity: 0 });
       gsap.set(".orbit-ring", { scale: 0, opacity: 0 });
       gsap.set(imageWrapperRef.current, { y: 100, opacity: 0, scale: 1.1 });
       gsap.set(".hero-detail", { y: 20, opacity: 0 });
 
       // 2. TIMELINE DE ENTRADA (Intro)
-      const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      const introTl = gsap.timeline({ 
+        defaults: { ease: "power4.out" },
+        delay: 0.5 
+      });
 
       introTl
-        .to(".reveal-left", { opacity: 1, duration: 1.2, stagger: 0.1 })
-        .to(".reveal-right", { opacity: 1, duration: 1.2, stagger: 0.1 }, "<")
-        .to(".reveal-center", { opacity: 1, duration: 1.2 }, "<0.2")
+        .to(".reveal-left", { opacity: 1, xPercent: 0, duration: 1.5, stagger: 0.1 })
+        .to(".reveal-right", { opacity: 1, xPercent: 0, duration: 1.5, stagger: 0.1 }, "<")
+        .to(".reveal-center", { opacity: 1, y: 0, duration: 1.5 }, "<0.2")
         .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 

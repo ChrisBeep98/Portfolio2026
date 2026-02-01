@@ -14,84 +14,91 @@ const steps = [
     id: 1,
     number: "01",
     title: "Investigación",
-    tag: "ANALYSIS",
-    description: "Desglose de variables y mapeo de fricciones en el ecosistema digital.",
+    description: "Análisis profundo de variables para encontrar la esencia del problema.",
     icon: Search,
-    color: "#00E5FF",
   },
   {
     id: 2,
     number: "02",
     title: "Estructura",
-    tag: "SKELETON",
-    description: "Definición de la columna vertebral lógica y flujos de datos complejos.",
+    description: "Construcción de cimientos lógicos que garantizan una experiencia sólida.",
     icon: Layers,
-    color: "#A855F7",
   },
   {
     id: 3,
     number: "03",
-    title: "Visual Core",
-    tag: "INTERFACE",
-    description: "Traducción de la estrategia en un sistema visual de alto impacto.",
+    title: "Diseño Visual",
+    description: "Creación de un lenguaje estético que comunica sin necesidad de palabras.",
     icon: PenTool,
-    color: "#F97316",
   },
   {
     id: 4,
     number: "04",
     title: "Kinetics",
-    tag: "EXECUTION",
-    description: "Implementación de lógicas de movimiento y optimización técnica.",
+    description: "El arte del movimiento aplicado para dar vida y alma a la interfaz.",
     icon: Sparkles,
-    color: "#22C55E",
   },
 ];
 
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
-  const stripesRef = useRef<(HTMLDivElement | null)[]>([]);
-  const titleRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleLettersRef = useRef<HTMLSpanElement[]>([]);
+  const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title Animation
-      gsap.fromTo(titleRef.current,
-        { y: 100, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 90%",
+      // 1. TITLE REVEAL (Kinetic Typography)
+      const titleChars = titleLettersRef.current.filter(Boolean);
+      const titleTrigger = document.getElementById("process-title");
+
+      if (titleChars.length && titleTrigger) {
+        gsap.fromTo(titleChars, 
+          { y: 150, opacity: 0, rotateX: -90 },
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            duration: 1.5,
+            stagger: 0.05,
+            ease: "expo.out",
+            scrollTrigger: {
+              trigger: titleTrigger,
+              start: "top 90%",
+            }
           }
-        }
-      );
+        );
+      }
 
-      // Stripes Reveal
-      stripesRef.current.forEach((stripe) => {
-        if (!stripe) return;
+      // 2. STEPS COREOGRAPHY
+      stepsRef.current.forEach((step) => {
+        if (!step) return;
 
-        const content = stripe.querySelector(".stripe-content");
-        const line = stripe.querySelector(".stripe-line");
-        const number = stripe.querySelector(".stripe-number");
+        const iconBox = step.querySelector(".icon-box");
+        const icon = step.querySelector(".icon-svg");
+        const number = step.querySelector(".step-number");
+        const title = step.querySelector(".step-title");
+        const desc = step.querySelector(".step-desc");
+        const line = step.querySelector(".step-line");
 
-        gsap.set(content, { y: 40, opacity: 0 });
+        // Initial States
+        gsap.set([iconBox, icon], { scale: 0, rotate: -45 });
         gsap.set(line, { scaleX: 0 });
+        gsap.set([title, desc, number], { y: 30, opacity: 0 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: stripe,
+            trigger: step,
             start: "top 85%",
             toggleActions: "play none none reverse",
           }
         });
 
-        tl.to(line, { scaleX: 1, duration: 1, ease: "expo.inOut" })
-          .to(content, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, "-=0.6")
-          .to(number, { opacity: 1, duration: 0.8 }, "-=0.6");
+        tl.to(iconBox, { scale: 1, rotate: 0, duration: 0.8, ease: "back.out(1.7)" })
+          .to(icon, { scale: 1, rotate: 0, duration: 0.6, ease: "power3.out" }, "-=0.6")
+          .to(line, { scaleX: 1, duration: 1, ease: "expo.inOut" }, "-=0.4")
+          .to(number, { y: 0, opacity: 0.1, duration: 0.8 }, "-=0.8")
+          .to([title, desc], { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" }, "-=0.6");
       });
 
     }, sectionRef);
@@ -105,84 +112,66 @@ export default function Process() {
       id="process"
       className="relative w-full bg-background py-32 md:py-64 overflow-hidden"
     >
-      <div className="px-frame max-w-[1400px] mx-auto relative z-10">
-        {/* Header - Massive Title */}
-        <div ref={titleRef} className="mb-32 md:mb-48 border-b border-foreground/10 pb-12">
-          <h2 className="text-[12vw] md:text-[10rem] font-black tracking-[-0.06em] leading-none uppercase">
-            MI <span className="text-outline">PROCESO</span>
-          </h2>
-          <div className="flex justify-between items-end mt-8">
-            <span className="font-mono text-xs tracking-[0.4em] text-foreground/30 uppercase">
-              [ WORKFLOW_STRATEGY_2026 ]
+      <div ref={containerRef} className="px-frame max-w-7xl mx-auto">
+        
+        {/* MASSIVE KINETIC TITLE */}
+        <div id="process-title" className="mb-48 md:mb-72 flex flex-wrap gap-x-[0.2em] overflow-visible">
+          {"MI PROCESO".split("").map((char, i) => (
+            <span 
+              key={i} 
+              ref={(el) => { if (el) titleLettersRef.current[i] = el; }}
+              className={`inline-block text-7xl md:text-9xl lg:text-[12rem] font-black tracking-tighter uppercase leading-none ${char === " " ? "w-[0.2em]" : ""}`}
+              style={{ perspective: "1000px" }}
+            >
+              {char}
             </span>
-            <span className="font-mono text-xs text-foreground/30">
-              PHASE: 01-04
-            </span>
-          </div>
+          ))}
         </div>
 
-        {/* Stripes Layout */}
-        <div className="flex flex-col">
+        {/* MOTION GRAPHICS STEPS */}
+        <div className="flex flex-col gap-32 md:gap-56">
           {steps.map((step, index) => {
             const Icon = step.icon;
 
             return (
               <div
                 key={step.id}
-                ref={(el) => { stripesRef.current[index] = el; }}
-                className="group relative w-full py-16 md:py-24"
+                ref={(el) => { stepsRef.current[index] = el; }}
+                className="relative flex flex-col md:flex-row items-start md:items-center gap-10 md:gap-24 group"
               >
-                {/* Horizontal Line */}
-                <div className="stripe-line absolute bottom-0 left-0 w-full h-px bg-foreground/10 origin-left" />
+                {/* Number Watermark */}
+                <span className="step-number absolute -top-12 -left-8 text-8xl md:text-[15rem] font-black pointer-events-none select-none opacity-0">
+                  {step.number}
+                </span>
 
-                <div className="stripe-content flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-16">
-                  {/* Left: Number + Icon */}
-                  <div className="flex items-center gap-12">
-                    <span className="stripe-number font-mono text-6xl md:text-8xl font-black text-foreground/5 transition-colors duration-500 group-hover:text-foreground/10">
-                      {step.number}
-                    </span>
-                    <div 
-                      className="w-16 h-16 flex items-center justify-center border border-foreground/10 rounded-full transition-all duration-500 group-hover:scale-110"
-                      style={{ color: step.color, borderColor: step.color + "33" }}
-                    >
-                      <Icon size={28} strokeWidth={1.5} />
+                {/* Animated Icon Node */}
+                <div className="relative flex-shrink-0">
+                  <div className="icon-box w-20 h-20 md:w-24 md:h-24 border border-foreground/10 flex items-center justify-center bg-background relative z-10">
+                    <div className="icon-svg text-foreground/60 group-hover:text-foreground transition-colors duration-500">
+                      <Icon size={32} strokeWidth={1.2} />
                     </div>
                   </div>
-
-                  {/* Center: Title + Tag */}
-                  <div className="flex-1 max-w-xl">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-foreground/40">
-                        {step.tag}
-                      </span>
-                    </div>
-                    <h3 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
-                      {step.title}
-                    </h3>
-                  </div>
-
-                  {/* Right: Description */}
-                  <div className="md:w-1/3">
-                    <p className="text-foreground/50 text-xl font-medium leading-tight">
-                      {step.description}
-                    </p>
-                  </div>
+                  {/* Decorative corner accents */}
+                  <div className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-foreground/40" />
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b border-r border-foreground/40" />
                 </div>
 
-                {/* Hover Reveal (Desktop) */}
-                <div className="absolute top-0 left-0 w-full h-full bg-foreground/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                {/* Content Block */}
+                <div className="flex-1 relative">
+                  <div className="step-line absolute -top-4 left-0 w-full h-px bg-foreground/10 origin-left" />
+                  
+                  <h3 className="step-title text-4xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-none">
+                    {step.title}
+                  </h3>
+                  <p className="step-desc text-foreground/50 text-xl md:text-2xl font-medium leading-tight max-w-3xl">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             );
           })}
         </div>
       </div>
-
-      <style jsx>{`
-        .text-outline {
-          -webkit-text-stroke: 1.5px hsl(var(--foreground));
-          color: transparent;
-        }
-      `}</style>
     </section>
   );
 }
