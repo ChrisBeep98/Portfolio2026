@@ -16,6 +16,8 @@ const steps = [
     title: "Investigación",
     description: "Entender el problema antes de resolverlo. Análisis profundo de usuarios, competencia y contexto.",
     icon: Search,
+    color: "#8b5cf6",
+    gradient: "from-violet-500/20 to-purple-500/5",
   },
   {
     id: 2,
@@ -23,6 +25,8 @@ const steps = [
     title: "Estructura",
     description: "Construir los cimientos. Wireframes, flujos de usuario y arquitectura de información sólida.",
     icon: Layout,
+    color: "#06b6d4",
+    gradient: "from-cyan-500/20 to-blue-500/5",
   },
   {
     id: 3,
@@ -30,6 +34,8 @@ const steps = [
     title: "Storytelling",
     description: "Cada interfaz cuenta una historia. Diseño visual que comunica, emociona y conecta.",
     icon: PenTool,
+    color: "#ec4899",
+    gradient: "from-pink-500/20 to-rose-500/5",
   },
   {
     id: 4,
@@ -37,6 +43,8 @@ const steps = [
     title: "Microinteracciones",
     description: "La magia está en los detalles. Animaciones y respuestas que hacen la experiencia memorable.",
     icon: Sparkles,
+    color: "#f59e0b",
+    gradient: "from-amber-500/20 to-orange-500/5",
   },
 ];
 
@@ -45,6 +53,7 @@ export default function Process() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const iconsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -90,14 +99,51 @@ export default function Process() {
           .to(desc, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.6");
       });
 
-      // Subtle floating animation for icons
-      gsap.to(".step-icon-inner", {
-        y: -6,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: 0.3,
+      // Scale pulse animation on scroll into view
+      iconsRef.current.forEach((iconContainer, index) => {
+        if (!iconContainer) return;
+
+        const icon = iconContainer.querySelector(".icon-inner");
+        
+        // Entry animation
+        gsap.fromTo(iconContainer,
+          { scale: 0.8, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: iconContainer,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            delay: index * 0.1,
+          }
+        );
+      });
+
+      // Hover interaction
+      iconsRef.current.forEach((iconContainer) => {
+        if (!iconContainer) return;
+        
+        const icon = iconContainer.querySelector(".icon-inner");
+        
+        iconContainer.addEventListener("mouseenter", () => {
+          gsap.to(icon, {
+            scale: 1.1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        iconContainer.addEventListener("mouseleave", () => {
+          gsap.to(icon, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
       });
 
     }, sectionRef);
@@ -109,9 +155,15 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative w-full bg-background py-32 md:py-40"
+      className="relative w-full bg-background py-32 md:py-40 overflow-hidden"
     >
-      <div className="px-frame max-w-6xl mx-auto">
+      {/* Background gradient orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/5 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "1s" }} />
+      </div>
+
+      <div className="px-frame max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-20 md:mb-28">
           <h2
@@ -142,7 +194,7 @@ export default function Process() {
               >
                 {/* Content */}
                 <div className={`flex-1 ${isEven ? "md:text-right" : "md:text-left"}`}>
-                  <span className="step-number block font-mono text-sm text-foreground/30 mb-3 tracking-widest">
+                  <span className="step-number block font-mono text-sm mb-3 tracking-widest" style={{ color: step.color }}>
                     {step.number}
                   </span>
                   <h3 className="step-title text-2xl md:text-3xl font-semibold tracking-tight mb-4">
@@ -153,10 +205,30 @@ export default function Process() {
                   </p>
                 </div>
 
-                {/* Icon */}
-                <div className="step-icon flex-shrink-0">
-                  <div className="step-icon-inner w-20 h-20 md:w-24 md:h-24 rounded-full border border-foreground/10 flex items-center justify-center bg-surface">
-                    <Icon size={28} className="text-foreground/60" strokeWidth={1.5} />
+                {/* Icon with hover animation */}
+                <div
+                  className="step-icon flex-shrink-0 relative cursor-pointer"
+                  ref={(el) => { iconsRef.current[index] = el; }}
+                >
+                  {/* Subtle glow */}
+                  <div
+                    className="absolute inset-0 rounded-2xl blur-2xl opacity-10"
+                    style={{ backgroundColor: step.color }}
+                  />
+                  
+                  {/* Inner icon container */}
+                  <div
+                    className="icon-inner relative w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center transition-colors duration-300"
+                    style={{
+                      background: `linear-gradient(135deg, ${step.color}10, transparent)`,
+                      border: `1px solid ${step.color}25`,
+                    }}
+                  >
+                    <Icon
+                      size={32}
+                      style={{ color: step.color }}
+                      strokeWidth={1.5}
+                    />
                   </div>
                 </div>
 
@@ -166,9 +238,6 @@ export default function Process() {
             );
           })}
         </div>
-
-        {/* Connecting Line - Vertical for mobile, hidden for desktop alternating */}
-        <div className="absolute left-1/2 top-[280px] bottom-32 w-px bg-foreground/5 hidden lg:block" />
       </div>
     </section>
   );

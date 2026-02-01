@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Github } from "lucide-react";
@@ -15,10 +15,12 @@ interface Project {
   category: string;
   description: string;
   image: string;
-  color: string;
   tags: string[];
   link?: string;
   github?: string;
+  lightBg: string;
+  darkBg: string;
+  accent: string;
 }
 
 const projects: Project[] = [
@@ -28,7 +30,9 @@ const projects: Project[] = [
     category: "Web Application",
     description: "A comprehensive SaaS platform for team collaboration with real-time features, analytics dashboard, and AI-powered insights.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop",
-    color: "#a855f7",
+    lightBg: "#F3E8FF", 
+    darkBg: "#2E1065",  
+    accent: "#a855f7",
     tags: ["Next.js", "TypeScript", "PostgreSQL", "AI"],
     link: "#",
     github: "#"
@@ -39,7 +43,9 @@ const projects: Project[] = [
     category: "Design System",
     description: "A comprehensive design system with 50+ components, tokens, and documentation for enterprise applications.",
     image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop",
-    color: "#06b6d4",
+    lightBg: "#CFFAFE", 
+    darkBg: "#083344",  
+    accent: "#06b6d4",
     tags: ["React", "Storybook", "Figma", "Design Tokens"],
     link: "#",
     github: "#"
@@ -50,7 +56,9 @@ const projects: Project[] = [
     category: "Data Visualization",
     description: "Real-time data visualization dashboard for monitoring business metrics with interactive charts and reports.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop",
-    color: "#ec4899",
+    lightBg: "#FCE7F3", 
+    darkBg: "#500724",  
+    accent: "#ec4899",
     tags: ["D3.js", "Vue", "Node.js", "WebSocket"],
     link: "#",
     github: "#"
@@ -61,7 +69,9 @@ const projects: Project[] = [
     category: "E-commerce",
     description: "Headless e-commerce solution with seamless checkout, inventory management, and multi-currency support.",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop",
-    color: "#f97316",
+    lightBg: "#FFEDD5", 
+    darkBg: "#431407",  
+    accent: "#f97316",
     tags: ["Next.js", "Stripe", "Prisma", "Tailwind"],
     link: "#",
     github: "#"
@@ -72,11 +82,17 @@ export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
   const desktopLeftRefs = useRef<(HTMLDivElement | null)[]>([]);
   const desktopRightRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    const checkTheme = () => setIsDark(document.documentElement.classList.contains("dark"));
+    checkTheme();
+    
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
     const mm = gsap.matchMedia();
 
-    // --- DESKTOP LOGIC ---
     mm.add("(min-width: 768px)", () => {
       const leftPanels = desktopLeftRefs.current.filter(Boolean);
       const rightPanels = desktopRightRefs.current.filter(Boolean);
@@ -105,36 +121,25 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
-      
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
         const nextCard = cards[i + 1];
-        gsap.to(card, {
-          scale: 0.92,
-          opacity: 0.4,
-          ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: "top bottom",
-            end: "top top",
-            scrub: true,
-          }
+        gsap.to(card, { scale: 0.92, opacity: 0.4, ease: "none",
+          scrollTrigger: { trigger: nextCard, start: "top bottom", end: "top top", scrub: true }
         });
       });
     });
 
-    return () => mm.revert();
+    return () => {
+      mm.revert();
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700"
-    >
-      {/* --- DESKTOP VIEW --- */}
+    <section ref={containerRef} className="relative bg-background transition-colors duration-700">
       <div className="hidden md:block" style={{ height: `${projects.length * 300}vh` }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projects.map((project, index) => {
@@ -142,10 +147,10 @@ export default function Projects() {
             return (
               <div key={`desktop-${project.id}`} className="absolute inset-0 w-full h-full flex">
                 <div ref={(el) => { desktopLeftRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 left-0 overflow-hidden bg-background">
-                  {isEven ? <DesktopContent project={project} index={index} /> : <DesktopImage project={project} />}
+                  {isEven ? <DesktopContent project={project} index={index} isDark={isDark} /> : <DesktopImage project={project} />}
                 </div>
                 <div ref={(el) => { desktopRightRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 right-0 overflow-hidden bg-background border-l border-foreground/5">
-                  {!isEven ? <DesktopContent project={project} index={index} /> : <DesktopImage project={project} />}
+                  {!isEven ? <DesktopContent project={project} index={index} isDark={isDark} /> : <DesktopImage project={project} />}
                 </div>
               </div>
             );
@@ -153,7 +158,6 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* --- MOBILE VIEW --- */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
@@ -165,8 +169,13 @@ export default function Projects() {
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                 Project {String(index + 1).padStart(2, '0')}
               </span>
-              <h2 className="text-4xl font-black tracking-tighter uppercase mb-6 leading-none text-black dark:text-white">
-                {project.title}
+              <h2 className="text-4xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-6">
+                <span 
+                  className="px-2 py-0.5 decoration-clone transition-colors duration-500"
+                  style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
+                >
+                  {project.title}
+                </span>
               </h2>
               <p className="text-sm text-foreground/60 leading-relaxed mb-8 font-medium line-clamp-4">
                 {project.description}
@@ -182,10 +191,8 @@ export default function Projects() {
                 Explore <ArrowUpRight size={14} />
               </a>
             </div>
-            
             <div className="h-[45vh] w-full relative">
               <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-              {/* Vignette Effect Mobile - Ultra Visible */}
               <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.6)] pointer-events-none" />
               <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.5)_120%)] mix-blend-multiply" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
@@ -197,15 +204,20 @@ export default function Projects() {
   );
 }
 
-function DesktopContent({ project, index }: { project: Project; index: number }) {
+function DesktopContent({ project, index, isDark }: { project: Project; index: number; isDark: boolean }) {
   return (
     <div className="w-full h-full flex flex-col justify-center px-[2em] lg:px-[8em]">
       <div className="max-w-xl">
         <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-foreground/30 mb-8 block">
           Project {String(index + 1).padStart(2, '0')}
         </span>
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase mb-10 leading-[0.85] text-black dark:text-white">
-          {project.title}
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-10">
+          <span 
+            className="px-4 py-1 decoration-clone transition-colors duration-500"
+            style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
+          >
+            {project.title}
+          </span>
         </h2>
         <div className="w-20 h-[1px] bg-foreground/20 mb-10" />
         <p className="text-base md:text-lg text-foreground/60 leading-relaxed mb-12 max-w-sm font-medium">
@@ -238,7 +250,6 @@ function DesktopImage({ project }: { project: Project }) {
           alt={project.title} 
           className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
         />
-        {/* Vignette Effect Desktop - Ultra Visible */}
         <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.7)] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.6)_130%)] mix-blend-multiply" />
         <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />

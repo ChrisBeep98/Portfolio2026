@@ -16,7 +16,9 @@ We no longer choose between Minimalism and Futurism. We implement both as contra
 
 ### 2.1 The "Hollow" Mandate
 *   In the Dark Realm, mass must be removed. Solids become outlines. Content becomes context.
-*   **Technique:** Use `text-transparent` with `-webkit-text-stroke` and `mix-blend-mode` to create weightless structures.
+*   **Technique:**
+    *   Use `text-transparent` with `-webkit-text-stroke` and `mix-blend-mode` to create weightless structures.
+    *   **CRITICAL:** The stroke color MUST be in `hsl()` or `rgb()` format. NEVER use **named colors** (like `black`, `white`, `cyan`, `pink`), or the `mix-blend-mode` difference will invert them to the **wrong** color in light mode, ruining the intended Hollow effect.
 
 ### 2.2 The Kinetic Entry
 *   Static loading is forbidden.
@@ -40,4 +42,5 @@ The Theme Toggle is not a utility; it is a **Portal**.
 3.  **Split the Reality:**
     *   *Layer 1:* Apply the Swiss styling.
     *   *Layer 2:* Apply the Cyber overrides (Glitch, Stroke, Neon).
+    *  **Use `hsl()` for stroke colors** to ensure `mix-blend-mode: difference` works correctly across themes.
 4.  **Optimize the Engine:** Ensure 120fps via `will-change` and `force3D`.
