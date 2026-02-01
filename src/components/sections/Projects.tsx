@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -92,16 +92,12 @@ export default function Projects() {
 
     const mm = gsap.matchMedia();
 
-    // --- DESKTOP LOGIC ---
+    // --- DESKTOP LOGIC: Split Scroll ---
     mm.add("(min-width: 768px)", () => {
       const leftPanels = desktopLeftRefs.current.filter(Boolean);
       const rightPanels = desktopRightRefs.current.filter(Boolean);
 
-      projects.forEach((_, i) => {
-        const items = [...(leftPanels[i]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[i]?.querySelectorAll(".reveal-item") || [])];
-        gsap.set(items, { y: 60, opacity: 0 });
-      });
-
+      // Initial setup
       gsap.set([leftPanels.slice(1), rightPanels.slice(1)], { y: "100vh" });
       gsap.set([leftPanels[0], rightPanels[0]], { y: 0, zIndex: 10 });
 
@@ -115,53 +111,38 @@ export default function Projects() {
         }
       });
 
-      const firstItems = [...(leftPanels[0]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[0]?.querySelectorAll(".reveal-item") || [])];
-      masterTl.to(firstItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.6, ease: "power2.out" }, 0);
-
       projects.forEach((_, i) => {
         if (i === projects.length - 1) return;
-        const cL = leftPanels[i], cR = rightPanels[i], nL = leftPanels[i+1], nR = rightPanels[i+1];
-        const nextItems = [...(nL?.querySelectorAll(".reveal-item") || []), ...(nR?.querySelectorAll(".reveal-item") || [])];
-        const currentItems = [...(cL?.querySelectorAll(".reveal-item") || []), ...(cR?.querySelectorAll(".reveal-item") || [])];
+        
+        const cL = leftPanels[i], cR = rightPanels[i];
+        const nL = leftPanels[i+1], nR = rightPanels[i+1];
 
         masterTl
           .to(nR, { y: 0, duration: 1, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) })
           .to(cL, { 
             y: "-100vh", duration: 1, ease: "none", 
-            onUpdate: function() { if (this.progress() > 0.5) { gsap.set([nL, nR], { zIndex: 20 }); gsap.set([cL, cR], { zIndex: 5 }); } } 
+            onUpdate: function() { 
+              if (this.progress() > 0.5) { 
+                gsap.set([nL, nR], { zIndex: 20 }); 
+                gsap.set([cL, cR], { zIndex: 5 }); 
+              } 
+            } 
           }, ">-0.4")
           .to(nL, { y: 0, duration: 1, ease: "none" }, "<")
-          .to(nextItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power2.out" }, ">-1")
-          .to(currentItems, { y: -30, opacity: 0, duration: 0.4 }, "<")
           .to(cR, { y: "-100vh", duration: 1, ease: "none" }, ">-0.5");
       });
     });
 
-    // --- MOBILE LOGIC (ULTRA OPTIMIZED + FULL WIDTH DIMMING) ---
+    // --- MOBILE LOGIC: Stacked Cards ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       cards.forEach((card, i) => {
-        gsap.fromTo(card.querySelectorAll(".reveal-item"), 
-          { y: 30, opacity: 0 },
-          { 
-            y: 0, 
-            opacity: 1, 
-            stagger: 0.1, 
-            duration: 0.8, 
-            ease: "power3.out",
-            scrollTrigger: { 
-              trigger: card, 
-              start: "top 65%", 
-              toggleActions: "play none none reverse" 
-            } 
-          }
-        );
         if (i === cards.length - 1) return;
+        
         const nextCard = cards[i + 1];
         const inner = card.querySelector(".mobile-card-inner");
         const dimmer = card.querySelector(".mobile-card-dimmer");
         
-        // Animamos el escalado del INNER (para que el dimmer externo cubra el 100%)
         gsap.to(inner, { 
           scale: 0.95,
           force3D: true,
@@ -174,9 +155,8 @@ export default function Projects() {
           }
         });
 
-        // Dimmer ocupa el 100% del viewport sticky
         gsap.to(dimmer, {
-          opacity: 0.4, // Más sutil
+          opacity: 0.5,
           ease: "none",
           scrollTrigger: {
             trigger: nextCard,
@@ -188,21 +168,31 @@ export default function Projects() {
       });
     });
 
-    return () => { mm.revert(); observer.disconnect(); };
+    return () => { 
+      mm.revert(); 
+      observer.disconnect(); 
+    };
   }, []);
 
   return (
-    <section ref={containerRef} className="relative bg-[#050505] transition-colors duration-700">
+    <section ref={containerRef} id="projects" className="relative bg-background">
+      {/* DESKTOP LAYOUT */}
       <div className="hidden md:block" style={{ height: `${projects.length * 200}vh` }}>
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div key={`desktop-${project.id}`} className="absolute inset-0 w-full h-full flex">
-                <div ref={(el) => { desktopLeftRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 left-0 overflow-hidden bg-background">
+              <div key={`desktop-wrapper-${project.id}`} className="absolute inset-0 w-full h-full flex">
+                <div 
+                  ref={(el) => { desktopLeftRefs.current[index] = el; }} 
+                  className="w-1/2 h-full absolute top-0 left-0 overflow-hidden bg-background"
+                >
                   {isEven ? <DesktopContent project={project} index={index} isDark={isDark} /> : <DesktopImage project={project} />}
                 </div>
-                <div ref={(el) => { desktopRightRefs.current[index] = el; }} className="w-1/2 h-full absolute top-0 right-0 overflow-hidden bg-background border-l border-foreground/5">
+                <div 
+                  ref={(el) => { desktopRightRefs.current[index] = el; }} 
+                  className="w-1/2 h-full absolute top-0 right-0 overflow-hidden bg-background border-l border-foreground/5"
+                >
                   {!isEven ? <DesktopContent project={project} index={index} isDark={isDark} /> : <DesktopImage project={project} />}
                 </div>
               </div>
@@ -211,49 +201,44 @@ export default function Projects() {
         </div>
       </div>
 
+      {/* MOBILE LAYOUT */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
-            key={`mobile-${project.id}`} 
-            className="mobile-project-card sticky top-0 h-screen w-full bg-[#050505] overflow-hidden"
+            key={`mobile-wrapper-${project.id}`} 
+            className="mobile-project-card sticky top-0 h-screen w-full bg-background overflow-hidden"
             style={{ zIndex: index + 1 }}
           >
-            {/* Dimmer externo: Ocupa el 100% y NO se escala */}
-            <div className="mobile-card-dimmer absolute inset-0 bg-black pointer-events-none z-[100] opacity-0 will-change-opacity" />
-
-            {/* Inner Wrapper: Es el que SE ESCALA */}
-            <div className="mobile-card-inner w-full h-full bg-background flex flex-col will-change-transform shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.3)]">
+            <div className="mobile-card-dimmer absolute inset-0 bg-black pointer-events-none z-[100] opacity-0" />
+            <div className="mobile-card-inner w-full h-full flex flex-col">
               <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
-                <span className="reveal-item text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
+                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                   Project {String(index + 1).padStart(2, '0')}
                 </span>
-                <h2 className="reveal-item text-4xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-6">
+                <h2 className="text-4xl font-black tracking-tighter uppercase leading-[1.15] mb-6">
                   <span 
-                    className="px-2 py-0.5 decoration-clone transition-all duration-500 shadow-[0_4px_15px_rgba(0,0,0,0.08)]"
+                    className="px-2 py-0.5 decoration-clone"
                     style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
                   >
                     {project.title}
                   </span>
                 </h2>
-                <p className="reveal-item text-sm text-foreground/60 leading-relaxed mb-8 font-medium line-clamp-4">
+                <p className="text-sm text-foreground/60 leading-relaxed mb-8 font-medium">
                   {project.description}
                 </p>
-                <div className="reveal-item flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="px-3 py-1 text-[9px] font-mono uppercase tracking-widest border border-foreground/10 rounded-full opacity-70">
+                    <span key={tag} className="px-3 py-1 text-[9px] font-mono border border-foreground/10 rounded-full">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <a href={project.link} className="reveal-item flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
+                <a href={project.link} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
                   Explore <ArrowUpRight size={14} />
                 </a>
               </div>
-              <div className="h-[45vh] w-full relative">
+              <div className="h-[40vh] w-full">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.6)] pointer-events-none" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.5)_120%)] mix-blend-multiply" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
               </div>
             </div>
           </div>
@@ -265,56 +250,44 @@ export default function Projects() {
 
 function DesktopContent({ project, index, isDark }: { project: Project; index: number; isDark: boolean }) {
   return (
-    <div className="w-full h-full flex flex-col justify-center px-[2em] lg:px-[8em]">
-      <div className="max-w-xl">
-        <span className="reveal-item text-[10px] font-mono uppercase tracking-[0.5em] text-foreground/30 mb-8 block">
-          Project {String(index + 1).padStart(2, '0')}
+    <div className="w-full h-full flex flex-col justify-center px-12 lg:px-24">
+      <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-foreground/30 mb-8 block">
+        Project {String(index + 1).padStart(2, '0')}
+      </span>
+      <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[1.15] mb-10">
+        <span 
+          className="px-4 py-1 decoration-clone"
+          style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
+        >
+          {project.title}
         </span>
-        <h2 className="reveal-item text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-10">
-          <span 
-            className="px-4 py-1 decoration-clone transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
-            style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
-          >
-            {project.title}
+      </h2>
+      <p className="text-lg text-foreground/60 leading-relaxed mb-12 max-w-md font-medium">
+        {project.description}
+      </p>
+      <div className="flex flex-wrap gap-2 mb-14">
+        {project.tags.map((tag) => (
+          <span key={tag} className="px-3 py-1 text-[9px] font-mono border border-foreground/10 rounded-full">
+            {tag}
           </span>
-        </h2>
-        <div className="reveal-item w-20 h-[1px] bg-foreground/20 mb-10" />
-        <p className="reveal-item text-base md:text-lg text-foreground/60 leading-relaxed mb-12 max-w-sm font-medium">
-          {project.description}
-        </p>
-        <div className="reveal-item flex flex-wrap gap-2 mb-14">
-          {project.tags.map((tag) => (
-            <span key={tag} className="px-3 py-1 text-[9px] font-mono uppercase tracking-widest border border-foreground/10 rounded-full opacity-60">
-              {tag}
-            </span>
-          ))}
-        </div>
-        <a href={project.link} className="reveal-item group flex items-center gap-6 w-fit">
-          <div className="w-12 h-12 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all duration-700">
-            <ArrowUpRight size={20} />
-          </div>
-          <span className="text-xs font-bold uppercase tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-opacity">Case_Study</span>
-        </a>
+        ))}
       </div>
+      <a href={project.link} className="flex items-center gap-6 w-fit group">
+        <div className="w-12 h-12 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-500">
+          <ArrowUpRight size={20} />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-opacity">Case_Study</span>
+      </a>
     </div>
   );
 }
 
 function DesktopImage({ project }: { project: Project }) {
   return (
-    <div className="w-full h-full p-8 lg:p-24 bg-background">
-      <div className="w-full h-full relative overflow-hidden rounded-sm transition-all duration-1000 group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)]">
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
-        />
-        <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.7)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.6)_130%)] mix-blend-multiply" />
-        <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
-        <div className="absolute top-8 right-8 font-mono text-[9px] uppercase tracking-[0.5em] text-black/20 dark:text-white/20 mix-blend-difference">
-          ID_{project.id.toString().padStart(3, '0')}
-        </div>
+    <div className="w-full h-full p-12 lg:p-24 bg-background">
+      <div className="w-full h-full relative overflow-hidden rounded-sm">
+        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/10" />
       </div>
     </div>
   );
