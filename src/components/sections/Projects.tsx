@@ -176,7 +176,7 @@ export default function Projects() {
 
         // Dimmer ocupa el 100% del viewport sticky
         gsap.to(dimmer, {
-          opacity: 0.7,
+          opacity: 0.4, // Más sutil
           ease: "none",
           scrollTrigger: {
             trigger: nextCard,
