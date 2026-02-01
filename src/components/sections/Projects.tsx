@@ -185,6 +185,9 @@ export default function Projects() {
             
             <div className="h-[45vh] w-full relative">
               <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+              {/* Vignette Effect Mobile - Ultra Visible */}
+              <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.6)] pointer-events-none" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.5)_120%)] mix-blend-multiply" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
             </div>
           </div>
@@ -235,6 +238,9 @@ function DesktopImage({ project }: { project: Project }) {
           alt={project.title} 
           className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
         />
+        {/* Vignette Effect Desktop - Ultra Visible */}
+        <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.7)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.6)_130%)] mix-blend-multiply" />
         <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
         <div className="absolute top-8 right-8 font-mono text-[9px] uppercase tracking-[0.5em] text-black/20 dark:text-white/20 mix-blend-difference">
           ID_{project.id.toString().padStart(3, '0')}
