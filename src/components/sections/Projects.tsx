@@ -105,7 +105,7 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC (REFACTORIZADA) ---
+    // --- MOBILE LOGIC (CON SHADOW UP) ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       
@@ -114,9 +114,10 @@ export default function Projects() {
 
         const nextCard = cards[i + 1];
         
+        // Animamos la carta actual para que se hunda y oscurezca cuando la SIGUIENTE entre
         gsap.to(card, {
-          scale: 0.9,
-          opacity: 0.3,
+          scale: 0.92,
+          opacity: 0.4,
           ease: "none",
           scrollTrigger: {
             trigger: nextCard,
@@ -155,15 +156,15 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* --- MOBILE VIEW (Ultra Stable Stacking) --- */}
+      {/* --- MOBILE VIEW --- */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
             key={`mobile-${project.id}`} 
-            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden"
+            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.15)] dark:shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.25)]"
             style={{ zIndex: index + 1 }}
           >
-            {/* Contenido arriba */}
+            {/* Contenido */}
             <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                 Project {String(index + 1).padStart(2, '0')}
@@ -186,13 +187,10 @@ export default function Projects() {
               </a>
             </div>
             
-            {/* Imagen abajo */}
+            {/* Imagen */}
             <div className="h-[45vh] w-full relative grayscale">
               <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-              <div className="absolute bottom-6 right-6 font-mono text-[8px] uppercase tracking-[0.4em] opacity-30 text-white">
-                REF_{project.id}
-              </div>
             </div>
           </div>
         ))}

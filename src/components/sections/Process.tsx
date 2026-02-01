@@ -120,7 +120,7 @@ export default function Process() {
           />
           <h2
             ref={titleRef}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter md:-translate-x-24 lg:-translate-x-32"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter md:-translate-x-64 lg:-translate-x-80"
           >
             Mi Proceso
           </h2>
