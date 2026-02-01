@@ -77,14 +77,21 @@ export default function Hero() {
             bottom: isMobile ? "14vh" : "10vh", 
             width: isMobile ? "60vw" : "16vw", 
             height: isMobile ? "28vh" : "30vh", 
-            opacity: 1, scale: 1, y: 0, x: 0 
+            opacity: 1, scale: 1, y: 0, x: 0,
+            clipPath: "inset(0% 0% 0% 0%)"
           },
           { 
-            left: 0, bottom: 0, top: isMobile ? "auto" : 0, x: 0, y: isMobile ? 100 : 0,
-            height: isMobile ? "25vh" : "100vh",
-            width: isMobile ? "100vw" : "40vw",
-            borderRadius: "0px",
+            left: isMobile ? "14px" : 0, 
+            bottom: isMobile ? "14vh" : 0, 
+            top: isMobile ? "auto" : 0, 
+            x: 0, 
+            y: isMobile ? 40 : 0,
+            height: isMobile ? "28vh" : "100vh",
+            width: isMobile ? "60vw" : "40vw",
+            borderRadius: isMobile ? "4px" : "0px",
             opacity: isMobile ? 0 : 1, 
+            scale: isMobile ? 0.9 : 1,
+            clipPath: isMobile ? "inset(50% 0% 50% 0%)" : "inset(0% 0% 0% 0%)",
             ease: "power2.inOut",
             immediateRender: false,
             zIndex: 40
