@@ -137,7 +137,7 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC (ULTRA OPTIMIZED) ---
+    // --- MOBILE LOGIC (ULTRA OPTIMIZED + FULL WIDTH DIMMING) ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
       cards.forEach((card, i) => {
@@ -158,17 +158,31 @@ export default function Projects() {
         );
         if (i === cards.length - 1) return;
         const nextCard = cards[i + 1];
+        const inner = card.querySelector(".mobile-card-inner");
+        const dimmer = card.querySelector(".mobile-card-dimmer");
         
-        // Transformación optimizada con force3D y translateZ
-        gsap.to(card, { 
+        // Animamos el escalado del INNER (para que el dimmer externo cubra el 100%)
+        gsap.to(inner, { 
           scale: 0.95,
-          force3D: true, // Forzar GPU
+          force3D: true,
           ease: "none",
           scrollTrigger: { 
             trigger: nextCard, 
             start: "top bottom", 
             end: "top top", 
             scrub: true 
+          }
+        });
+
+        // Dimmer ocupa el 100% del viewport sticky
+        gsap.to(dimmer, {
+          opacity: 0.7,
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextCard,
+            start: "top bottom",
+            end: "top top",
+            scrub: true
           }
         });
       });
@@ -178,9 +192,9 @@ export default function Projects() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative bg-background transition-colors duration-700">
+    <section ref={containerRef} className="relative bg-[#050505] transition-colors duration-700">
       <div className="hidden md:block" style={{ height: `${projects.length * 200}vh` }}>
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
             return (
@@ -201,45 +215,46 @@ export default function Projects() {
         {projects.map((project, index) => (
           <div 
             key={`mobile-${project.id}`} 
-            className="mobile-project-card sticky top-0 h-screen w-full bg-background flex flex-col overflow-hidden shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.3)]"
-            style={{ 
-              zIndex: index + 1,
-              willChange: "transform", // Optimización de navegador
-              transform: "translateZ(0)", // Forzar GPU
-              backfaceVisibility: "hidden" // Evitar parpadeos
-            } as any}
+            className="mobile-project-card sticky top-0 h-screen w-full bg-[#050505] overflow-hidden"
+            style={{ zIndex: index + 1 }}
           >
-            <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
-              <span className="reveal-item text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
-                Project {String(index + 1).padStart(2, '0')}
-              </span>
-              <h2 className="reveal-item text-4xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-6">
-                <span 
-                  className="px-2 py-0.5 decoration-clone transition-all duration-500 shadow-[0_4px_15px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
-                  style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
-                >
-                  {project.title}
+            {/* Dimmer externo: Ocupa el 100% y NO se escala */}
+            <div className="mobile-card-dimmer absolute inset-0 bg-black pointer-events-none z-[100] opacity-0 will-change-opacity" />
+
+            {/* Inner Wrapper: Es el que SE ESCALA */}
+            <div className="mobile-card-inner w-full h-full bg-background flex flex-col will-change-transform shadow-[0_-15px_30px_-10px_rgba(0,0,0,0.3)]">
+              <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
+                <span className="reveal-item text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
+                  Project {String(index + 1).padStart(2, '0')}
                 </span>
-              </h2>
-              <p className="reveal-item text-sm text-foreground/60 leading-relaxed mb-8 font-medium line-clamp-4">
-                {project.description}
-              </p>
-              <div className="reveal-item flex flex-wrap gap-2 mb-8">
-                {project.tags.slice(0, 3).map((tag) => (
-                  <span key={tag} className="px-3 py-1 text-[9px] font-mono uppercase tracking-widest border border-foreground/10 rounded-full opacity-70">
-                    {tag}
+                <h2 className="reveal-item text-4xl font-black tracking-tighter uppercase leading-[1.15] text-black dark:text-white mb-6">
+                  <span 
+                    className="px-2 py-0.5 decoration-clone transition-all duration-500 shadow-[0_4px_15px_rgba(0,0,0,0.08)]"
+                    style={{ backgroundColor: isDark ? project.darkBg : project.lightBg }}
+                  >
+                    {project.title}
                   </span>
-                ))}
+                </h2>
+                <p className="reveal-item text-sm text-foreground/60 leading-relaxed mb-8 font-medium line-clamp-4">
+                  {project.description}
+                </p>
+                <div className="reveal-item flex flex-wrap gap-2 mb-8">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="px-3 py-1 text-[9px] font-mono uppercase tracking-widest border border-foreground/10 rounded-full opacity-70">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <a href={project.link} className="reveal-item flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
+                  Explore <ArrowUpRight size={14} />
+                </a>
               </div>
-              <a href={project.link} className="reveal-item flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
-                Explore <ArrowUpRight size={14} />
-              </a>
-            </div>
-            <div className="h-[45vh] w-full relative">
-              <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.6)] pointer-events-none" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.5)_120%)] mix-blend-multiply" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
+              <div className="h-[45vh] w-full relative">
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.6)] pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.5)_120%)] mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
+              </div>
             </div>
           </div>
         ))}
