@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, ChevronRight, Activity, Command } from "lucide-react";
+import Header from "@/components/sections/Header";
 
 /**
  * VANK CASE STUDY - RECONSTRUCTED & STABILIZED
@@ -22,15 +23,16 @@ export default function VankProject() {
   return (
     <main className="bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background overflow-x-hidden">
       
-      {/* 1. ELASTIC NAVIGATION */}
-      <nav className="fixed top-0 left-0 w-full z-[100] px-frame py-[2em] flex justify-between items-center mix-blend-difference pointer-events-none">
+      {/* 1. GLOBAL HEADER & BACK BUTTON */}
+      <Header hideLogo={true} />
+      <div className="fixed top-8 left-6 md:left-12 lg:left-20 z-[110] mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
-          <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-            <ArrowLeft size={14} />
+          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+            <ArrowLeft size={18} />
           </div>
           <span className="hidden md:block font-bold text-[0.65em] uppercase tracking-[0.3em]">Proyectos</span>
         </Link>
-      </nav>
+      </div>
 
       {/* 2. ELASTIC HERO - RESTRUCTURED */}
       <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[6em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">

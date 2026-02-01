@@ -6,7 +6,7 @@ import { Menu } from "lucide-react";
 import gsap from "gsap";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
-export default function Header() {
+export default function Header({ hideLogo = false }: { hideLogo?: boolean }) {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -50,11 +50,15 @@ export default function Header() {
     >
       <div className="w-full pl-[2em] lg:pl-[7em] pr-[1.5em] lg:pr-[6.4em] py-8 flex justify-between items-center pointer-events-auto bg-transparent">
         {/* Logo */}
-        <Link href="/" className="header-logo group flex items-center opacity-0">
-          <span className="font-display font-black tracking-tighter text-2xl text-white">
-            CS.
-          </span>
-        </Link>
+        {!hideLogo ? (
+          <Link href="/" className="header-logo group flex items-center opacity-0">
+            <span className="font-display font-black tracking-tighter text-2xl text-white">
+              CS.
+            </span>
+          </Link>
+        ) : (
+          <div className="w-10" /> // Spacer to maintain layout
+        )}
 
         {/* Right Group: Nav Links + Menu Icon + Theme Toggle */}
         <div className="header-right flex items-center gap-3 md:gap-10 opacity-0">
