@@ -31,13 +31,13 @@ export default function VankProject() {
       </nav>
 
       {/* 2. ELASTIC HERO - RESTRUCTURED */}
-      <header className="px-[2em] md:px-[6em] lg:px-[10em] pt-[8em] pb-[4em] border-b border-foreground/5">
-        <div className="flex flex-col mb-[6em]">
+      <header className="px-[14px] md:px-[6em] lg:px-[10em] pt-[8em] pb-[4em] border-b border-foreground/5">
+        <div className="flex flex-col mb-[4em]">
           <h1 className="text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase italic">
             VANK<span className="text-primary not-italic">.</span>
           </h1>
-          <p className="text-[5vw] lg:text-[3.5rem] font-light tracking-tighter mt-[0.8em] md:mt-[1.2em] opacity-60 leading-[0.9] max-w-6xl">
-            Una plataforma fintech <span className="font-medium text-foreground italic">lista para crecer.</span>
+          <p className="text-[5vw] lg:text-[2.5rem] font-light tracking-tight mt-[0.8em] md:mt-[0.6em] opacity-60 leading-[0.9] max-w-6xl">
+            Una plataforma fintech <span className="font-medium text-foreground">lista para crecer.</span>
           </p>
         </div>
 
