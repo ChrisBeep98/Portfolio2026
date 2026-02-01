@@ -115,11 +115,9 @@ export default function Projects() {
         }
       });
 
-      // Primer revelado en desktop
+      // Primer revelado más rápido
       const firstItems = [...(leftPanels[0]?.querySelectorAll(".reveal-item") || []), ...(rightPanels[0]?.querySelectorAll(".reveal-item") || [])];
-      masterTl.to(firstItems, { y: 0, opacity: 1, stagger: 0.08, ease: "power2.out",
-        scrollTrigger: { trigger: containerRef.current, start: "top 65%", end: "top 10%", scrub: 1 }
-      });
+      masterTl.to(firstItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.6, ease: "power2.out" }, 0);
 
       projects.forEach((_, i) => {
         if (i === projects.length - 1) return;
@@ -128,23 +126,21 @@ export default function Projects() {
         const currentItems = [...(cL?.querySelectorAll(".reveal-item") || []), ...(cR?.querySelectorAll(".reveal-item") || [])];
 
         masterTl
-          .to(nR, { y: 0, duration: 1.2, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) })
-          .to(cL, { y: "-100vh", duration: 1.2, ease: "none", 
+          .to(nR, { y: 0, duration: 1, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) })
+          .to(cL, { 
+            y: "-100vh", duration: 1, ease: "none", 
             onUpdate: function() { if (this.progress() > 0.5) { gsap.set([nL, nR], { zIndex: 20 }); gsap.set([cL, cR], { zIndex: 5 }); } } 
           }, ">-0.4")
-          .to(nL, { y: 0, duration: 1.2, ease: "none" }, "<")
-          .to(nextItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power2.out" }, ">-1.4")
+          .to(nL, { y: 0, duration: 1, ease: "none" }, "<")
+          .to(nextItems, { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power2.out" }, ">-1")
           .to(currentItems, { y: -30, opacity: 0, duration: 0.4 }, "<")
-          .to(cR, { y: "-100vh", duration: 1.2, ease: "none" }, ">-0.6");
+          .to(cR, { y: "-100vh", duration: 1, ease: "none" }, ">-0.5");
       });
     });
 
-    // --- MOBILE LOGIC NORMALIZADA ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
-      
       cards.forEach((card, i) => {
-        // Revelado de INFO NORMALIZADO
         gsap.fromTo(card.querySelectorAll(".reveal-item"), 
           { y: 30, opacity: 0 },
           { 
@@ -155,22 +151,15 @@ export default function Projects() {
             ease: "power3.out",
             scrollTrigger: { 
               trigger: card, 
-              start: "top 65%", // Empieza más tarde, cuando la tarjeta ya está bien entrada
+              start: "top 65%", 
               toggleActions: "play none none reverse" 
             } 
           }
         );
-
-        // Efecto Stacking NORMALIZADO
         if (i === cards.length - 1) return;
         const nextCard = cards[i + 1];
         gsap.to(card, { scale: 0.92, opacity: 0.4, ease: "none",
-          scrollTrigger: { 
-            trigger: nextCard, 
-            start: "top bottom", 
-            end: "top top", 
-            scrub: true 
-          }
+          scrollTrigger: { trigger: nextCard, start: "top bottom", end: "top top", scrub: true }
         });
       });
     });
@@ -180,8 +169,8 @@ export default function Projects() {
 
   return (
     <section ref={containerRef} className="relative bg-background transition-colors duration-700">
-      {/* DESKTOP */}
-      <div className="hidden md:block" style={{ height: `${projects.length * 350}vh` }}>
+      {/* DESKTOP VIEW - REDUCED SCROLL DISTANCE */}
+      <div className="hidden md:block" style={{ height: `${projects.length * 200}vh` }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
@@ -199,7 +188,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* MOBILE */}
+      {/* MOBILE VIEW */}
       <div className="md:hidden flex flex-col">
         {projects.map((project, index) => (
           <div 
