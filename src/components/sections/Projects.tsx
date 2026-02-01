@@ -133,38 +133,54 @@ export default function Projects() {
       });
     });
 
-    // --- MOBILE LOGIC: Stacked Cards ---
+    // --- MOBILE LOGIC: Stacked Cards (Optimized) ---
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".mobile-project-card") as HTMLElement[];
+      
       cards.forEach((card, i) => {
-        if (i === cards.length - 1) return;
+        const inner = card.querySelector(".mobile-card-inner") as HTMLElement;
+        const dimmer = card.querySelector(".mobile-card-dimmer") as HTMLElement;
         
-        const nextCard = cards[i + 1];
-        const inner = card.querySelector(".mobile-card-inner");
-        const dimmer = card.querySelector(".mobile-card-dimmer");
-        
-        gsap.to(inner, { 
-          scale: 0.95,
-          force3D: true,
-          ease: "none",
-          scrollTrigger: { 
-            trigger: nextCard, 
-            start: "top bottom", 
-            end: "top top", 
-            scrub: true 
-          }
-        });
+        // 1. Entrance: Animate border radius to 0 only at the very end (last 20% of the journey)
+        if (i > 0) {
+          gsap.to(inner, {
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            force3D: true,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 20%", // Starts only when the card is near the top
+              end: "top 0%",    // Finishes exactly at the top
+              scrub: true,
+            }
+          });
+        } else {
+          gsap.set(inner, { borderTopLeftRadius: 0, borderTopRightRadius: 0 });
+        }
 
-        gsap.to(dimmer, {
-          opacity: 0.5,
-          ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: "top bottom",
-            end: "top top",
-            scrub: true
-          }
-        });
+        // 2. Exit/Stacking: Scale and Dim as the NEXT card comes up
+        if (i < cards.length - 1) {
+          const nextCard = cards[i + 1];
+          
+          const exitTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: nextCard,
+              start: "top bottom",
+              end: "top top",
+              scrub: true,
+            }
+          });
+
+          exitTl.to(inner, { 
+            scale: 0.94, // Slightly deeper scale for better visual depth
+            force3D: true,
+            ease: "none",
+          }).to(dimmer, {
+            opacity: 0.6,
+            ease: "none",
+          }, 0);
+        }
       });
     });
 
@@ -206,12 +222,15 @@ export default function Projects() {
         {projects.map((project, index) => (
           <div 
             key={`mobile-wrapper-${project.id}`} 
-            className="mobile-project-card sticky top-0 h-screen w-full bg-background overflow-hidden"
+            className="mobile-project-card sticky top-0 h-screen w-full bg-transparent overflow-hidden"
             style={{ zIndex: index + 1 }}
           >
             <div className="mobile-card-dimmer absolute inset-0 bg-black pointer-events-none z-[100] opacity-0" />
-            <div className="mobile-card-inner w-full h-full flex flex-col">
-              <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center">
+            <div className="mobile-card-inner w-full h-full bg-background flex flex-col rounded-t-[36px] overflow-hidden border-t border-white/5 will-change-[transform,border-radius] [transform:translateZ(0)]">
+              {/* Performance Optimized Shadow Layer */}
+              <div className="absolute inset-0 -top-10 -z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.3)] pointer-events-none" />
+              
+              <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center relative">
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                   Project {String(index + 1).padStart(2, '0')}
                 </span>
