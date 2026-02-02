@@ -9,9 +9,20 @@ export const dictionary = {
       projects: "Projects"
     },
     hero: {
-      title: "Christian Sandoval",
-      subtitle: "UX-UI Designer & Frontend Developer",
-      tagline: "Building digital experiences with cinematic precision."
+      firstName: "Christian",
+      lastName: "Sandoval",
+      role: "UX-UI.DESIGNER",
+      frontend: "& Frontend",
+      developer: "Developer",
+      detail: "Visual Storyteller / 2026",
+      satellites: {
+        react: "React",
+        nextjs: "Next.js",
+        design: "Design",
+        uiux: "UI/UX",
+        motion: "Motion",
+        backend: "Backend"
+      }
     },
     vank: {
       intro: {
@@ -98,9 +109,20 @@ export const dictionary = {
       projects: "Proyectos"
     },
     hero: {
-      title: "Christian Sandoval",
-      subtitle: "UX-UI Designer & Frontend Developer",
-      tagline: "Construyendo experiencias digitales con precisión cinemática."
+      firstName: "Christian",
+      lastName: "Sandoval",
+      role: "ARQUITECTO.DIGITAL",
+      frontend: "& STORYTELLER",
+      developer: "INTERACTIVO",
+      detail: "Visual Storyteller / 2026",
+      satellites: {
+        react: "React",
+        nextjs: "Next.js",
+        design: "Diseño",
+        uiux: "UI/UX",
+        motion: "Motion",
+        backend: "Backend"
+      }
     },
     vank: {
       intro: {
