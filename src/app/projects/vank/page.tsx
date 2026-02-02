@@ -55,29 +55,21 @@ export default function VankProject() {
         ease: "power2.out"
       });
 
-      // 3. HERO IMAGE REVEAL & PARALLAX
-      gsap.from(".hero-img-container", {
-        y: 80,
-        opacity: 0,
-        duration: 1.5,
-        delay: 0.4,
-        ease: "power3.out",
-        clearProps: "all"
-      });
-
-      gsap.fromTo(".hero-parallax-img", 
-        { scale: 1.0 },
-        { 
-          scale: 1.2,
-          ease: "none",
+      // 3. CINEMATIC IMAGES REVEAL (Slide In Only)
+      const imageContainers = gsap.utils.toArray(".hero-img-container") as HTMLElement[];
+      imageContainers.forEach((container) => {
+        gsap.from(container, {
+          y: 80,
+          opacity: 0,
+          duration: 1.5,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: ".hero-img-container",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5 
-          } 
-        }
-      );
+            trigger: container,
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      });
 
       // 4. ACTO 01 REVEAL
       const acto01Tl = gsap.timeline({
@@ -211,18 +203,18 @@ export default function VankProject() {
           </header>
 
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-[55vh] md:h-[90vh] relative">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
                 alt="Vank Dashboard" 
-                className="hero-parallax-img w-full h-full object-cover absolute top-0 left-0"
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
               />
             </div>
           </section>
 
-          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5 overflow-hidden">
+          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
             <div className="lg:pr-10">
-              <span className={STYLING.label}>Acto_01</span>
+              <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">01</span>
               <div className="space-y-2">
                 {["El", "origen", "del reto"].map((line, i) => (
                   <div key={i} className="acto01-title-mask overflow-hidden">
@@ -233,17 +225,37 @@ export default function VankProject() {
                 ))}
               </div>
             </div>
-            <div className="pt-[4em] md:pt-[12em]">
+            <div className="pt-[4em] md:pt-[18em]">
               <p className="acto01-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
                 Cuando llegamos al proyecto, no había un producto definido. Había un par de archivos de Figma sueltos, pantallas desconectadas, sin UI kit y sin flujos completos. Nuestra misión fue tomar ese caos y convertirlo en una experiencia funcional, coherente y lista para que el equipo de desarrollo pudiera construir sobre ella —y todo en plazos muy ajustados.
               </p>
             </div>
           </section>
 
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98d47f23eece986b74c_Layout%205.jpg" 
+                alt="Vank Layout Detail" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
+            </div>
+          </section>
+
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98de492f2b844c5bf3a_Frame%201171275577.jpg" 
+                alt="Vank UI System" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
+            </div>
+          </section>
+
           <section id="desafio" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em] section-gap border-b border-foreground/5">
             <div className="flex flex-col gap-[4em]">
               <div>
-                <span className={STYLING.label}>Acto_02</span>
+                <span className={STYLING.label}>02</span>
                 <h2 className="text-[12vw] lg:text-[10em] font-black uppercase tracking-tighter leading-[0.8] mb-[0.2em]">
                   El <br /> Desafío
                 </h2>
@@ -291,7 +303,7 @@ export default function VankProject() {
 
           <section id="solucion" className={STYLING.section}>
             <div>
-              <span className={STYLING.label}>Acto_03</span>
+              <span className={STYLING.label}>03</span>
               <h2 className={STYLING.title}>Cómo lo <br /> resolvimos</h2>
             </div>
             <div className="space-y-[6em]">
@@ -336,7 +348,7 @@ export default function VankProject() {
 
           <section id="resultado" className={STYLING.section}>
             <div>
-              <span className={STYLING.label}>Acto_04</span>
+              <span className={STYLING.label}>04</span>
               <h2 className={STYLING.title}>El resultado <br /> final</h2>
             </div>
             <div className="space-y-[5em]">
@@ -362,7 +374,7 @@ export default function VankProject() {
 
           <section id="impacto" className={STYLING.section}>
             <div>
-              <span className={STYLING.label}>Acto_05</span>
+              <span className={STYLING.label}>05</span>
               <h2 className={STYLING.title}>Impacto y <br /> Aprendizajes</h2>
             </div>
             <div className="space-y-[5em]">
@@ -374,6 +386,9 @@ export default function VankProject() {
 
           <footer className="px-frame py-[10em] grid grid-cols-1 lg:grid-cols-[50%_50%] gap-[5em] border-t border-foreground/5">
             <div className="space-y-[4em]">
+              <h1 className="text-display-lg font-black uppercase leading-[0.8] tracking-tighter">
+                DISPONIBLE <br /> <span className="opacity-20 italic">PARA CREAR</span>
+              </h1>
               <h1 className="text-display-lg font-black uppercase leading-[0.8] tracking-tighter">
                 DISPONIBLE <br /> <span className="opacity-20 italic">PARA CREAR</span>
               </h1>

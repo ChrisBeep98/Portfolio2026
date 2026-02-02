@@ -9,87 +9,175 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Animated Icon Component with Motion Graphics
-function AnimatedIcon({
-  icon: Icon,
-  color,
+// Stacking Card Component
+function ProcessCard({
+  phase,
+  index,
+  totalCards,
 }: {
-  icon: React.ElementType;
-  color: string;
+  phase: {
+    id: number;
+    title: string;
+    subtitle: string;
+    description: string;
+    icon: React.ElementType;
+    iconColor: string;
+  };
+  index: number;
+  totalCards: number;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
-  const ring1Ref = useRef<HTMLDivElement>(null);
-  const ring2Ref = useRef<HTMLDivElement>(null);
+  const ringsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !iconRef.current) return;
+    if (!cardRef.current || !iconRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Continuous floating animation
+      // Icon floating animation
       gsap.to(iconRef.current, {
-        y: -4,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        force3D: true,
-      });
-
-      // Subtle rotation
-      gsap.to(iconRef.current, {
+        y: -8,
         rotation: 5,
-        duration: 4,
+        duration: 3,
         ease: "sine.inOut",
         repeat: -1,
         yoyo: true,
         force3D: true,
       });
 
-      // Pulsing rings
-      if (ring1Ref.current && ring2Ref.current) {
-        gsap.to([ring1Ref.current, ring2Ref.current], {
+      // Ring pulse animation
+      if (ringsRef.current) {
+        const rings = ringsRef.current.children;
+        gsap.to(rings, {
           scale: 1.5,
           opacity: 0,
           duration: 2,
-          stagger: 0.5,
+          stagger: 0.6,
           repeat: -1,
           ease: "power2.out",
           force3D: true,
         });
       }
-    }, containerRef);
+    }, cardRef);
 
     return () => ctx.revert();
   }, []);
 
+  const Icon = phase.icon;
+
   return (
-    <div ref={containerRef} className="relative w-full h-full flex items-center justify-center">
-      {/* Pulsing rings */}
+    <div
+      ref={cardRef}
+      className="process-card w-full"
+      style={{ zIndex: index + 1 }}
+      data-index={index}
+    >
       <div
-        ref={ring1Ref}
-        className="absolute inset-0 rounded-full border-2 opacity-30"
-        style={{ borderColor: color }}
-      />
-      <div
-        ref={ring2Ref}
-        className="absolute inset-0 rounded-full border opacity-20"
-        style={{ borderColor: color }}
-      />
-      
-      {/* Icon with glow */}
-      <div
-        ref={iconRef}
-        className="relative z-10"
+        className="relative flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-10 rounded-3xl backdrop-blur-xl transition-all duration-500"
         style={{
-          filter: `drop-shadow(0 0 8px ${color}60)`
+          background: `linear-gradient(135deg, ${phase.iconColor}10 0%, rgba(242,242,240,0.8) 50%, rgba(255,255,255,0.4) 100%)`,
+          border: `1px solid ${phase.iconColor}30`,
+          boxShadow: `0 25px 80px -20px ${phase.iconColor}20, 0 0 0 1px rgba(255,255,255,0.5) inset`,
         }}
       >
-        <Icon
-          size={24}
-          strokeWidth={1.5}
-          style={{ color }}
-          className="md:w-7 md:h-7"
+        {/* Large Icon Section */}
+        <div className="relative flex-shrink-0 flex items-center justify-center w-full md:w-48 lg:w-56">
+          {/* Animated rings behind icon */}
+          <div ref={ringsRef} className="absolute inset-0 flex items-center justify-center">
+            <div
+              className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full border-2 opacity-40"
+              style={{ borderColor: phase.iconColor }}
+            />
+            <div
+              className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full border opacity-30"
+              style={{ borderColor: phase.iconColor }}
+            />
+            <div
+              className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full border opacity-20"
+              style={{ borderColor: phase.iconColor, borderStyle: "dashed" }}
+            />
+          </div>
+
+          {/* Icon container */}
+          <div
+            ref={iconRef}
+            className="relative z-10 w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-2xl flex items-center justify-center"
+            style={{
+              background: `linear-gradient(135deg, ${phase.iconColor}20, ${phase.iconColor}05)`,
+              boxShadow: `0 0 40px ${phase.iconColor}30, inset 0 1px 0 rgba(255,255,255,0.3)`,
+            }}
+          >
+            <Icon
+              size={48}
+              strokeWidth={1.2}
+              style={{ color: phase.iconColor }}
+              className="md:w-14 md:h-14 lg:w-16 lg:h-16 drop-shadow-lg"
+            />
+          </div>
+
+          {/* Phase number badge */}
+          <div
+            className="absolute -top-2 -left-2 md:top-0 md:left-0 px-3 py-1.5 rounded-full text-xs font-mono font-bold"
+            style={{
+              background: phase.iconColor,
+              color: "#fff",
+              boxShadow: `0 4px 15px ${phase.iconColor}50`,
+            }}
+          >
+            0{phase.id}
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="flex-1 flex flex-col justify-center">
+          {/* Subtitle */}
+          <span
+            className="text-[10px] md:text-xs uppercase tracking-[0.4em] font-mono mb-2"
+            style={{ color: phase.iconColor }}
+          >
+            {phase.subtitle}
+          </span>
+
+          {/* Title with gradient text */}
+          <h3
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4"
+            style={{
+              background: `linear-gradient(135deg, #050505 0%, ${phase.iconColor} 100%)`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {phase.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm md:text-base text-foreground/60 leading-relaxed max-w-xl">
+            {phase.description}
+          </p>
+
+          {/* Progress bar */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex-1 h-1 bg-foreground/10 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-1000"
+                style={{
+                  width: `${((index + 1) / totalCards) * 100}%`,
+                  background: `linear-gradient(90deg, ${phase.iconColor}, ${phase.iconColor}80)`,
+                }}
+              />
+            </div>
+            <span className="text-xs font-mono text-foreground/40">
+              {index + 1}/{totalCards}
+            </span>
+          </div>
+        </div>
+
+        {/* Decorative corner */}
+        <div
+          className="absolute bottom-0 right-0 w-32 h-32 opacity-10 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at bottom right, ${phase.iconColor} 0%, transparent 70%)`,
+          }}
         />
       </div>
     </div>
@@ -101,15 +189,17 @@ const phases = [
     id: 1,
     title: "Investigación",
     subtitle: "Discovery",
-    description: "Análisis profundo del usuario y contexto. Datos antes de intuición.",
+    description:
+      "Análisis profundo del usuario y contexto. Datos antes de intuición. Investigación de mercado, entrevistas y análisis competitivo para construir una base sólida.",
     icon: Search,
-    iconColor: "var(--color-primary)",
+    iconColor: "#a855f7",
   },
   {
     id: 2,
     title: "Estructura",
     subtitle: "Architecture",
-    description: "Arquitectura de información. Flujos claros, navegación intuitiva.",
+    description:
+      "Arquitectura de información clara. Flujos de usuario optimizados, wireframes de alta fidelidad y prototipos interactivos que definen la experiencia.",
     icon: Layers,
     iconColor: "#06b6d4",
   },
@@ -117,7 +207,8 @@ const phases = [
     id: 3,
     title: "Storytelling",
     subtitle: "Narrative",
-    description: "Cada interfaz cuenta una historia. Diseño emocional intencional.",
+    description:
+      "Cada interfaz cuenta una historia. Diseño emocional intencional que conecta con los usuarios y crea experiencias memorables y significativas.",
     icon: MessageCircle,
     iconColor: "#ec4899",
   },
@@ -125,7 +216,8 @@ const phases = [
     id: 4,
     title: "Microinteracciones",
     subtitle: "Details",
-    description: "Los detalles invisibles. Cada hover calibrado para deleitar.",
+    description:
+      "Los detalles invisibles que hacen la diferencia. Cada hover, transición y animación calibrada para deleitar y guiar al usuario naturalmente.",
     icon: Sparkles,
     iconColor: "#f97316",
   },
@@ -134,13 +226,14 @@ const phases = [
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const phasesRef = useRef<HTMLDivElement[]>([]);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Title animation - Character by character reveal
+      // Title animation
       const titleChars = titleRef.current?.querySelectorAll(".title-char");
       if (titleChars) {
         gsap.fromTo(
@@ -163,50 +256,63 @@ export default function Process() {
         );
       }
 
-      // Phases animation
-      phasesRef.current.forEach((phase, index) => {
-        if (!phase) return;
-
-        const number = phase.querySelector(".phase-number");
-        const title = phase.querySelector(".phase-title");
-        const desc = phase.querySelector(".phase-desc");
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: phase,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-            fastScrollEnd: true,
+      // Cards entrance animation
+      const cards = gsap.utils.toArray<HTMLElement>(".process-card");
+      cards.forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { 
+            y: 60, 
+            opacity: 0,
+            scale: 0.95
           },
-        });
-
-        tl.fromTo(
-          number,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", force3D: true }
-        )
-          .fromTo(
-            title,
-            { y: 40, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", force3D: true },
-            "-=0.5"
-          )
-          .fromTo(
-            desc,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
-            "-=0.4"
-          );
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            force3D: true,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.1,
+          }
+        );
       });
+
+      // Progress bar animation
+      if (progressRef.current) {
+        gsap.fromTo(
+          progressRef.current,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.3,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Split title into characters for animation
+  // Split title into characters
   const titleText = "Mi Proceso";
   const titleChars = titleText.split("").map((char, i) => (
-    <span key={i} className="title-char inline-block" style={{ perspective: "1000px" }}>
+    <span
+      key={i}
+      className="title-char inline-block"
+      style={{ perspective: "1000px" }}
+    >
       {char === " " ? "\u00A0" : char}
     </span>
   ));
@@ -215,145 +321,63 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative bg-background section-gap"
+      className="relative bg-background"
     >
-      {/* Header - Fixed to left corner with right text on desktop */}
-      <div ref={titleRef} className="absolute top-[var(--section-gap)] left-[var(--px-frame)] right-[var(--px-frame)] z-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-[var(--content-gap)]">
-          <h2 className="text-display-xl overflow-hidden">
-            {titleChars}
-          </h2>
-          <div className="flex items-center gap-[var(--content-gap)] md:text-right">
-            <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" />
-            <span className="text-sm text-foreground/50 font-mono uppercase tracking-[0.2em]">
-              04 Fases
-            </span>
-          </div>
-        </div>
-        <div className="w-full h-px bg-foreground/10 mt-[var(--block-gap)] origin-left" />
+      {/* Fixed Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-foreground/5 z-50">
+        <div
+          ref={progressRef}
+          className="h-full origin-left"
+          style={{
+            background:
+              "linear-gradient(90deg, #a855f7, #06b6d4, #ec4899, #f97316)",
+          }}
+        />
       </div>
 
-      <div className="max-w-forge mx-auto px-frame pt-[calc(var(--section-gap)*2)]">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-purple-500/5 blur-3xl" />
+        <div className="absolute top-1/2 -right-32 w-96 h-96 rounded-full bg-cyan-500/5 blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-pink-500/5 blur-3xl" />
+      </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Animated Vertical Line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px hidden md:block overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-b from-transparent via-foreground/20 to-transparent animate-line-flow" />
-          </div>
-
-          {/* Phases */}
-          <div className="space-y-[var(--section-gap)]">
-            {phases.map((phase, index) => {
-              const Icon = phase.icon;
-              const isEven = index % 2 === 0;
-
-              return (
-                <div
-                  key={phase.id}
-                  ref={(el) => {
-                    if (el) phasesRef.current[index] = el;
-                  }}
-                  className={`relative grid grid-cols-1 md:grid-cols-2 gap-[var(--block-gap)] md:gap-[var(--section-gap)] ${
-                    isEven ? "" : "md:text-right"
-                  }`}
-                >
-                  {/* Number & Icon */}
-                  <div
-                    className={`flex items-start gap-[var(--content-gap)] ${
-                      isEven ? "md:justify-end" : "md:order-2"
-                    }`}
-                  >
-                    <div className="phase-number flex-shrink-0">
-                      <span className="text-7xl md:text-8xl font-extralight text-foreground/20">
-                        0{phase.id}
-                      </span>
-                    </div>
-
-                    <div
-                      className="mt-4 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-                      style={{
-                        background: `linear-gradient(135deg, ${phase.iconColor}20, ${phase.iconColor}10)`,
-                        border: `2px solid ${phase.iconColor}40`,
-                        boxShadow: `0 4px 20px ${phase.iconColor}20`
-                      }}
-                    >
-                      <AnimatedIcon
-                        icon={Icon}
-                        color={phase.iconColor}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className={`${isEven ? "md:order-2" : ""}`}>
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/40 block mb-[var(--content-gap)] font-mono">
-                      {phase.subtitle}
-                    </span>
-
-                    <h3 className="phase-title text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-[var(--content-gap)]">
-                      {phase.title}
-                    </h3>
-
-                    <p className="phase-desc text-base text-foreground/50 leading-relaxed max-w-md">
-                      {phase.description}
-                    </p>
-                  </div>
-
-                  {/* Animated Timeline dot */}
-                  <div
-                    className={`hidden md:block absolute top-0 ${
-                      isEven ? "left-1/2" : "left-1/2"
-                    } -translate-x-1/2`}
-                  >
-                    <div
-                      className="w-3 h-3 rounded-full animate-pulse-glow"
-                      style={{
-                        backgroundColor: phase.iconColor,
-                        boxShadow: `0 0 10px ${phase.iconColor}, 0 0 20px ${phase.iconColor}50`
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+      <div className="px-frame relative z-10">
+        {/* Header - Sticky */}
+        <div
+          ref={titleRef}
+          className="sticky top-0 pt-[var(--section-gap)] pb-8 bg-background/95 backdrop-blur-md z-30 border-b border-foreground/5"
+        >
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-[var(--content-gap)]">
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight overflow-hidden">
+              {titleChars}
+            </h2>
+            <div className="flex items-center gap-[var(--content-gap)]">
+              <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" />
+              <span className="text-sm text-foreground/50 font-mono uppercase tracking-[0.2em]">
+                Scroll to explore
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Footer Spacing */}
-        <div className="mt-[var(--section-gap)]" />
+        {/* Cards Container - Scrolls under the sticky header */}
+        <div
+          ref={cardsContainerRef}
+          className="relative py-[var(--block-gap)]"
+        >
+          <div className="flex flex-col gap-8">
+            {phases.map((phase, index) => (
+              <ProcessCard
+                key={phase.id}
+                phase={phase}
+                index={index}
+                totalCards={phases.length}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes line-flow {
-          0% {
-            transform: translateY(-100%);
-          }
-          100% {
-            transform: translateY(100%);
-          }
-        }
-        
-        .animate-line-flow {
-          animation: line-flow 3s linear infinite;
-        }
-
-        @keyframes pulse-glow {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.3);
-            opacity: 0.7;
-          }
-        }
-
-        .animate-pulse-glow {
-          animation: pulse-glow 2s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 }
