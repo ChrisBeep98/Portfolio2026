@@ -22,7 +22,16 @@ Este proyecto utiliza un enfoque **"Kinetic Responsive"**, donde no solo cambia 
 | **Info Reveal** | Integrado en Master Timeline. | ScrollTrigger individual por tarjeta. |
 | **Fondo Título** | Resaltado sólido con `shadow spread`. | Resaltado sólido compacto. |
 
-## 4. Optimizaciones de Mobile
+## 4. Case Study Strategy (VANK Pattern)
+| Elemento | Desktop (Blueprint) | Mobile (Discovery) |
+| :--- | :--- | :--- |
+| **Layout** | Sidebar 15% / Contenido 85%. | Columnado Simple (100%). |
+| **Sidebar** | `fixed` con índice interactivo. | Oculto (`hidden`). |
+| **Imágenes Hero** | `object-cover` + `90vh`. | `object-contain` + `h-auto` (Edge-to-Edge). |
+| **Jerarquía Hero** | Título -> Subtítulo -> Info Técnica. | Título -> Subtítulo -> Visual -> Info Técnica. |
+
+## 5. Optimizaciones de Mobile
+- **Edge-to-Edge Visuals:** Eliminación de paddings en contenedores de imagen mediante reestructuración de hijos (textos con padding independiente).
 - **GPU Forcing:** `transform: translateZ(0)` aplicado en todos los contenedores `sticky`.
 - **Shadows:** Reducción de blur y spread en mobile para evitar caídas de FPS (60fps target).
 - **Opacity:** Evitamos animar opacidades de contenedores grandes; preferimos overlays negros sólidos (`dimmers`) para oscurecer capas inferiores.

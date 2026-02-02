@@ -95,8 +95,42 @@ export default function VankProject() {
         ease: "power3.out"
       }, "-=0.8");
 
-      // 5. SCROLL SPY FOR SIDEBAR
-      const sections = ["hero", "contexto", "desafio", "solucion", "resultado", "impacto"];
+      // 5. ACTO 02 REVEAL (Individual Triggers)
+      const acto02TitleTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#acto02",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      acto02TitleTl.fromTo(".acto02-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
+      )
+      .fromTo(".acto02-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
+      );
+
+      // Individual description and list elements
+      const acto02DescElements = gsap.utils.toArray(".acto02-desc") as HTMLElement[];
+      acto02DescElements.forEach((el) => {
+        gsap.from(el, {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 92%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      });
+
+      // 6. SCROLL SPY FOR SIDEBAR
+      const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
           trigger: `#${section}`,
@@ -144,7 +178,7 @@ export default function VankProject() {
             {[
               { id: "hero", label: "Intro" },
               { id: "contexto", label: "Contexto" },
-              { id: "desafio", label: "Desafío" },
+              { id: "acto02", label: "Desafío" },
               { id: "solucion", label: "Solución" },
               { id: "resultado", label: "Resultado" },
               { id: "impacto", label: "Impacto" }
@@ -286,6 +320,66 @@ export default function VankProject() {
                 alt="Vank UI System" 
                 className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
               />
+            </div>
+          </section>
+
+          {/* 5. ACTO 02: REPLICATED STRUCTURE */}
+          <section id="acto02" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden border-b border-foreground/5">
+            <div className="lg:pr-10">
+              <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">02</span>
+              <div className="space-y-2">
+                {/* Mobile: 2 lines, Desktop: 3 lines */}
+                <div className="lg:hidden space-y-2">
+                  {["El Problema", "El Desafío"].map((line, i) => (
+                    <div key={i} className="acto02-title-mask overflow-hidden">
+                      <h2 className="acto02-title-text text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden lg:block space-y-2">
+                  {["El", "Problema", "El Desafío"].map((line, i) => (
+                    <div key={i} className="acto02-title-mask overflow-hidden">
+                      <h2 className="acto02-title-text lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
+              <div className="space-y-[1.5em]">
+                <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">Contexto inicial</h3>
+                <p className="acto02-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
+                  El modelo de negocio de Vank existente presentaba desafíos significativos que generaban frustración entre sus usuarios. Las problemáticas principales giraban en torno a la eficiencia, la transparencia y la facilidad de uso en un sector tan sensible como el financiero y de criptomonedas.
+                </p>
+              </div>
+
+              <div className="space-y-[2em]">
+                <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">Problemas identificados</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                  {[
+                    "Pantallas sueltas sin conexión entre sí.",
+                    "Ausencia total de un sistema de diseño o UI kit.",
+                    "Flujos incompletos desconectados de la experiencia real.",
+                    "Procesos clave (transferencias, recargas) sin definición de punta a punta."
+                  ].map((text, i) => (
+                    <div key={i} className="acto02-desc flex items-start gap-[1.25em] will-change-transform">
+                      <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
+                      <p className="text-lg md:text-xl font-light leading-snug opacity-80">{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Integrated Insight Message */}
+              <div className="pt-[4em] md:pt-[6em] pb-[2em] flex justify-center text-center px-0 lg:-ml-[66.6%] lg:w-[166.6%] pointer-events-none">
+                <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform pointer-events-auto">
+                  &quot;Para comprender estos problemas, se realizó una investigación exhaustiva que reveló los siguientes insights.&quot;
+                </p>
+              </div>
             </div>
           </section>
 

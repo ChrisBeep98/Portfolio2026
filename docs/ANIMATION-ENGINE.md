@@ -33,4 +33,21 @@ Cada proyecto consume un track de `200vh` dividido en:
 ## 3. Optimización de GSAP en React
 - **Contexto:** Siempre usamos `gsap.context()` dentro de `useEffect` para asegurar una limpieza total de ScrollTriggers al desmontar componentes.
 - **QuickTo:** Para efectos de seguimiento de ratón (como en el Hero), usamos `gsap.quickTo` para máxima eficiencia de memoria.
-- **Force3D:** Todas las transformaciones de escala y posición tienen `force3D: true` para usar la GPU del dispositivo.
+- Force3D: Todas las transformaciones de escala y posición tienen `force3D: true` para usar la GPU del dispositivo.
+
+## 4. Case Study Special Effects (VANK Pattern)
+
+### The Mask Reveal (Titles)
+- **Mecánica:** `clip-path: inset(0% 0% 100% 0%)` -> `inset(0% 0% 0% 0%)`.
+- **Sincronización:** Acompañado de un desplazamiento `y: 100% -> 0%`.
+- **Impacto:** Efecto de "apertura de ventana" tipográfica, extremadamente optimizado para GPU.
+
+### Individual Scroll Triggers (Narrative Flow)
+- **Evolución:** Migración de animaciones por bloque a disparadores por elemento.
+- **Lógica:** Cada párrafo e ítem de lista tiene su propio `ScrollTrigger` con `start: "top 92%"`.
+- **Beneficio:** Evita el despliegue masivo de contenido no visible y mejora la sensación de "descubrimiento" orgánico.
+
+### Liquid ScrollTo
+- **Plugin:** `gsap/ScrollToPlugin`.
+- **Easing:** `power4.inOut` con duración de `1.5s`.
+- **Propósito:** Eliminar los saltos bruscos nativos del navegador en los índices laterales.
