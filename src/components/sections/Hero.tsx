@@ -221,8 +221,8 @@ export default function Hero() {
         </div>
 
         {/* --- PLANETARY SYSTEM --- */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 will-change-transform">
-          <div ref={systemRef} className="relative w-[300px] md:w-[400px] h-[300px] md:h-[400px] flex items-center justify-center translate-z-0">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 will-change-transform overflow-hidden md:overflow-visible">
+          <div ref={systemRef} className="relative w-full md:w-[400px] h-full md:h-[400px] flex items-center justify-center translate-z-0">
             <div 
               ref={planetRef} 
               className="absolute rounded-full z-10 

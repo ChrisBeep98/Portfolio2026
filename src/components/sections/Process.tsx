@@ -259,19 +259,23 @@ export default function Process() {
         );
       }
 
-      // Cards entrance animation - alternating from sides
+      // Cards entrance animation - alternating from sides, but from bottom on mobile
       const cards = gsap.utils.toArray<HTMLElement>(".process-card");
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
       cards.forEach((card, i) => {
         const isLeft = i % 2 === 0;
         gsap.fromTo(
           card,
           { 
-            x: isLeft ? -100 : 100, 
+            x: isMobile ? 0 : (isLeft ? -100 : 100),
+            y: isMobile ? 60 : 0, 
             opacity: 0,
             scale: 0.95
           },
           {
             x: 0,
+            y: 0,
             opacity: 1,
             scale: 1,
             duration: 0.8,
