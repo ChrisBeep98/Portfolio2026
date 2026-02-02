@@ -26,15 +26,15 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Nexus Platform",
-    category: "Web Application",
-    description: "A comprehensive SaaS platform for team collaboration with real-time features, analytics dashboard, and AI-powered insights.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop",
-    lightBg: "#F3E8FF", 
-    darkBg: "#2E1065",  
-    accent: "#a855f7",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "AI"],
-    link: "#",
+    title: "VANK",
+    category: "Fintech Platform",
+    description: "Una plataforma fintech integral diseñada para democratizar el acceso a herramientas financieras complejas y criptomonedas.",
+    image: "https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg",
+    lightBg: "#FEF08A", 
+    darkBg: "#713F12",  
+    accent: "#facc15",
+    tags: ["UX Strategy", "UI Design", "Fintech"],
+    link: "/projects/vank",
     github: "#"
   },
   {
