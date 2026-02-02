@@ -15,39 +15,38 @@ export default function LanguageSwitch() {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
 
-  if (!mounted) return <div className="w-8 h-5" />;
+  if (!mounted) return <div className="w-10 h-10" />;
+
+  const isEnglish = language === 'en';
 
   return (
     <button
       onClick={toggleLanguage}
-      className="relative flex items-center justify-center w-12 h-8 overflow-hidden group cursor-pointer"
+      className="flex items-center justify-center w-10 h-10 transition-all duration-300 ease-out text-white cursor-pointer hover:scale-110 active:scale-95 group"
       aria-label="Switch Language"
     >
-      <div className="relative w-full h-full flex flex-col items-center justify-center">
-        {/* EN Text */}
-        <span 
-          className={`absolute font-mono text-sm font-bold tracking-wider text-white transition-all duration-500 ease-out ${
-            language === 'en' 
-              ? "translate-y-0 opacity-100" 
-              : "-translate-y-8 opacity-0"
+      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        {/* EN State (Visible when English) */}
+        <div 
+          className={`absolute transition-all duration-500 transform flex items-center justify-center ${
+            isEnglish ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
           }`}
         >
-          EN
-        </span>
+          <span className="font-mono text-sm font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            EN
+          </span>
+        </div>
 
-        {/* ES Text */}
-        <span 
-          className={`absolute font-mono text-sm font-bold tracking-wider text-white transition-all duration-500 ease-out ${
-            language === 'es' 
-              ? "translate-y-0 opacity-100" 
-              : "translate-y-8 opacity-0"
+        {/* ES State (Visible when Spanish) */}
+        <div 
+          className={`absolute transition-all duration-500 transform flex items-center justify-center ${
+            isEnglish ? "translate-y-10 opacity-0" : "translate-y-0 opacity-100"
           }`}
         >
-          ES
-        </span>
-        
-        {/* Hover underline effect */}
-        <div className="absolute bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-2/3" />
+          <span className="font-mono text-sm font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            ES
+          </span>
+        </div>
       </div>
     </button>
   );

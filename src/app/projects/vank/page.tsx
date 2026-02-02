@@ -324,7 +324,7 @@ export default function VankProject() {
           </section>
 
           {/* 5. ACTO 02: REPLICATED STRUCTURE */}
-          <section id="acto02" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden border-b border-foreground/5">
+          <section id="acto02" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
             <div className="lg:pr-10">
               <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">02</span>
               <div className="space-y-2">
