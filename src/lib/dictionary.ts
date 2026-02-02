@@ -11,9 +11,9 @@ export const dictionary = {
     hero: {
       firstName: "Christian",
       lastName: "Sandoval",
-      role: "UX-UI.DESIGNER",
-      frontend: "& Frontend",
-      developer: "Developer",
+      role: "DIGITAL.DESIGNER",
+      frontend: "& INTERACTIVE",
+      developer: "STORYTELLER",
       detail: "Visual Storyteller / 2026",
       satellites: {
         react: "React",
