@@ -81,7 +81,7 @@ export default function VankProject() {
         }
       );
 
-      // 5. SCROLL SPY FOR SIDEBAR
+      // 4. SCROLL SPY FOR SIDEBAR
       const sections = ["hero", "contexto", "desafio", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
@@ -92,6 +92,30 @@ export default function VankProject() {
           onEnterBack: () => setActiveSection(index)
         });
       });
+
+      // 5. ACTO 01 REVEAL
+      const acto01Tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#contexto",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      acto01Tl.fromTo(".acto01-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
+      )
+      .fromTo(".acto01-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
+      )
+      .from(".acto01-desc", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8");
 
     }, containerRef);
 
@@ -216,15 +240,21 @@ export default function VankProject() {
           </section>
 
           {/* 4. SECTION 01: EL PUNTO DE PARTIDA */}
-          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5">
+          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5 overflow-hidden">
             <div className="lg:pr-10">
               <span className={STYLING.label}>Acto_01</span>
-              <h2 className="text-6xl md:text-8xl lg:text-[6.5em] font-bold uppercase tracking-tighter leading-[0.85]">
-                El <br /> origen <br /> del reto
-              </h2>
+              <div className="space-y-2">
+                {["El", "origen", "del reto"].map((line, i) => (
+                  <div key={i} className="acto01-title-mask overflow-hidden">
+                    <h2 className="acto01-title-text text-6xl md:text-8xl lg:text-[6.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                      {line}
+                    </h2>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="pt-[4em] md:pt-[12em]">
-              <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80">
+              <p className="acto01-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
                 Cuando llegamos al proyecto, no había un producto definido. Había un par de archivos de Figma sueltos, pantallas desconectadas, sin UI kit y sin flujos completos. Nuestra misión fue tomar ese caos y convertirlo en una experiencia funcional, coherente y lista para que el equipo de desarrollo pudiera construir sobre ella —y todo en plazos muy ajustados.
               </p>
             </div>
