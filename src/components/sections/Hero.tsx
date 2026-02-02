@@ -23,11 +23,15 @@ export default function Hero() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Disable browser's automatic scroll restoration to prevent jumps
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
     const ctx = gsap.context(() => {
       const isMobile = window.innerWidth < 768;
 
-      // 1. ESTADO INICIAL
-      const allTargets = ".reveal-left, .reveal-right, .reveal-center, .hero-detail, .image-inner-container";
+      // 1. ESTADO INICIAL COMPLETO
       gsap.set(".reveal-left", { opacity: 0, xPercent: -100 });
       gsap.set(".reveal-right", { opacity: 0, xPercent: 100 });
       gsap.set(".reveal-center", { opacity: 0, y: 30 });
@@ -36,12 +40,11 @@ export default function Hero() {
       gsap.set(imageWrapperRef.current, { y: 100, opacity: 0, scale: 1.1 });
       gsap.set(".hero-detail", { y: 20, opacity: 0 });
 
-      // 2. TIMELINE DE ENTRADA (Intro) - Sin delay global para poder matarla siempre
+      // 2. TIMELINE DE ENTRADA (Intro)
       const introTl = gsap.timeline({ 
         defaults: { ease: "power4.out" }
       });
 
-      // Añadimos el delay como un espacio vacío al inicio
       introTl.to({}, { duration: 0.5 }) 
         .to(".reveal-left", { opacity: 1, xPercent: 0, duration: 1.5, stagger: 0.1 })
         .to(".reveal-right", { opacity: 1, xPercent: 0, duration: 1.5, stagger: 0.1 }, "<")
@@ -49,7 +52,7 @@ export default function Hero() {
         .to(imageWrapperRef.current, { y: 0, opacity: 1, scale: 1, duration: 1.5 }, "-=1")
         .to(".hero-detail", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1");
 
-      // 3. TIMELINE DE SCROLL (ACTO 2) - Garantía de Visibilidad con fromTo
+      // 3. TIMELINE DE SCROLL (ACTO 2)
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -57,113 +60,53 @@ export default function Hero() {
           end: "bottom bottom",
           scrub: 1,
           onEnter: () => {
-            // Matamos la intro agresivamente si se inicia scroll
-            if (introTl.isActive() || introTl.progress() < 1) {
-              introTl.progress(1).kill();
-            }
+            if (introTl.isActive()) introTl.progress(1).kill();
           }
         }
       });
 
-      // Usamos fromTo con immediateRender: false para garantizar visibilidad absoluta
+      // Si cargamos la página ya con scroll (back button), terminamos la intro de inmediato
+      if (window.scrollY > 10) {
+        introTl.progress(1).kill();
+      }
+
       scrollTl
         .fromTo(".reveal-left", 
           { xPercent: 0, opacity: 1, scale: 1 }, 
-          { 
-            xPercent: isMobile ? -60 : -150, 
-            opacity: 0, 
-            scale: isMobile ? 0.85 : 1,
-            ease: "none", 
-            immediateRender: false 
-          }, 0)
+          { xPercent: isMobile ? -60 : -150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
         .fromTo(".reveal-right", 
           { xPercent: 0, opacity: 1, scale: 1 }, 
-          { 
-            xPercent: isMobile ? 60 : 150, 
-            opacity: 0, 
-            scale: isMobile ? 0.85 : 1,
-            ease: "none", 
-            immediateRender: false 
-          }, 0)
+          { xPercent: isMobile ? 60 : 150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
         .fromTo(".reveal-center", 
           { xPercent: 0, opacity: 1, scale: 1 }, 
-          { 
-            xPercent: isMobile ? -60 : -150, 
-            opacity: 0, 
-            scale: isMobile ? 0.85 : 1,
-            ease: "none", 
-            immediateRender: false 
-          }, 0)
+          { xPercent: isMobile ? -60 : -150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
         
         .fromTo(imageWrapperRef.current, 
-          { 
-            left: isMobile ? "14px" : "7em", 
-            bottom: isMobile ? "14vh" : "10vh", 
-            width: isMobile ? "60vw" : "16vw", 
-            height: isMobile ? "28vh" : "30vh", 
-            opacity: 1, scale: 1, y: 0, x: 0,
-            clipPath: "inset(0% 0% 0% 0%)"
-          },
-          { 
-            left: isMobile ? "14px" : 0, 
-            bottom: isMobile ? "14vh" : 0, 
-            top: isMobile ? "auto" : 0, 
-            x: 0, 
-            y: isMobile ? 40 : 0,
-            height: isMobile ? "28vh" : "100vh",
-            width: isMobile ? "60vw" : "40vw",
-            borderRadius: isMobile ? "4px" : "0px",
-            opacity: isMobile ? 0 : 1, 
-            scale: isMobile ? 0.9 : 1,
-            clipPath: isMobile ? "inset(50% 0% 50% 0%)" : "inset(0% 0% 0% 0%)",
-            ease: "power2.inOut",
-            immediateRender: false,
-            zIndex: 40
-          }, 0)
+          { left: isMobile ? "14px" : "7em", bottom: isMobile ? "14vh" : "10vh", width: isMobile ? "60vw" : "16vw", height: isMobile ? "28vh" : "30vh", opacity: 1, scale: 1, y: 0, x: 0, clipPath: "inset(0% 0% 0% 0%)" },
+          { left: isMobile ? "14px" : 0, bottom: isMobile ? "14vh" : 0, top: isMobile ? "auto" : 0, x: 0, y: isMobile ? 40 : 0, height: isMobile ? "28vh" : "100vh", width: isMobile ? "60vw" : "40vw", borderRadius: isMobile ? "4px" : "0px", opacity: isMobile ? 0 : 1, scale: isMobile ? 0.9 : 1, clipPath: isMobile ? "inset(50% 0% 50% 0%)" : "inset(0% 0% 0% 0%)", ease: "power2.inOut", immediateRender: false, zIndex: 40 }, 0)
         
-        .fromTo(systemRef.current, { x: 0, opacity: 0 }, { 
-          x: isMobile ? 0 : "20vw", 
-          opacity: 1,
-          ease: "power2.inOut",
-          immediateRender: false
-        }, 0)
-        .fromTo(planetRef.current, { scale: 0, opacity: 0 }, { 
-          scale: isMobile ? 0.7 : 1.15,
-          opacity: 1,
-          ease: "power2.inOut",
-          immediateRender: false
-        }, 0.1) 
-        .fromTo(".orbit-ring", { scale: 0, opacity: 0 }, { 
-          scale: isMobile ? 0.6 : 1,
-          opacity: 0.6, 
-          stagger: 0.05, 
-          ease: "power2.inOut",
-          immediateRender: false,
-          force3D: true
-        }, 0.1)
+        .fromTo(systemRef.current, { x: 0, opacity: 0 }, { x: isMobile ? 0 : "20vw", opacity: 1, ease: "power2.inOut", immediateRender: false }, 0)
+        .fromTo(planetRef.current, { scale: 0, opacity: 0 }, { scale: isMobile ? 0.7 : 1.15, opacity: 1, ease: "power2.inOut", immediateRender: false }, 0.1) 
+        .fromTo(".orbit-ring", { scale: 0, opacity: 0 }, { scale: isMobile ? 0.6 : 1, opacity: 0.6, stagger: 0.05, ease: "power2.inOut", immediateRender: false, force3D: true }, 0.1)
         .fromTo(".hero-detail", { opacity: 1, y: 0 }, { opacity: 0, y: 50, immediateRender: false, force3D: true }, 0);
 
-      // 4. BUCLE DE ÓRBITAS OPTIMIZADO
+      // 4. BUCLE DE ÓRBITAS
       [1, 2, 3].forEach(i => {
-        gsap.to(`.orbit-${i}`, { 
-          rotation: i % 2 === 0 ? -360 : 360, 
-          duration: 20 + (i * 10), 
-          repeat: -1, 
-          ease: "none",
-          force3D: true
-        });
-        gsap.to(`.node-${i}`, { 
-          rotation: i % 2 === 0 ? 360 : -360, 
-          duration: 20 + (i * 10), 
-          repeat: -1, 
-          ease: "none",
-          force3D: true
-        });
+        gsap.to(`.orbit-${i}`, { rotation: i % 2 === 0 ? -360 : 360, duration: 20 + (i * 10), repeat: -1, ease: "none", force3D: true });
+        gsap.to(`.node-${i}`, { rotation: i % 2 === 0 ? 360 : -360, duration: 20 + (i * 10), repeat: -1, ease: "none", force3D: true });
       });
+
+      // Forced refresh to calculate all positions correctly
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
 
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
   const typographySize = "text-[clamp(2.8rem,12vw,12rem)]";
