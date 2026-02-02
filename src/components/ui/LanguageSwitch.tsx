@@ -22,7 +22,7 @@ export default function LanguageSwitch() {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center justify-center w-10 h-10 transition-all duration-300 ease-out text-white cursor-pointer hover:scale-110 active:scale-95 group"
+      className="flex items-center justify-center w-10 h-10 border border-white/20 rounded-full bg-transparent transition-all duration-300 ease-out text-white cursor-pointer hover:scale-110 hover:border-primary/50 active:scale-95 group"
       aria-label="Switch Language"
     >
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
@@ -32,8 +32,8 @@ export default function LanguageSwitch() {
             isEnglish ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
           }`}
         >
-          <span className="font-mono text-sm font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
-            EN
+          <span className="font-mono text-[10px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            en
           </span>
         </div>
 
@@ -43,8 +43,8 @@ export default function LanguageSwitch() {
             isEnglish ? "translate-y-10 opacity-0" : "translate-y-0 opacity-100"
           }`}
         >
-          <span className="font-mono text-sm font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
-            ES
+          <span className="font-mono text-[10px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            es
           </span>
         </div>
       </div>
