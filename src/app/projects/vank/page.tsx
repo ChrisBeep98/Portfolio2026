@@ -166,10 +166,11 @@ export default function VankProject() {
 
         <div className="w-full lg:ml-[15%] lg:w-[85%]">
           
-          <header id="hero" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
-            <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em]">
+          <header id="hero" className="px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
+            {/* Title & Subtitle - Padding restored here */}
+            <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em] px-[14px] md:px-0">
               <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
-                <h1 className="hero-title-text text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
+                <h1 className="hero-title-text text-5xl md:text-7xl lg:text-[5.5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
                   VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
                 </h1>
               </div>
@@ -178,7 +179,19 @@ export default function VankProject() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[1.5em] md:pt-[4em] border-t border-foreground/10 pb-[3em] md:pb-[4em]">
+            {/* Mobile Hero Image Placement - Truly Edge-to-Edge */}
+            <div className="md:hidden w-full pb-[3em]">
+              <div className="hero-img-container overflow-hidden bg-surface shadow-sm will-change-transform h-auto relative flex items-center justify-center">
+                <img 
+                  src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
+                  alt="Vank Dashboard" 
+                  className="w-full h-auto object-contain will-change-transform relative"
+                />
+              </div>
+            </div>
+
+            {/* Technical Grid - Padding restored here */}
+            <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[1.5em] md:pt-[4em] border-t border-foreground/10 pb-[3em] md:pb-[4em] px-[14px] md:px-0">
               <div className="flex flex-col gap-[1.5em]">
                 <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em] meta-reveal">Contexto del proyecto</span>
                 <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-2xl opacity-80 will-change-transform meta-reveal">
@@ -202,11 +215,23 @@ export default function VankProject() {
             </div>
           </header>
 
+          {/* 3. HERO IPAD */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
               <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
+                alt="Vank iPad Dashboard" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
+            </div>
+          </section>
+
+          {/* 3.1 HERO MACBOOK (Desktop Only) */}
+          <section className="hidden md:block w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
-                alt="Vank Dashboard" 
+                alt="Vank MacBook Detail" 
                 className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
               />
             </div>
