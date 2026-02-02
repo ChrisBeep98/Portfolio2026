@@ -129,10 +129,21 @@ export default function Hero() {
         <div className="relative z-10 flex flex-col justify-center gap-2 md:gap-[12px] w-full leading-[0.82] pointer-events-none px-[14px] md:px-[7em] h-[60vh] md:h-screen pt-10 md:pt-0 will-change-[transform,opacity]">
           <div className="w-full text-left"><div className="reveal-left opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-40 whitespace-nowrap`}>{t.hero.firstName}</h1></div></div>
           <div className="w-full text-right relative">
-            <div className="reveal-right opacity-0 inline-block relative">
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>{t.hero.lastName}</h1>
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 right-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-red-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>{t.hero.lastName}</h1>
+            <div className="reveal-right opacity-0 inline-block relative group">
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent dark:[-webkit-text-stroke:1px_rgba(255,255,255,0.3)] whitespace-nowrap`}>
+                {t.hero.lastName}
+              </h1>
+              {/* Glitch Layers */}
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 -translate-x-[3px] z-0 text-transparent dark:text-cyan-500/50 mix-blend-screen opacity-0 dark:opacity-100 transition-all duration-300 whitespace-nowrap`}>
+                {t.hero.lastName}
+              </h1>
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 translate-x-[3px] z-0 text-transparent dark:text-red-500/50 mix-blend-screen opacity-0 dark:opacity-100 transition-all duration-300 whitespace-nowrap`}>
+                {t.hero.lastName}
+              </h1>
             </div>
+          </div>
+          <div className="w-full text-center">
+            {/* ... role line ... */}
           </div>
           {/* --- ROLE LINE (Responsive Split) --- */}
           <div className="w-full text-left md:text-center pl-[15vw] md:pl-0">
@@ -149,10 +160,20 @@ export default function Hero() {
               </h1>
             </div>
           </div>
-          {/* FRONTEND */}
+
+          {/* FRONTEND / STORYTELLER */}
           <div className="w-full flex justify-start relative md:pl-[20vw]">
-             <div className="reveal-left opacity-0 inline-block relative">
-              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent whitespace-nowrap`}>{t.hero.frontend}</h1>
+             <div className="reveal-left opacity-0 inline-block relative group">
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase relative z-10 text-black dark:text-transparent dark:[-webkit-text-stroke:1px_rgba(255,255,255,0.3)] whitespace-nowrap`}>
+                {t.hero.frontend}
+              </h1>
+              {/* Glitch Layers */}
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 -translate-x-[3px] z-0 text-transparent dark:text-cyan-500/50 mix-blend-screen opacity-0 dark:opacity-100 transition-all duration-300 whitespace-nowrap`}>
+                {t.hero.frontend}
+              </h1>
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 left-0 translate-x-[3px] z-0 text-transparent dark:text-red-500/50 mix-blend-screen opacity-0 dark:opacity-100 transition-all duration-300 whitespace-nowrap`}>
+                {t.hero.frontend}
+              </h1>
             </div>
           </div>
           <div className="w-full text-right"><div className="reveal-right opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-black dark:text-transparent dark:[-webkit-text-stroke:2px_#06b6d4] opacity-100 dark:opacity-20 whitespace-nowrap`}>{t.hero.developer}</h1></div></div>
