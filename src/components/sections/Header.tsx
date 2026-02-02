@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import gsap from "gsap";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 
 export default function Header({ hideLogo = false }: { hideLogo?: boolean }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -86,6 +87,9 @@ export default function Header({ hideLogo = false }: { hideLogo?: boolean }) {
           >
             <Menu size={24} strokeWidth={3} />
           </button>
+
+          {/* Language Switch */}
+          <LanguageSwitch />
 
           {/* Theme Mode Switch */}
           <ThemeToggle />

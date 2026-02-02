@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
     <html lang="es" className="dark">
       <body className={`${manrope.variable} ${jetbrains.variable}`}>
         <div className="noise-bg" />
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

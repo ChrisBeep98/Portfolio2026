@@ -366,7 +366,7 @@ export default function VankProject() {
                     "Flujos incompletos desconectados de la experiencia real.",
                     "Procesos clave (transferencias, recargas) sin definición de punta a punta."
                   ].map((text, i) => (
-                    <div key={i} className="acto02-desc flex items-start gap-[1.25em] will-change-transform">
+                    <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
                       <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                       <p className="text-lg md:text-xl font-light leading-snug opacity-80">{text}</p>
                     </div>
@@ -380,55 +380,45 @@ export default function VankProject() {
                   &quot;Para comprender estos problemas, se realizó una investigación exhaustiva que reveló los siguientes insights.&quot;
                 </p>
               </div>
-            </div>
-          </section>
 
-          <section id="desafio" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em] section-gap border-b border-foreground/5">
-            <div className="flex flex-col gap-[4em]">
-              <div>
-                <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">02</span>
-                <h2 className="text-[12vw] lg:text-[8em] font-black uppercase tracking-tighter leading-[0.8] mb-[0.2em]">
-                  El <br /> Desafío
-                </h2>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] gap-12">
-                <div className="hidden lg:block" />
-                <div className="space-y-[5em]">
-                  <div className="space-y-[1.5em]">
-                    <h3 className={STYLING.subtitle}>Contexto inicial</h3>
-                    <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80">
-                      El ecosistema existente presentaba una fragmentación profunda. No existía un lenguaje común entre módulos, lo que generaba desconfianza en transacciones críticas.
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 content-gap">
-                    {[
-                      "Arquitectura de información atomizada.",
-                      "Ausencia de un sistema de diseño UI Kit.",
-                      "Flujos incompletos con alta fricción.",
-                      "Falta de transparencia en rendimientos."
-                    ].map((text, i) => (
-                      <div key={i} className="flex gap-[1em]">
-                        <span className="font-mono text-[0.7em] opacity-20 mt-[0.25em]">0{i+1}</span>
-                        <p className="text-[1.1em] font-bold uppercase tracking-tighter opacity-80 leading-tight">{text}</p>
-                      </div>
-                    ))}
-                  </div>
+              {/* Left-Aligned Insights Block */}
+              <div className="space-y-[2.5em] pt-[4em] lg:-ml-[66.6%] lg:w-full">
+                <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">Insights clave de la investigación</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                  {[
+                    "Los usuarios demandaban rapidez, transparencia y claridad total en los flujos.",
+                    "La plataforma requería una arquitectura escalable lista para el crecimiento global.",
+                    "Un sistema visual consistente era imperativo para acelerar los ciclos de desarrollo."
+                  ].map((text, i) => (
+                    <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
+                      <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
+                      <p className="text-lg md:text-xl font-light leading-snug opacity-80">{text}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="space-y-[3em] py-[1em] px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em]">
-            <div className="w-full">
-              <div className="md:rounded-[2em] overflow-hidden shadow-xl">
-                <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98fac1c6a1592b34c6c_MacBook%20Air%20M4%20-%20Sky%20Blue-1.jpg" alt="View 1" className="w-full h-auto" />
-              </div>
+          {/* 5.1 GALLERY BREAK - MACBOOK 1 */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98fac1c6a1592b34c6c_MacBook%20Air%20M4%20-%20Sky%20Blue-1.jpg" 
+                alt="Vank Interface Detail 1" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
             </div>
-            <div className="w-full">
-              <div className="md:rounded-[2em] overflow-hidden shadow-xl">
-                <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98e7d50442728168c29_MacBook%20Air%20M4%20-%20Sky%20Blue.jpg" alt="View 2" className="w-full h-auto" />
-              </div>
+          </section>
+
+          {/* 5.2 GALLERY BREAK - MACBOOK 2 */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98e7d50442728168c29_MacBook%20Air%20M4%20-%20Sky%20Blue.jpg" 
+                alt="Vank Interface Detail 2" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
             </div>
           </section>
 
