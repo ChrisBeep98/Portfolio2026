@@ -32,8 +32,8 @@ export default function LanguageSwitch() {
             isEnglish ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
           }`}
         >
-          <span className="font-mono text-[10px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
-            en
+          <span className="font-mono text-[12px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            En
           </span>
         </div>
 
@@ -43,8 +43,8 @@ export default function LanguageSwitch() {
             isEnglish ? "translate-y-10 opacity-0" : "translate-y-0 opacity-100"
           }`}
         >
-          <span className="font-mono text-[10px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
-            es
+          <span className="font-mono text-[12px] font-bold tracking-wider group-hover:text-primary group-active:text-primary transition-colors">
+            Es
           </span>
         </div>
       </div>
