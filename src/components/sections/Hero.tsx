@@ -134,7 +134,21 @@ export default function Hero() {
               <h1 className={`${typographySize} font-black tracking-tighter uppercase absolute top-0 right-0 -translate-x-[2px] -z-10 mix-blend-screen text-transparent dark:text-red-500 opacity-0 dark:opacity-90 transition-all duration-300 whitespace-nowrap`}>{t.hero.lastName}</h1>
             </div>
           </div>
-          <div className="w-full text-center"><div className="reveal-center opacity-0 inline-block"><h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>{t.hero.role}</h1></div></div>
+          {/* --- ROLE LINE (Responsive Split) --- */}
+          <div className="w-full text-left md:text-center pl-[15vw] md:pl-0">
+            <div className="reveal-left md:reveal-center opacity-0 inline-block">
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>
+                {t.hero.role[0]}<span className="hidden md:inline">.{t.hero.role[1]}</span>
+              </h1>
+            </div>
+          </div>
+          <div className="w-full text-right md:hidden">
+            <div className="reveal-right opacity-0 inline-block">
+              <h1 className={`${typographySize} font-black tracking-tighter uppercase text-orange-600 dark:text-transparent dark:[-webkit-text-stroke:2px_#ec4899] opacity-100 dark:opacity-40 whitespace-nowrap`}>
+                {t.hero.role[1]}
+              </h1>
+            </div>
+          </div>
           {/* FRONTEND */}
           <div className="w-full flex justify-start relative md:pl-[20vw]">
              <div className="reveal-left opacity-0 inline-block relative">
