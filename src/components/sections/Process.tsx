@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Stacking Card Component
+// Stacking Card Component - Alternating Layout
 function ProcessCard({
   phase,
   index,
@@ -30,6 +30,9 @@ function ProcessCard({
   const iconRef = useRef<HTMLDivElement>(null);
   const ringsRef = useRef<HTMLDivElement>(null);
 
+  // Determine if card is on left or right side
+  const isLeft = index % 2 === 0;
+
   useEffect(() => {
     if (!cardRef.current || !iconRef.current) return;
 
@@ -37,7 +40,7 @@ function ProcessCard({
       // Icon floating animation
       gsap.to(iconRef.current, {
         y: -8,
-        rotation: 5,
+        rotation: isLeft ? 5 : -5,
         duration: 3,
         ease: "sine.inOut",
         repeat: -1,
@@ -61,19 +64,19 @@ function ProcessCard({
     }, cardRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isLeft]);
 
   const Icon = phase.icon;
 
   return (
     <div
       ref={cardRef}
-      className="process-card w-full"
+      className={`process-card w-full flex ${isLeft ? 'justify-start' : 'justify-end'}`}
       style={{ zIndex: index + 1 }}
       data-index={index}
     >
       <div
-        className="relative flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-10 rounded-3xl backdrop-blur-xl transition-all duration-500"
+        className={`relative flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-10 rounded-3xl backdrop-blur-xl transition-all duration-500 w-full md:w-[85%] lg:w-[75%] ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
         style={{
           background: `linear-gradient(135deg, ${phase.iconColor}10 0%, rgba(242,242,240,0.8) 50%, rgba(255,255,255,0.4) 100%)`,
           border: `1px solid ${phase.iconColor}30`,
@@ -117,7 +120,7 @@ function ProcessCard({
 
           {/* Phase number badge */}
           <div
-            className="absolute -top-2 -left-2 md:top-0 md:left-0 px-3 py-1.5 rounded-full text-xs font-mono font-bold"
+            className={`absolute -top-2 ${isLeft ? '-left-2 md:left-0' : '-right-2 md:right-0'} md:top-0 px-3 py-1.5 rounded-full text-xs font-mono font-bold`}
             style={{
               background: phase.iconColor,
               color: "#fff",
@@ -129,7 +132,7 @@ function ProcessCard({
         </div>
 
         {/* Content Section */}
-        <div className="flex-1 flex flex-col justify-center">
+        <div className={`flex-1 flex flex-col justify-center ${isLeft ? 'md:text-left' : 'md:text-right md:items-end'}`}>
           {/* Subtitle */}
           <span
             className="text-[10px] md:text-xs uppercase tracking-[0.4em] font-mono mb-2"
@@ -156,7 +159,7 @@ function ProcessCard({
           </p>
 
           {/* Progress bar */}
-          <div className="mt-6 flex items-center gap-3">
+          <div className={`mt-6 flex items-center gap-3 ${isLeft ? '' : 'md:flex-row-reverse'}`}>
             <div className="flex-1 h-1 bg-foreground/10 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-1000"
@@ -174,9 +177,9 @@ function ProcessCard({
 
         {/* Decorative corner */}
         <div
-          className="absolute bottom-0 right-0 w-32 h-32 opacity-10 pointer-events-none"
+          className={`absolute bottom-0 ${isLeft ? 'right-0' : 'left-0'} w-32 h-32 opacity-10 pointer-events-none`}
           style={{
-            background: `radial-gradient(circle at bottom right, ${phase.iconColor} 0%, transparent 70%)`,
+            background: `radial-gradient(circle at ${isLeft ? 'bottom right' : 'bottom left'}, ${phase.iconColor} 0%, transparent 70%)`,
           }}
         />
       </div>
@@ -256,18 +259,19 @@ export default function Process() {
         );
       }
 
-      // Cards entrance animation
+      // Cards entrance animation - alternating from sides
       const cards = gsap.utils.toArray<HTMLElement>(".process-card");
       cards.forEach((card, i) => {
+        const isLeft = i % 2 === 0;
         gsap.fromTo(
           card,
           { 
-            y: 60, 
+            x: isLeft ? -100 : 100, 
             opacity: 0,
             scale: 0.95
           },
           {
-            y: 0,
+            x: 0,
             opacity: 1,
             scale: 1,
             duration: 0.8,
@@ -361,12 +365,12 @@ export default function Process() {
           </div>
         </div>
 
-        {/* Cards Container - Scrolls under the sticky header */}
+        {/* Cards Container - Alternating zigzag layout */}
         <div
           ref={cardsContainerRef}
           className="relative py-[var(--block-gap)]"
         >
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-12 md:gap-16">
             {phases.map((phase, index) => (
               <ProcessCard
                 key={phase.id}

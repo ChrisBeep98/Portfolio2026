@@ -216,13 +216,25 @@ export default function VankProject() {
             <div className="lg:pr-10">
               <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">01</span>
               <div className="space-y-2">
-                {["El", "origen", "del reto"].map((line, i) => (
-                  <div key={i} className="acto01-title-mask overflow-hidden">
-                    <h2 className="acto01-title-text text-6xl md:text-8xl lg:text-[6.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
-                      {line}
-                    </h2>
-                  </div>
-                ))}
+                {/* Mobile: 2 lines, Desktop: 3 lines */}
+                <div className="lg:hidden space-y-2">
+                  {["El origen", "del reto"].map((line, i) => (
+                    <div key={i} className="acto01-title-mask overflow-hidden">
+                      <h2 className="acto01-title-text text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden lg:block space-y-2">
+                  {["El", "origen", "del reto"].map((line, i) => (
+                    <div key={i} className="acto01-title-mask overflow-hidden">
+                      <h2 className="acto01-title-text lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="pt-[4em] md:pt-[18em]">
@@ -255,8 +267,8 @@ export default function VankProject() {
           <section id="desafio" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em] section-gap border-b border-foreground/5">
             <div className="flex flex-col gap-[4em]">
               <div>
-                <span className={STYLING.label}>02</span>
-                <h2 className="text-[12vw] lg:text-[10em] font-black uppercase tracking-tighter leading-[0.8] mb-[0.2em]">
+                <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">02</span>
+                <h2 className="text-[12vw] lg:text-[8em] font-black uppercase tracking-tighter leading-[0.8] mb-[0.2em]">
                   El <br /> Desafío
                 </h2>
               </div>
