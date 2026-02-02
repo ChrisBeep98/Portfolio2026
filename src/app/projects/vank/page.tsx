@@ -55,22 +55,33 @@ export default function VankProject() {
         ease: "power2.out"
       });
 
-      // 3. HERO IMAGE PARALLAX (Optimized)
+      // 3. HERO IMAGE REVEAL (Slide In)
+      gsap.from(".hero-img-container", {
+        y: 80,
+        opacity: 0,
+        scale: 0.98,
+        duration: 1.5,
+        delay: 0.4,
+        ease: "power3.out",
+        clearProps: "all"
+      });
+
+      // 4. HERO IMAGE ZOOM (Cinematic)
       gsap.fromTo(".hero-parallax-img", 
-        { yPercent: -10, scale: 1.1 },
+        { scale: 1.0 },
         { 
-          yPercent: 10, 
+          scale: 1.2,
           ease: "none",
           scrollTrigger: {
             trigger: ".hero-img-container",
             start: "top bottom",
             end: "bottom top",
-            scrub: true
+            scrub: 1.5 
           } 
         }
       );
 
-      // 4. SCROLL SPY FOR SIDEBAR
+      // 5. SCROLL SPY FOR SIDEBAR
       const sections = ["hero", "contexto", "desafio", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
@@ -146,19 +157,31 @@ export default function VankProject() {
         {/* MAIN CONTENT */}
         <div className="w-full lg:ml-[15%] lg:w-[85%]">
           
-          <header id="hero" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[12em] pt-[8em] md:pt-[8em] pb-[3em] md:pb-[4em] border-b border-foreground/5">
-            <div className="flex flex-col mb-[2em] md:mb-[3em]">
-                        <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
-                          <h1 className="hero-title-text text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
-                            VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
-                          </h1>
-                        </div>
-                        <p className="hero-subtitle text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
-                          Una plataforma fintech lista para crecer.
-                        </p>            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[8em] md:pt-[8em] border-t border-foreground/10">
-              <div className="flex flex-col gap-[1.5em]">
+                                    <header id="hero" className="px-[14px] md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
+          
+                                      <div className="flex flex-col mb-0 pb-[1.5em] md:mb-[4em] md:pb-0">
+          
+                                        <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
+          
+                                          <h1 className="hero-title-text text-[12vw] lg:text-[5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
+          
+                                            VANK<span className="text-yellow-300 ml-[0.05em]">.</span>
+          
+                                          </h1>
+          
+                                        </div>
+          
+                                        <p className="hero-subtitle text-[5vw] lg:text-[2rem] font-medium tracking-normal mt-[0.8em] md:mt-[0.6em] text-foreground/80 leading-[1.1] max-w-4xl will-change-transform">
+          
+                                          Una plataforma fintech lista para crecer.
+          
+                                        </p>
+          
+                                      </div>
+          
+                          
+          
+                                      <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[1.5em] md:pt-[3em] border-t border-foreground/10 pb-[3em] md:pb-[4em]">              <div className="flex flex-col gap-[1.5em]">
                 <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em] meta-reveal">Contexto del proyecto</span>
                 <p className="text-xl md:text-2xl font-light leading-tight tracking-tight max-w-2xl opacity-80 will-change-transform meta-reveal">
                   Una experiencia financiera construida desde cero, con procesos claros y un sistema de diseño escalable.
@@ -181,12 +204,13 @@ export default function VankProject() {
             </div>
           </header>
 
-          <section className="w-full px-[14px] md:px-[6em] lg:pl-0 lg:pr-[12em] py-[1em]">
-            <div className="hero-img-reveal md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform">
+          {/* 3. HERO IMAGE */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-[55vh] md:h-[90vh] relative">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
                 alt="Vank Dashboard" 
-                className="w-full h-auto object-cover"
+                className="hero-parallax-img w-full h-full object-cover absolute top-0 left-0"
               />
             </div>
           </section>

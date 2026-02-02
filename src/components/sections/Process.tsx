@@ -216,18 +216,30 @@ export default function Process() {
       id="process"
       className="relative bg-[#E8E8E6] dark:bg-[#0d0d0d] py-32 md:py-48"
     >
-      <div className="max-w-5xl mx-auto px-8 md:px-16">
-        {/* Header */}
-        <div ref={titleRef} className="mb-32 md:mb-40">
+      {/* Header - Fixed to left corner with right text on desktop */}
+      <div ref={titleRef} className="absolute top-32 left-[2em] md:left-[5em] right-[5em] z-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <h2 className="title-word text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
             Mi Proceso
           </h2>
+          <div className="title-word flex items-center gap-3 md:text-right">
+            <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" />
+            <span className="text-sm text-foreground/50">
+              04 Fases
+            </span>
+          </div>
         </div>
+        <div className="title-word w-full h-px bg-foreground/10 mt-6 origin-left" />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-8 md:px-16 pt-48 md:pt-64">
 
         {/* Timeline */}
         <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-foreground/10 origin-top hidden md:block" />
+          {/* Animated Vertical Line */}
+          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px hidden md:block overflow-hidden">
+            <div className="w-full h-full bg-gradient-to-b from-transparent via-foreground/20 to-transparent animate-line-flow" />
+          </div>
 
           {/* Phases */}
           <div className="space-y-24 md:space-y-32">
@@ -275,8 +287,6 @@ export default function Process() {
 
                   {/* Content */}
                   <div className={`${isEven ? "md:order-2" : ""}`}>
-                    <div className="phase-divider h-px bg-foreground/10 mb-6 origin-left" />
-
                     <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/40 block mb-3">
                       {phase.subtitle}
                     </span>
@@ -290,13 +300,19 @@ export default function Process() {
                     </p>
                   </div>
 
-                  {/* Timeline dot */}
+                  {/* Animated Timeline dot */}
                   <div
                     className={`hidden md:block absolute top-0 ${
                       isEven ? "left-1/2" : "left-1/2"
                     } -translate-x-1/2`}
                   >
-                    <div className="w-2 h-2 rounded-full bg-foreground/30" />
+                    <div
+                      className="w-3 h-3 rounded-full animate-pulse-glow"
+                      style={{
+                        backgroundColor: phase.iconColor,
+                        boxShadow: `0 0 10px ${phase.iconColor}, 0 0 20px ${phase.iconColor}50`
+                      }}
+                    />
                   </div>
                 </div>
               );
@@ -318,6 +334,37 @@ export default function Process() {
           </blockquote>
         </div>
       </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes line-flow {
+          0% {
+            transform: translateY(-100%);
+          }
+          100% {
+            transform: translateY(100%);
+          }
+        }
+        
+        .animate-line-flow {
+          animation: line-flow 3s linear infinite;
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.3);
+            opacity: 0.7;
+          }
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }
