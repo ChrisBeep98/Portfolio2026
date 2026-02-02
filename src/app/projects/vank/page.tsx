@@ -216,10 +216,12 @@ export default function VankProject() {
           </section>
 
           {/* 4. SECTION 01: EL PUNTO DE PARTIDA */}
-          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[35%_65%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5">
-            <div>
+          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5">
+            <div className="lg:pr-10">
               <span className={STYLING.label}>Acto_01</span>
-              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85]">El punto <br /> de partida</h2>
+              <h2 className="text-6xl md:text-8xl lg:text-[6.5em] font-bold uppercase tracking-tighter leading-[0.85]">
+                El <br /> origen <br /> del reto
+              </h2>
             </div>
             <div className="pt-[4em] md:pt-[12em]">
               <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80">
