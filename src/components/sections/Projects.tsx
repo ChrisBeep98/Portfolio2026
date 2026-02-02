@@ -118,7 +118,7 @@ export default function Projects() {
         const nL = leftPanels[i+1], nR = rightPanels[i+1];
 
         masterTl
-          .to(nR, { y: 0, duration: 1, ease: "none", onStart: () => gsap.set(nR, { zIndex: 30 }) })
+          .to(nR, { y: 0, duration: 1, ease: "none", onStart: () => { gsap.set(nR, { zIndex: 30 }); } })
           .to(cL, { 
             y: "-100vh", duration: 1, ease: "none", 
             onUpdate: function() { 

@@ -20,7 +20,7 @@ function ProcessCard({
     title: string;
     subtitle: string;
     description: string;
-    icon: React.ElementType;
+    icon: React.ElementType<any>;
     iconColor: string;
   };
   index: number;
@@ -66,7 +66,7 @@ function ProcessCard({
     return () => ctx.revert();
   }, [isLeft]);
 
-  const Icon = phase.icon;
+  const Icon = phase.icon as any;
 
   return (
     <div
