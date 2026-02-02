@@ -215,23 +215,23 @@ export default function VankProject() {
             </div>
           </header>
 
-          {/* 3. HERO IPAD */}
-          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
-              <img 
-                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
-                alt="Vank iPad Dashboard" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
-              />
-            </div>
-          </section>
-
-          {/* 3.1 HERO MACBOOK (Desktop Only) */}
+          {/* 3. HERO MACBOOK (Desktop Only) */}
           <section className="hidden md:block w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
                 alt="Vank MacBook Detail" 
+                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+              />
+            </div>
+          </section>
+
+          {/* 3.1 HERO IPAD */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+              <img 
+                src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
+                alt="Vank iPad Dashboard" 
                 className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
               />
             </div>
