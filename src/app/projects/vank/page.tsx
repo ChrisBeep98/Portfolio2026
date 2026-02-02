@@ -181,12 +181,12 @@ export default function VankProject() {
           
                           
           
-                                      <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[1.5em] md:pt-[3em] border-t border-foreground/10 pb-[3em] md:pb-[4em]">              <div className="flex flex-col gap-[1.5em]">
-                <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em] meta-reveal">Contexto del proyecto</span>
-                <p className="text-xl md:text-2xl font-light leading-tight tracking-tight max-w-2xl opacity-80 will-change-transform meta-reveal">
-                  Una experiencia financiera construida desde cero, con procesos claros y un sistema de diseño escalable.
-                </p>
-              </div>
+                                      <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 md:gap-20 pt-[1.5em] md:pt-[3em] border-t border-foreground/10 pb-[3em] md:pb-[4em]">            <div className="flex flex-col gap-[1.5em]">
+              <span className="font-sans text-[0.85em] italic opacity-40 block mb-[0.25em] md:mb-[1.5em] meta-reveal">Contexto del proyecto</span>
+              <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-2xl opacity-80 will-change-transform meta-reveal">
+                Una experiencia financiera construida desde cero, con procesos claros y un sistema de diseño escalable.
+              </p>
+            </div>
 
               <div className="grid grid-cols-2 gap-y-[2.5em] gap-x-[2em]">
                 {[
@@ -215,14 +215,15 @@ export default function VankProject() {
             </div>
           </section>
 
-          <section id="contexto" className={STYLING.section}>
+          {/* 4. SECTION 01: EL PUNTO DE PARTIDA */}
+          <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[35%_65%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap border-b border-foreground/5">
             <div>
               <span className={STYLING.label}>Acto_01</span>
-              <h2 className={STYLING.title}>El punto <br /> de partida</h2>
+              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85]">El punto <br /> de partida</h2>
             </div>
-            <div>
-              <p className={STYLING.body}>
-                Vank nació de la necesidad de democratizar el acceso a herramientas financieras complejas. El reto principal fue crear una interfaz que no solo fuera funcional, sino que también educara al usuario en su camino hacia la inversión inteligente.
+            <div className="pt-[4em] md:pt-[12em]">
+              <p className="text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80">
+                Cuando llegamos al proyecto, no había un producto definido. Había un par de archivos de Figma sueltos, pantallas desconectadas, sin UI kit y sin flujos completos. Nuestra misión fue tomar ese caos y convertirlo en una experiencia funcional, coherente y lista para que el equipo de desarrollo pudiera construir sobre ella —y todo en plazos muy ajustados.
               </p>
             </div>
           </section>
