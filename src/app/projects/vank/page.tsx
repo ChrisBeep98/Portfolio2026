@@ -55,20 +55,28 @@ export default function VankProject() {
         ease: "power2.out"
       });
 
-      // 3. CINEMATIC IMAGES REVEAL (Slide In Only)
+      // 3. CINEMATIC IMAGES REVEAL (Premium Slide In)
       const imageContainers = gsap.utils.toArray(".hero-img-container") as HTMLElement[];
       imageContainers.forEach((container) => {
-        gsap.from(container, {
-          y: 80,
-          opacity: 0,
-          duration: 1.5,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 90%",
-            toggleActions: "play none none reverse"
+        gsap.fromTo(container, 
+          { 
+            y: 40, 
+            opacity: 0 
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            force3D: true,
+            scrollTrigger: {
+              trigger: container,
+              start: "top 92%",
+              toggleActions: "play none none reverse",
+              fastScrollEnd: true
+            }
           }
-        });
+        );
       });
 
       // 4. ACTO 01 REVEAL
@@ -251,22 +259,26 @@ export default function VankProject() {
 
           {/* 3. HERO MACBOOK (Desktop Only) */}
           <section className="hidden md:block w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
                 alt="Vank MacBook Detail" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
 
           {/* 3.1 HERO IPAD */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
                 alt="Vank iPad Dashboard" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
@@ -304,21 +316,25 @@ export default function VankProject() {
           </section>
 
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98d47f23eece986b74c_Layout%205.jpg" 
                 alt="Vank Layout Detail" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
 
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98de492f2b844c5bf3a_Frame%201171275577.jpg" 
                 alt="Vank UI System" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
@@ -402,22 +418,26 @@ export default function VankProject() {
 
           {/* 5.1 GALLERY BREAK - MACBOOK 1 */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98fac1c6a1592b34c6c_MacBook%20Air%20M4%20-%20Sky%20Blue-1.jpg" 
                 alt="Vank Interface Detail 1" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
 
           {/* 5.2 GALLERY BREAK - MACBOOK 2 */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface shadow-sm will-change-transform h-auto md:h-[90vh] relative flex items-center justify-center">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
               <img 
                 src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98e7d50442728168c29_MacBook%20Air%20M4%20-%20Sky%20Blue.jpg" 
                 alt="Vank Interface Detail 2" 
-                className="w-full h-auto md:h-full object-contain md:object-cover will-change-transform relative"
+                className="w-full h-full object-cover relative"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </section>
