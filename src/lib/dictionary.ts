@@ -127,10 +127,11 @@ export const dictionary = {
         description: "Designing the Vank platform not only addressed the initial problems but also generated a measurable positive impact and provided valuable lessons for future projects.",
         resultsLabel: "Results.",
         resultsList: [
-          "The development team received a clear product ready for implementation, shortening delivery times.",
-          "Operational Efficiency: The design system ensured consistency and accelerated new feature development.",
-          "Positive Feedback: The experience was perceived as clearer and more trustworthy."
-        ]
+          "Building structures from scratch forces you to decide many small but decisive things.",
+          "Prioritizing architecture and systems before visual detail accelerates the whole process.",
+          "Teamwork and communication with developers are the key to delivering something truly usable."
+        ],
+        insightMessage: "\"This project was an enriching experience that left important lessons.\""
       },
       footer: {
         title: "AVAILABLE",
@@ -266,10 +267,11 @@ export const dictionary = {
         description: "El Diseño de la plataforma Vank no solo abordó los problemas iniciales, sino que también generó un impacto positivo medible y proporcionó valiosas lecciones para futuros proyectos.",
         resultsLabel: "Resultados.",
         resultsList: [
-          "El equipo de desarrollo recibió un producto claro y listo para implementar, lo que acortó tiempos de entrega.",
-          "Eficiencia Operativa: El sistema de diseño permitió mantener coherencia y acelerar nuevas funcionalidades.",
-          "Retroalimentación Positiva: la experiencia se percibió más clara y confiable."
-        ]
+          "Crear estructuras desde cero obliga a decidir muchas cosas pequeñas pero decisivas.",
+          "Priorizar arquitectura y sistema antes del detalle visual acelera todo el proceso.",
+          "El trabajo en equipo y la comunicación con los developers son la clave para entregar algo realmente usable."
+        ],
+        insightMessage: "\"Este proyecto fue una experiencia enriquecedora que dejó importantes lecciones.\""
       },
       footer: {
         title: "DISPONIBLE",

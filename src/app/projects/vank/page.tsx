@@ -646,8 +646,16 @@ export default function VankProject() {
                 {t.vank.impact.description}
               </p>
 
-              <div className="space-y-[2.5em]">
-                <h3 className="acto05-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform text-left">
+              {/* Insight Message Block */}
+              <div className="pt-[4em] md:pt-[6em] pb-[2em] flex justify-start md:justify-center text-left md:text-center px-[14px] md:px-0 lg:-ml-[66.6%] lg:w-[166.6%] pointer-events-none">
+                <p className="acto05-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform pointer-events-auto text-left md:text-center">
+                  {t.vank.impact.insightMessage}
+                </p>
+              </div>
+
+              {/* Left-Aligned Learnings Block */}
+              <div className="space-y-[2.5em] pt-[4em] lg:-ml-[66.6%] lg:w-full">
+                <h3 className="acto05-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground bill-change-transform text-left">
                   {t.vank.impact.resultsLabel}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
@@ -661,6 +669,14 @@ export default function VankProject() {
                   ))}
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* FINAL SHOWCASE - IPHONE FRONT VIEW */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68981ddc80f51af6ea7290e6_iphone-14-pro-mockup-against-the-wall-front-view.jpg" 
+                alt="iPhone 14 Pro Mockup" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
