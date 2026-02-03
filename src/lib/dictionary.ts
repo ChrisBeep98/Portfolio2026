@@ -71,17 +71,27 @@ export const dictionary = {
           "Users demanded speed, transparency, and total clarity in flows.",
           "The platform required a scalable architecture ready for global growth.",
           "A consistent visual system was imperative to accelerate development cycles."
+        ],
+        objectivesBridge: "\"Based on the problems and insights, the following objectives were established.\"",
+        objectivesLabel: "Project Objectives",
+        objectivesList: [
+          "Unify and give coherence to the entire design.",
+          "Define complete and frictionless flows.",
+          "Build a scalable visual system.",
+          "Deliver a version ready for development in record time."
         ]
       },
       acto03: {
         label: "03",
-        title: "How we solved it",
-        description: "We worked in an environment of constant validation where technical feasibility was the main driver of the design.",
-        steps: [
-          { t: "Research", d: "Flow auditing and deep benchmarking of fintechs." },
-          { t: "Definition", d: "User journey mapping to validate the architecture." },
-          { t: "Atomic Design", d: "Building Vank Atoms: A scalable system." },
-          { t: "Methodology", d: "Weekly feedback cycles with stakeholders." }
+        title: ["How we", "solved it"],
+        titleMobile: ["How we", "solved it"],
+        description: "We worked as a multidisciplinary team with continuous communication between design, product, and development.",
+        list: [
+          "Research: fintech benchmark, usability heuristics.",
+          "Definition: We created full user personas and user journeys, which did not exist before.",
+          "Design: wireframes to validate architecture → UI Kit and design system → high-fidelity prototypes in Figma.",
+          "Methodology: Scrum with weekly sprints and feedback meetings with stakeholders to validate decisions.",
+          "Testing: in-person and remote usability testing to iterate quickly."
         ]
       },
       acto04: {
@@ -179,17 +189,27 @@ export const dictionary = {
           "Los usuarios demandaban rapidez, transparencia y claridad total en los flujos.",
           "La plataforma requería una arquitectura escalable lista para el crecimiento global.",
           "Un sistema visual consistente era imperativo para acelerar los ciclos de desarrollo."
+        ],
+        objectivesBridge: "\"Con base en los problemas e insights, se establecieron los siguientes objetivos.\"",
+        objectivesLabel: "Objetivos del proyecto",
+        objectivesList: [
+          "Unificar y dar coherencia a todo el diseño.",
+          "Definir flujos completos y sin fricciones.",
+          "Construir un sistema visual escalable.",
+          "Entregar una versión lista para pasar a desarrollo en tiempo récord."
         ]
       },
       acto03: {
         label: "03",
-        title: "Cómo lo resolvimos",
-        description: "Trabajamos en un entorno de validación constante donde la factibilidad técnica fue el motor principal del diseño.",
-        steps: [
-          { t: "Investigación", d: "Auditoría de flujos y benchmark profundo de fintechs." },
-          { t: "Definición", d: "Mapeo de user journeys para validar la arquitectura." },
-          { t: "Diseño Atómico", d: "Construcción de Vank Atoms: Un sistema escalable." },
-          { t: "Metodología", d: "Ciclos de feedback semanales con stakeholders." }
+        title: ["Cómo lo", "resolvimos"],
+        titleMobile: ["Cómo lo", "resolvimos"],
+        description: "Trabajamos como un equipo multidisciplinario con comunicación continua entre diseño, producto y desarrollo.",
+        list: [
+          "Investigación: benchmark de fintechs, heurísticas de usabilidad.",
+          "Definición: Creamos user personas y user journeys completos, que antes no existían.",
+          "Diseño: wireframes para validar arquitectura → UI Kit y sistema de diseño → prototipos de alta en Figma.",
+          "Metodología: Scrum con sprints semanales y reuniones de feedback con stakeholders para validar decisiones.",
+          "Pruebas: usabilidad presencial y remota para iterar rápidamente."
         ]
       },
       acto04: {

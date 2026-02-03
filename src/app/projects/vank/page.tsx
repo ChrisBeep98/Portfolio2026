@@ -98,7 +98,29 @@ export default function VankProject() {
         });
       });
 
-      // 6. SCROLL SPY
+      // 6. ACTO 03 REVEAL (Solution)
+      const acto03TitleTl = gsap.timeline({
+        scrollTrigger: { trigger: "#solucion", start: "top 80%", toggleActions: "play none none reverse" }
+      });
+
+      acto03TitleTl.fromTo(".acto03-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
+      )
+      .fromTo(".acto03-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
+      );
+
+      const acto03DescElements = gsap.utils.toArray(".acto03-desc") as HTMLElement[];
+      acto03DescElements.forEach((el) => {
+        gsap.from(el, {
+          y: 40, opacity: 0, duration: 1, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
+        });
+      });
+
+      // 7. SCROLL SPY
       const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
@@ -332,6 +354,76 @@ export default function VankProject() {
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98e7d50442728168c29_MacBook%20Air%20M4%20-%20Sky%20Blue.jpg" 
                 alt="Interface 2" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* OBJECTIVES BRIDGE */}
+          <section className="px-frame py-[6em] md:py-[10em] flex justify-center text-center">
+            <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform">
+              {t.vank.acto02.objectivesBridge}
+            </p>
+          </section>
+
+          {/* PROJECT OBJECTIVES LIST (CENTERED) */}
+          <section className="px-frame section-gap overflow-hidden flex flex-col items-center">
+            <div className="max-w-4xl w-full space-y-[3em]">
+              <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground text-center will-change-transform">
+                {t.vank.acto02.objectivesLabel}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                {t.vank.acto02.objectivesList.map((text, i) => (
+                  <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
+                    <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
+                    <p className="text-lg md:text-xl font-light leading-snug opacity-80">
+                      {text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98f4cacb189e2e1ce90_iPad%20Mockup%20Light.jpg" 
+                alt="iPad Process" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* ACTO 03: CÓMO LO RESOLVIMOS */}
+          <section id="solucion" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
+            <div className="lg:pr-10">
+              <span className={STYLING.label}>{t.vank.acto03.label}</span>
+              <div className="space-y-2">
+                {/* Mobile & Desktop Titles */}
+                <div className="space-y-2">
+                  {t.vank.acto03.title.map((line, i) => (
+                    <div key={i} className="acto03-title-mask overflow-hidden">
+                      <h2 className="acto03-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
+              <p className="acto03-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
+                {t.vank.acto03.description}
+              </p>
+              
+              <div className="grid grid-cols-1 gap-y-10">
+                {t.vank.acto03.list.map((text, i) => (
+                  <div key={i} className="acto03-desc flex items-start gap-[1.5em] will-change-transform border-l border-foreground/10 pl-8">
+                    <p className="text-lg md:text-xl font-light leading-snug opacity-80">
+                      <span className="font-bold text-foreground opacity-100 block mb-2">
+                        {text.split(":")[0]}
+                      </span>
+                      {text.split(":")[1]}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 
