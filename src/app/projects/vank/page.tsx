@@ -25,7 +25,7 @@ export default function VankProject() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. HERO TEXT REVEAL (Mask Effect)
+      // 1. HERO TEXT REVEAL
       gsap.fromTo(".hero-title-mask", 
         { clipPath: "inset(0% 0% 100% 0%)" },
         { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.5 }
@@ -76,7 +76,7 @@ export default function VankProject() {
         y: 40, opacity: 0, duration: 1, ease: "power3.out"
       }, "-=0.8");
 
-      // 5. ACTO 02 REVEAL (Individual Triggers)
+      // 5. ACTO 02 REVEAL
       const acto02TitleTl = gsap.timeline({
         scrollTrigger: { trigger: "#acto02", start: "top 80%", toggleActions: "play none none reverse" }
       });
@@ -120,7 +120,29 @@ export default function VankProject() {
         });
       });
 
-      // 7. SCROLL SPY
+      // 7. ACTO 04 REVEAL (Result)
+      const acto04TitleTl = gsap.timeline({
+        scrollTrigger: { trigger: "#resultado", start: "top 80%", toggleActions: "play none none reverse" }
+      });
+
+      acto04TitleTl.fromTo(".acto04-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
+      )
+      .fromTo(".acto04-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
+      );
+
+      const acto04DescElements = gsap.utils.toArray(".acto04-desc") as HTMLElement[];
+      acto04DescElements.forEach((el) => {
+        gsap.from(el, {
+          y: 40, opacity: 0, duration: 1, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
+        });
+      });
+
+      // 8. SCROLL SPY
       const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
@@ -147,7 +169,6 @@ export default function VankProject() {
       
       <Header hideLogo={true} />
       
-      {/* 1. BACK BUTTON */}
       <div className="fixed top-8 left-6 md:left-12 lg:left-20 z-[110] mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
           <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
@@ -159,7 +180,6 @@ export default function VankProject() {
 
       <div className="flex flex-col lg:flex-row relative">
         
-        {/* SIDEBAR NAVIGATION */}
         <aside className="hidden lg:flex flex-col w-[15%] h-screen fixed top-0 left-0 pt-48 pl-12 justify-start z-40 pointer-events-none">
           <div className="space-y-3 relative pointer-events-auto">
             <div 
@@ -173,23 +193,32 @@ export default function VankProject() {
               { id: "solucion", label: t.vank.intro.back === "Projects" ? "Solution" : "Solución" },
               { id: "resultado", label: t.vank.intro.back === "Projects" ? "Result" : "Resultado" },
               { id: "impacto", label: t.vank.intro.back === "Projects" ? "Impact" : "Impacto" }
-            ].map((item, index) => (
-              <button key={item.id} onClick={() => scrollToSection(item.id)}
-                className={`text-left text-[12px] italic font-bold tracking-tight transition-opacity duration-300 block w-full pl-6 ${
-                  activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"
-                }`}
-                style={{ height: "1.5rem", lineHeight: "1.5rem" }}
-              >
-                <span className="font-mono text-[0.8em] mr-2 opacity-50 not-italic">0{index}</span>
-                {item.label}
-              </button>
-            ))}
+            ].map((item, index) => {
+              let label = "";
+              if (item.id === "hero") label = "Intro";
+              else if (item.id === "contexto") label = t.vank.intro.contextLabel.split(' ')[0];
+              else if (item.id === "acto02") label = t.vank.intro.back === "Projects" ? "Challenge" : "Desafío";
+              else if (item.id === "solucion") label = t.vank.intro.back === "Projects" ? "Solution" : "Solución";
+              else if (item.id === "resultado") label = t.vank.intro.back === "Projects" ? "Result" : "Resultado";
+              else if (item.id === "impacto") label = t.vank.intro.back === "Projects" ? "Impact" : "Impacto";
+
+              return (
+                <button key={item.id} onClick={() => scrollToSection(item.id)}
+                  className={`text-left text-[12px] italic font-bold tracking-tight transition-opacity duration-300 block w-full pl-6 ${
+                    activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"
+                  }`}
+                  style={{ height: "1.5rem", lineHeight: "1.5rem" }}
+                >
+                  <span className="font-mono text-[0.8em] mr-2 opacity-50 not-italic">0{index}</span>
+                  {label}
+                </button>
+              );
+            })}
           </div>
         </aside>
 
         <div className="w-full lg:ml-[15%] lg:w-[85%]">
           
-          {/* HERO HEADER */}
           <header id="hero" className="px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
             <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em] px-[14px] md:px-0">
               <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
@@ -230,26 +259,23 @@ export default function VankProject() {
             </div>
           </header>
 
-          {/* 3. HERO MACBOOK (Desktop Only) */}
           <section className="hidden md:block w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
                 alt="MacBook" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
-          {/* 3.1 HERO IPAD */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
                 alt="iPad" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
-          {/* ACTO 01 */}
           <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
             <div className="lg:pr-10">
-              <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">{t.vank.acto01.label}</span>
+              <span className={STYLING.label}>{t.vank.acto01.label}</span>
               <div className="space-y-2">
                 <div className="lg:hidden space-y-2">
                   {t.vank.acto01.titleMobile.map((line, i) => (
@@ -272,26 +298,23 @@ export default function VankProject() {
             </div>
           </section>
 
-          {/* IMAGE 4.5: LAYOUT DETAIL */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98d47f23eece986b74c_Layout%205.jpg" 
                 alt="Layout Detail" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
-          {/* IMAGE 4.6: UI SYSTEM */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
-            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center will-change-[opacity] translate-z-0">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98de492f2b844c5bf3a_Frame%201171275577.jpg" 
                 alt="UI System" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
-          {/* ACTO 02 */}
           <section id="acto02" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
             <div className="lg:pr-10">
-              <span className="font-sans text-[1.25rem] uppercase tracking-tighter text-foreground/30 font-bold block mb-1 ml-[6px]">{t.vank.acto02.label}</span>
+              <span className={STYLING.label}>{t.vank.acto02.label}</span>
               <div className="space-y-2">
                 <div className="lg:hidden space-y-2">
                   {t.vank.acto02.titleMobile.map((line, i) => (
@@ -325,8 +348,10 @@ export default function VankProject() {
                   ))}
                 </div>
               </div>
-              <div className="pt-[4em] md:pt-[6em] pb-[2em] flex justify-center text-center px-0 lg:-ml-[66.6%] lg:w-[166.6%] pointer-events-none">
-                <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform pointer-events-auto">{t.vank.acto02.insightMessage}</p>
+              <div className="pt-[4em] md:pt-[6em] pb-[2em] flex justify-start md:justify-center text-left md:text-center px-[14px] md:px-0 lg:-ml-[66.6%] lg:w-[166.6%] pointer-events-none">
+                <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform pointer-events-auto text-left md:text-center">
+                  {t.vank.acto02.insightMessage}
+                </p>
               </div>
               <div className="space-y-[2.5em] pt-[4em] lg:-ml-[66.6%] lg:w-full">
                 <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">{t.vank.acto02.insightsLabel}</h3>
@@ -342,7 +367,6 @@ export default function VankProject() {
             </div>
           </section>
 
-          {/* FINAL GALLERY */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98fac1c6a1592b34c6c_MacBook%20Air%20M4%20-%20Sky%20Blue-1.jpg" 
@@ -358,16 +382,16 @@ export default function VankProject() {
           </section>
 
           {/* OBJECTIVES BRIDGE */}
-          <section className="px-frame py-[6em] md:py-[10em] flex justify-center text-center">
-            <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform">
+          <section className="px-[14px] md:px-frame py-[6em] md:py-[10em] flex justify-start md:justify-center text-left md:text-center">
+            <p className="acto02-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform text-left md:text-center">
               {t.vank.acto02.objectivesBridge}
             </p>
           </section>
 
-          {/* PROJECT OBJECTIVES LIST (2x2 LEFT ALIGNED) */}
-          <section className="px-frame lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] pb-[4em] mt-[2em] md:mt-[4em] overflow-hidden text-left">
+          {/* PROJECT OBJECTIVES LIST */}
+          <section className="px-[14px] md:px-frame lg:pl-0 lg:pr-[8em] pb-[4em] mt-[2em] md:mt-[4em] overflow-hidden text-left">
             <div className="max-w-5xl flex flex-col items-start space-y-[1.5em]">
-              <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform text-left">
+              <h3 className="acto02-desc text-xl md:text-2xl font-medium tracking-tight text-foreground will-change-transform text-left">
                 {t.vank.acto02.objectivesLabel}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
@@ -395,13 +419,10 @@ export default function VankProject() {
             <div className="lg:pr-10">
               <span className={STYLING.label}>{t.vank.acto03.label}</span>
               <div className="space-y-2">
-                {/* Mobile & Desktop Titles */}
                 <div className="space-y-2">
                   {t.vank.acto03.title.map((line, i) => (
                     <div key={i} className="acto03-title-mask overflow-hidden">
-                      <h2 className="acto03-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
-                        {line}
-                      </h2>
+                      <h2 className="acto03-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
                     </div>
                   ))}
                 </div>
@@ -414,7 +435,7 @@ export default function VankProject() {
               
               <div className="grid grid-cols-1 gap-y-10">
                 {t.vank.acto03.list.map((text, i) => (
-                  <div key={i} className="acto03-desc flex items-start gap-[1.5em] will-change-transform border-l border-foreground/10 pl-8">
+                  <div key={i} className="acto03-desc flex items-start gap-[1.5em] will-change-transform md:border-l border-foreground/10 md:pl-8">
                     <p className="text-lg md:text-xl font-light leading-snug opacity-80">
                       <span className="font-bold text-foreground opacity-100 block mb-2">
                         {text.split(":")[0]}
@@ -427,7 +448,7 @@ export default function VankProject() {
             </div>
           </section>
 
-          {/* PROCESS IMAGES - WIREFRAME */}
+          {/* PROCESS IMAGES */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-video relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/6897f7d682665ced3cd4a2cb_Wireframe%20-%201.png" 
@@ -435,7 +456,6 @@ export default function VankProject() {
             </div>
           </section>
 
-          {/* PROCESS IMAGES - GRID */}
           <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[60vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68983095c959083bd0f24696_Frame%201000004217.jpg" 
@@ -448,14 +468,13 @@ export default function VankProject() {
           </section>
 
           {/* SOLUTION BRIDGE */}
-          <section className="px-frame py-[6em] md:py-[10em] flex justify-center items-center text-center w-full">
-            <p className="acto03-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform mx-auto -translate-x-[80px]">
+          <section className="px-[14px] md:px-frame py-[6em] md:py-[10em] flex justify-start md:justify-center items-start md:items-center text-left md:text-center w-full">
+            <p className="acto03-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform md:mx-auto md:-translate-x-[80px] text-left md:text-center">
               {t.vank.acto03.solutionBridge}
             </p>
           </section>
 
-          {/* METHODOLOGY DETAILS (LEFT ALIGNED) */}
-          <section className="px-frame lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] pb-[10em] md:pb-[15em] overflow-hidden text-left">
+          <section className="px-[14px] md:px-frame lg:pl-0 lg:pr-[8em] pb-[4em] overflow-hidden text-left">
             <div className="max-w-5xl flex flex-col items-start space-y-[4em] md:space-y-[6em]">
               {t.vank.acto03.methodologyDetails.map((item, i) => (
                 <div key={i} className="acto03-desc space-y-4 will-change-transform">
@@ -470,7 +489,86 @@ export default function VankProject() {
             </div>
           </section>
 
-          {/* FOOTER */}
+          {/* DESIGN SYSTEM BRIDGE */}
+          <section className="px-[14px] md:px-frame py-[2em] md:py-[4em] flex justify-start md:justify-center items-start md:items-center text-left md:text-center w-full">
+            <p className="acto03-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform md:mx-auto md:-translate-x-[80px] text-left md:text-center">
+              {t.vank.acto03.designSystemBridge}
+            </p>
+          </section>
+
+          {/* DESIGN SYSTEM IMAGE */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/689683784f56907d00b74a31_isometric-frame-1%20vank.jpg" 
+                alt="Design System Isometric" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* ACTO 04: EL RESULTADO */}
+          <section id="resultado" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
+            <div className="lg:pr-10">
+              <span className={STYLING.label}>{t.vank.acto04.label}</span>
+              <div className="space-y-2">
+                <div className="space-y-2">
+                  {t.vank.acto04.title.map((line, i) => (
+                    <div key={i} className="acto04-title-mask overflow-hidden">
+                      <h2 className="acto04-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
+              <p className="acto04-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
+                {t.vank.acto04.description}
+              </p>
+            </div>
+          </section>
+
+          {/* RESULT BRIDGE */}
+          <section className="px-[14px] md:px-frame py-[6em] md:py-[10em] flex justify-start md:justify-center items-start md:items-center text-left md:text-center w-full">
+            <p className="acto04-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform md:mx-auto md:-translate-x-[80px] text-left md:text-center">
+              {t.vank.acto04.resultBridge}
+            </p>
+          </section>
+
+          {/* KEY CHANGES LIST */}
+          <section className="px-[14px] md:px-frame lg:pl-0 lg:pr-[8em] pb-[4em] overflow-hidden text-left">
+            <div className="max-w-5xl flex flex-col items-start space-y-[3em]">
+              <h3 className="acto04-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform text-left">
+                {t.vank.acto04.changesLabel}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
+                {t.vank.acto04.results.map((text, i) => (
+                  <div key={i} className="acto04-desc flex items-start gap-[0.75em] will-change-transform text-left">
+                    <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
+                    <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">
+                      {text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FINAL SHOWCASE - IPAD */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
+                alt="Final iPad Showcase" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* FINAL SHOWCASE - IPHONE */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/689447f99d4a88b1d0f561b3_01%20Free%20iPhone%2016%20Pro%20Mockup%20On%20Rock.jpg" 
+                alt="Final iPhone Showcase" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
           <footer className="px-frame py-[10em] grid grid-cols-1 lg:grid-cols-[50%_50%] gap-[5em] border-t border-foreground/5">
             <div className="space-y-[4em]">
               <h1 className="text-display-lg font-black uppercase leading-[0.8] tracking-tighter">

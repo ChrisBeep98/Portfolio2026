@@ -107,14 +107,17 @@ export const dictionary = {
       },
       acto04: {
         label: "04",
-        title: "The final result",
-        description: "A robust ecosystem that guarantees functional coherence in every pixel.",
+        title: ["The", "Result"],
+        titleMobile: ["The", "Result"],
+        description: "The implementation of a comprehensive design system was fundamental to ensuring visual and functional coherence throughout the Vank platform. This system covered everything from the web version to the mobile app, facilitating collaboration between the design and development teams and guaranteeing the future scalability of the product.",
+        resultBridge: "\"The final solution was a platform with complete flows, coherent visuals, and ready to scale.\"",
+        changesLabel: "Key Changes",
         results: [
-          "Unified and clear navigation.",
+          "Flows designed from start to finish for all key operations.",
           "Documented design system.",
-          "Total visibility of commissions.",
-          "Transfers in 3 steps.",
-          "Code ready for implementation."
+          "Commissions visible from the first step.",
+          "Simplified processes (e.g., transfers in three steps).",
+          "Key screens like Home, Profile, VankPay, Fiat Recharge, and Fiat Send ready for implementation."
         ]
       },
       impact: {
@@ -236,14 +239,17 @@ export const dictionary = {
       },
       acto04: {
         label: "04",
-        title: "El resultado final",
-        description: "Un ecosistema robusto que garantiza la coherencia funcional en cada pixel.",
+        title: ["El", "Resultado"],
+        titleMobile: ["El", "Resultado"],
+        description: "La implementación de un sistema de diseño integral fue fundamental para asegurar la coherencia visual y funcional en toda la plataforma Vank. Este sistema abarcó desde la versión web hasta la aplicación móvil, facilitando la colaboración entre el equipo de diseño y desarrollo y garantizando la escalabilidad futura del producto.",
+        resultBridge: "\"La solución final, fue una plataforma con flujos completos, visual coherente y preparada para escalar.\"",
+        changesLabel: "Cambios Clave",
         results: [
-          "Navegación unificada y clara.",
+          "Flujos diseñados de principio a fin para todas las operaciones clave.",
           "Sistema de diseño documentado.",
-          "Visibilidad total de comisiones.",
-          "Transferencias en 3 pasos.",
-          "Código listo para implementación."
+          "Comisiones visibles desde el primer paso.",
+          "Procesos simplificados (por ejemplo, transferencias en tres pasos).",
+          "Pantallas clave como Home, Perfil, VankPay, Recarga Fiat y Envío Fiat listas para implementación."
         ]
       },
       impact: {
