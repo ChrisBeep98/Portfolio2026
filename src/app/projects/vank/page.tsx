@@ -364,17 +364,17 @@ export default function VankProject() {
             </p>
           </section>
 
-          {/* PROJECT OBJECTIVES LIST (CENTERED) */}
-          <section className="px-frame section-gap overflow-hidden flex flex-col items-center">
-            <div className="max-w-4xl w-full space-y-[3em]">
-              <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground text-center will-change-transform">
+          {/* PROJECT OBJECTIVES LIST (2x2 LEFT ALIGNED) */}
+          <section className="px-frame lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] pb-[4em] mt-[2em] md:mt-[4em] overflow-hidden text-left">
+            <div className="max-w-5xl flex flex-col items-start space-y-[1.5em]">
+              <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform text-left">
                 {t.vank.acto02.objectivesLabel}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
                 {t.vank.acto02.objectivesList.map((text, i) => (
-                  <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
+                  <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform text-left">
                     <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
-                    <p className="text-lg md:text-xl font-light leading-snug opacity-80">
+                    <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">
                       {text}
                     </p>
                   </div>
@@ -424,6 +424,26 @@ export default function VankProject() {
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* PROCESS IMAGES - WIREFRAME */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-video relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/6897f7d682665ced3cd4a2cb_Wireframe%20-%201.png" 
+                alt="Wireframes" className="w-full h-full object-contain relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* PROCESS IMAGES - GRID */}
+          <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[60vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68983095c959083bd0f24696_Frame%201000004217.jpg" 
+                alt="Design System Detail" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+            <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[60vh] relative flex items-center justify-center translate-z-0">
+              <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/6898309237fee820de12d95b_fasfdasdf.png" 
+                alt="Process Detail" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
             </div>
           </section>
 
