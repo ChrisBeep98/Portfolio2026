@@ -142,8 +142,30 @@ export default function VankProject() {
         });
       });
 
-      // 8. SCROLL SPY
-      const sections = ["hero", "contexto", "acto02", "solucion", "resultado"];
+      // 8. ACTO 05 REVEAL (Impact)
+      const acto05TitleTl = gsap.timeline({
+        scrollTrigger: { trigger: "#impacto", start: "top 80%", toggleActions: "play none none reverse" }
+      });
+
+      acto05TitleTl.fromTo(".acto05-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
+      )
+      .fromTo(".acto05-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
+      );
+
+      const acto05DescElements = gsap.utils.toArray(".acto05-desc") as HTMLElement[];
+      acto05DescElements.forEach((el) => {
+        gsap.from(el, {
+          y: 40, opacity: 0, duration: 1, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
+        });
+      });
+
+      // 9. SCROLL SPY
+      const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
           trigger: `#${section}`,
@@ -156,7 +178,7 @@ export default function VankProject() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [t]);
 
   const scrollToSection = (id: string) => {
     gsap.to(window, {
@@ -222,7 +244,10 @@ export default function VankProject() {
           <header id="hero" className="px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
             <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em] px-[14px] md:px-0">
               <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
-                <h1 className="hero-title-text text-5xl md:text-7xl lg:text-[5.5em] font-black tracking-[-0.08em] leading-[0.7] uppercase will-change-transform">
+                <h1 
+                  className="hero-title-text font-black tracking-[-0.08em] uppercase will-change-transform"
+                  style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                >
                   {t.vank.intro.title}<span className="text-yellow-300 ml-[0.05em]">.</span>
                 </h1>
               </div>
@@ -280,14 +305,24 @@ export default function VankProject() {
                 <div className="lg:hidden space-y-2">
                   {t.vank.acto01.titleMobile.map((line, i) => (
                     <div key={i} className="acto01-title-mask overflow-hidden">
-                      <h2 className="acto01-title-text text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
+                      <h2 
+                        className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
                     </div>
                   ))}
                 </div>
                 <div className="hidden lg:block space-y-2">
                   {t.vank.acto01.title.map((line, i) => (
                     <div key={i} className="acto01-title-mask overflow-hidden">
-                      <h2 className="acto01-title-text lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
+                      <h2 
+                        className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
                     </div>
                   ))}
                 </div>
@@ -319,14 +354,24 @@ export default function VankProject() {
                 <div className="lg:hidden space-y-2">
                   {t.vank.acto02.titleMobile.map((line, i) => (
                     <div key={i} className="acto02-title-mask overflow-hidden">
-                      <h2 className="acto02-title-text text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
+                      <h2 
+                        className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
                     </div>
                   ))}
                 </div>
                 <div className="hidden lg:block space-y-2">
                   {t.vank.acto02.title.map((line, i) => (
                     <div key={i} className="acto02-title-mask overflow-hidden">
-                      <h2 className="acto02-title-text lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
+                      <h2 
+                        className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
                     </div>
                   ))}
                 </div>
@@ -422,7 +467,12 @@ export default function VankProject() {
                 <div className="space-y-2">
                   {t.vank.acto03.title.map((line, i) => (
                     <div key={i} className="acto03-title-mask overflow-hidden">
-                      <h2 className="acto03-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">{line}</h2>
+                      <h2 
+                        className="acto03-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
                     </div>
                   ))}
                 </div>
@@ -512,7 +562,10 @@ export default function VankProject() {
                 <div className="space-y-2">
                   {t.vank.acto04.title.map((line, i) => (
                     <div key={i} className="acto04-title-mask overflow-hidden">
-                      <h2 className="acto04-title-text text-5xl md:text-7xl lg:text-[5.5em] font-bold uppercase tracking-tighter leading-[0.85] will-change-transform">
+                      <h2 
+                        className="acto04-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
                         {line}
                       </h2>
                     </div>
@@ -566,6 +619,48 @@ export default function VankProject() {
             <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
               <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/689447f99d4a88b1d0f561b3_01%20Free%20iPhone%2016%20Pro%20Mockup%20On%20Rock.jpg" 
                 alt="Final iPhone Showcase" className="w-full h-full object-cover relative" loading="lazy" decoding="async" />
+            </div>
+          </section>
+
+          {/* ACTO 05: IMPACTO Y APRENDIZAJES */}
+          <section id="impacto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden border-t border-foreground/5">
+            <div className="lg:pr-10">
+              <span className={STYLING.label}>{t.vank.impact.label}</span>
+              <div className="space-y-2">
+                <div className="space-y-2">
+                  {t.vank.impact.title.map((line, i) => (
+                    <div key={i} className="acto05-title-mask overflow-hidden">
+                      <h2 
+                        className="acto05-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
+              <p className="acto05-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
+                {t.vank.impact.description}
+              </p>
+
+              <div className="space-y-[2.5em]">
+                <h3 className="acto05-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform text-left">
+                  {t.vank.impact.resultsLabel}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
+                  {t.vank.impact.resultsList.map((text, i) => (
+                    <div key={i} className="acto05-desc flex items-start gap-[0.75em] will-change-transform text-left">
+                      <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
+                      <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">
+                        {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 

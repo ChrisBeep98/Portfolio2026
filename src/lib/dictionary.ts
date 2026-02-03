@@ -120,6 +120,18 @@ export const dictionary = {
           "Key screens like Home, Profile, VankPay, Fiat Recharge, and Fiat Send ready for implementation."
         ]
       },
+      impact: {
+        label: "05",
+        title: ["Impact", "& Learnings"],
+        titleMobile: ["Impact", "& Learnings"],
+        description: "Designing the Vank platform not only addressed the initial problems but also generated a measurable positive impact and provided valuable lessons for future projects.",
+        resultsLabel: "Results.",
+        resultsList: [
+          "The development team received a clear product ready for implementation, shortening delivery times.",
+          "Operational Efficiency: The design system ensured consistency and accelerated new feature development.",
+          "Positive Feedback: The experience was perceived as clearer and more trustworthy."
+        ]
+      },
       footer: {
         title: "AVAILABLE",
         subtitle: "TO CREATE",
@@ -245,6 +257,18 @@ export const dictionary = {
           "Comisiones visibles desde el primer paso.",
           "Procesos simplificados (por ejemplo, transferencias en tres pasos).",
           "Pantallas clave como Home, Perfil, VankPay, Recarga Fiat y Envío Fiat listas para implementación."
+        ]
+      },
+      impact: {
+        label: "05",
+        title: ["Impacto", "y Aprendizajes"],
+        titleMobile: ["Impacto", "y Aprendizajes"],
+        description: "El Diseño de la plataforma Vank no solo abordó los problemas iniciales, sino que también generó un impacto positivo medible y proporcionó valiosas lecciones para futuros proyectos.",
+        resultsLabel: "Resultados.",
+        resultsList: [
+          "El equipo de desarrollo recibió un producto claro y listo para implementar, lo que acortó tiempos de entrega.",
+          "Eficiencia Operativa: El sistema de diseño permitió mantener coherencia y acelerar nuevas funcionalidades.",
+          "Retroalimentación Positiva: la experiencia se percibió más clara y confiable."
         ]
       },
       footer: {
