@@ -24,6 +24,14 @@ export const dictionary = {
         backend: "Backend"
       }
     },
+    about: {
+      w1: "I am a", w2: "UX/UI", w3: "Designer", w4: "and", w5: "Frontend",
+      w6: "Developer.", w7: "I transform", w8: "complex", w9: "ideas",
+      w10: "into", w11: "clean,", w12: "functional,", w13: "and",
+      w14: "memorable", w15: "digital", w16: "experiences.", w17: "My",
+      w18: "work", w19: "lives", w20: "at the", w21: "intersection", w22: "between",
+      w23: "aesthetics", w24: "and", w25: "technology.", w26: ""
+    },
     vank: {
       intro: {
         back: "Projects",
@@ -123,6 +131,14 @@ export const dictionary = {
         motion: "Motion",
         backend: "Backend"
       }
+    },
+    about: {
+      w1: "Soy", w2: "diseñador", w3: "UX/UI", w4: "y", w5: "desarrollador",
+      w6: "frontend.", w7: "Transformo", w8: "ideas", w9: "complejas",
+      w10: "en", w11: "experiencias", w12: "digitales", w13: "limpias,",
+      w14: "funcionales", w15: "y", w16: "memorables.", w17: "Mi",
+      w18: "trabajo", w19: "habita", w20: "en", w21: "la", w22: "intersección",
+      w23: "entre", w24: "estética", w25: "y", w26: "tecnología."
     },
     vank: {
       intro: {

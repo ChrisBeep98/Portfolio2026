@@ -67,7 +67,24 @@ export default function Hero() {
         .fromTo(".reveal-left", { xPercent: 0, opacity: 1, scale: 1 }, { xPercent: isMobile ? -60 : -150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
         .fromTo(".reveal-right", { xPercent: 0, opacity: 1, scale: 1 }, { xPercent: isMobile ? 60 : 150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
         .fromTo(".reveal-center", { xPercent: 0, opacity: 1, scale: 1 }, { xPercent: isMobile ? -60 : -150, opacity: 0, scale: isMobile ? 0.85 : 1, ease: "none", immediateRender: false }, 0)
-        .fromTo(imageWrapperRef.current, { left: isMobile ? "14px" : "7em", bottom: isMobile ? "14vh" : "10vh", width: isMobile ? "60vw" : "16vw", height: isMobile ? "28vh" : "30vh", opacity: 1, scale: 1, y: 0, x: 0, clipPath: "inset(0% 0% 0% 0%)" }, { left: isMobile ? "14px" : 0, bottom: isMobile ? "14vh" : 0, top: isMobile ? "auto" : 0, x: 0, y: isMobile ? 40 : 0, height: isMobile ? "28vh" : "100vh", width: isMobile ? "60vw" : "40vw", borderRadius: isMobile ? "4px" : "0px", opacity: isMobile ? 0 : 1, scale: isMobile ? 0.9 : 1, clipPath: isMobile ? "inset(50% 0% 50% 0%)" : "inset(0% 0% 0% 0%)", ease: "power2.inOut", immediateRender: false, zIndex: 40 }, 0)
+        .fromTo(imageWrapperRef.current, 
+          { left: isMobile ? "14px" : "7em", bottom: isMobile ? "14vh" : "10vh", width: isMobile ? "60vw" : "16vw", height: isMobile ? "28vh" : "30vh", opacity: 1, scale: 1, y: 0, x: 0, clipPath: "inset(0% 0% 0% 0%)", borderRadius: "2px" },
+          { 
+            left: isMobile ? "14px" : "2em", 
+            bottom: isMobile ? "14vh" : "2em", 
+            top: isMobile ? "auto" : "2em", 
+            x: 0, 
+            y: isMobile ? 40 : 0, 
+            height: isMobile ? "28vh" : "calc(100vh - 4em)", 
+            width: isMobile ? "60vw" : "calc(40vw - 2em)", 
+            borderRadius: isMobile ? "1.5em" : "2.5em", 
+            opacity: isMobile ? 0 : 1, 
+            scale: isMobile ? 0.9 : 1, 
+            clipPath: isMobile ? "inset(50% 0% 50% 0%)" : "inset(0% 0% 0% 0%)", 
+            ease: "power2.inOut", 
+            immediateRender: false, 
+            zIndex: 40 
+          }, 0)
         .fromTo(systemRef.current, { x: 0, opacity: 0 }, { x: isMobile ? 0 : "20vw", opacity: 1, ease: "power2.inOut", immediateRender: false }, 0)
         .fromTo(planetRef.current, { scale: 0, opacity: 0 }, { scale: isMobile ? 0.7 : 1.15, opacity: 1, ease: "power2.inOut", immediateRender: false }, 0.1) 
         .fromTo(".orbit-ring", { scale: 0, opacity: 0 }, { scale: isMobile ? 0.6 : 1, opacity: 0.6, stagger: 0.05, ease: "power2.inOut", immediateRender: false, force3D: true }, 0.1)

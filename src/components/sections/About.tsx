@@ -3,18 +3,22 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 import { Sparkles, Zap, Star, Triangle, Diamond, LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface ContentItem {
   type: "text" | "accent";
-  content?: string;
+  id: string;
   icon?: LucideIcon;
   className?: string;
+  isSpecial?: boolean;
+  isOrange?: boolean;
 }
 
 export default function About() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -63,44 +67,44 @@ export default function About() {
   }, []);
 
   const content: ContentItem[] = [
-    { type: "text", content: "Soy" },
-    { type: "text", content: "diseñador" },
-    { type: "accent", icon: Sparkles, className: "text-orange-500 about-accent-rotate" },
-    { type: "text", content: "UX/UI" },
-    { type: "text", content: "y" },
-    { type: "text", content: "desarrollador" },
-    { type: "accent", icon: Zap, className: "text-purple-500 about-accent-pulse" },
-    { type: "text", content: "frontend." },
-    { type: "text", content: "Transformo" },
-    { type: "text", content: "ideas" },
-    { type: "accent", icon: Star, className: "text-cyan-500 about-accent-rotate" },
-    { type: "text", content: "complejas" },
-    { type: "text", content: "en" },
-    { type: "text", content: "experiencias" },
-    { type: "accent", icon: Triangle, className: "text-pink-500 about-accent-rotate" },
-    { type: "text", content: "digitales" },
-    { type: "text", content: "limpias," },
-    { type: "text", content: "funcionales" },
-    { type: "text", content: "y" },
-    { type: "text", content: "memorables." },
-    { type: "text", content: "Mi" },
-    { type: "text", content: "trabajo" },
-    { type: "text", content: "habita" },
-    { type: "text", content: "en" },
-    { type: "text", content: "la" },
-    { type: "text", content: "intersección" },
-    { type: "accent", icon: Diamond, className: "text-yellow-500 about-accent-pulse" },
-    { type: "text", content: "entre" },
-    { type: "text", content: "estética" },
-    { type: "text", content: "y" },
-    { type: "text", content: "tecnología." },
+    { type: "text", id: "w1" },
+    { type: "text", id: "w2" },
+    { type: "accent", id: "a1", icon: Sparkles, className: "text-orange-500 about-accent-rotate" },
+    { type: "text", id: "w3", isOrange: true },
+    { type: "text", id: "w4" },
+    { type: "text", id: "w5" },
+    { type: "accent", id: "a2", icon: Zap, className: "text-purple-500 about-accent-pulse" },
+    { type: "text", id: "w6" },
+    { type: "text", id: "w7" },
+    { type: "text", id: "w8" },
+    { type: "accent", id: "a3", icon: Star, className: "text-cyan-500 about-accent-rotate" },
+    { type: "text", id: "w9" },
+    { type: "text", id: "w10" },
+    { type: "text", id: "w11" },
+    { type: "accent", id: "a4", icon: Triangle, className: "text-pink-500 about-accent-rotate" },
+    { type: "text", id: "w12" },
+    { type: "text", id: "w13" },
+    { type: "text", id: "w14" },
+    { type: "text", id: "w15" },
+    { type: "text", id: "w16" },
+    { type: "text", id: "w17" },
+    { type: "text", id: "w18" },
+    { type: "text", id: "w19" },
+    { type: "text", id: "w20" },
+    { type: "text", id: "w21" },
+    { type: "text", id: "w22" },
+    { type: "accent", id: "a5", icon: Diamond, className: "text-yellow-500 about-accent-pulse" },
+    { type: "text", id: "w23" },
+    { type: "text", id: "w24", isSpecial: true },
+    { type: "text", id: "w25" },
+    { type: "text", id: "w26", isSpecial: true },
   ];
 
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700"
+      className="relative w-full bg-[#F2F2F0] dark:bg-[#050505] transition-colors duration-700 mt-[8em]"
     >
       <div
         ref={containerRef}
@@ -111,17 +115,17 @@ export default function About() {
         <div className="max-w-[1600px] mx-auto w-full relative z-10">
           <h2 className="text-[8.5vw] sm:text-[7.5vw] md:text-[6vw] lg:text-[4vw] lg:font-medium font-bold tracking-tighter leading-[1.25] sm:leading-[1.15] text-white dark:text-black">
             {content.map((item, index) => {
-              if (item.type === "text" && item.content) {
-                const isSpecial = ["UX/UI", "estética", "tecnología."].includes(item.content);
-                const isOrange = item.content === "UX/UI";
+              if (item.type === "text") {
+                const text = (t.about as any)[item.id];
+                if (!text) return null;
                 return (
                   <span
                     key={index}
                     className={`about-word inline-block mr-[0.25em] ${
-                      isOrange ? "text-orange-400 dark:text-orange-600" : ""
-                    } ${isSpecial && !isOrange ? "italic font-light" : ""}`}
+                      item.isOrange ? "text-orange-400 dark:text-orange-600" : ""
+                    } ${item.isSpecial ? "italic font-light" : ""}`}
                   >
-                    {item.content}
+                    {text}
                   </span>
                 );
               }
