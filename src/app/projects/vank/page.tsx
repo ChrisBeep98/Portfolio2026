@@ -447,6 +447,29 @@ export default function VankProject() {
             </div>
           </section>
 
+          {/* SOLUTION BRIDGE */}
+          <section className="px-frame py-[6em] md:py-[10em] flex justify-center items-center text-center w-full">
+            <p className="acto03-desc text-3xl md:text-5xl font-medium tracking-tighter leading-tight max-w-4xl text-foreground italic opacity-90 will-change-transform mx-auto -translate-x-[80px]">
+              {t.vank.acto03.solutionBridge}
+            </p>
+          </section>
+
+          {/* METHODOLOGY DETAILS (LEFT ALIGNED) */}
+          <section className="px-frame lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] pb-[10em] md:pb-[15em] overflow-hidden text-left">
+            <div className="max-w-5xl flex flex-col items-start space-y-[4em] md:space-y-[6em]">
+              {t.vank.acto03.methodologyDetails.map((item, i) => (
+                <div key={i} className="acto03-desc space-y-4 will-change-transform">
+                  <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground leading-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-lg md:text-xl font-light leading-snug opacity-70 max-w-4xl">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* FOOTER */}
           <footer className="px-frame py-[10em] grid grid-cols-1 lg:grid-cols-[50%_50%] gap-[5em] border-t border-foreground/5">
             <div className="space-y-[4em]">

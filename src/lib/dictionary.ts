@@ -92,6 +92,17 @@ export const dictionary = {
           "Design: wireframes to validate architecture → UI Kit and design system → high-fidelity prototypes in Figma.",
           "Methodology: Scrum with weekly sprints and feedback meetings with stakeholders to validate decisions.",
           "Testing: in-person and remote usability testing to iterate quickly."
+        ],
+        solutionBridge: "\"A user-centered design approach was implemented, combining agile methodologies to iterate quickly.\"",
+        methodologyDetails: [
+          {
+            title: "Scrum with weekly sprints to advance in clear and prioritized blocks.",
+            desc: "We worked in short one-week cycles, which allowed us to deliver functional prototypes constantly and facilitate integration with the development team. This was fundamental to meeting tight deadlines."
+          },
+          {
+            title: "Continuous feedback with development to ensure technical feasibility.",
+            desc: "Regular meetings were held with the development team and other stakeholders to ensure fluid communication, align expectations, and quickly resolve any impediments. Constant feedback was key to continuous improvement."
+          }
         ]
       },
       acto04: {
@@ -210,6 +221,17 @@ export const dictionary = {
           "Diseño: wireframes para validar arquitectura → UI Kit y sistema de diseño → prototipos de alta en Figma.",
           "Metodología: Scrum con sprints semanales y reuniones de feedback con stakeholders para validar decisiones.",
           "Pruebas: usabilidad presencial y remota para iterar rápidamente."
+        ],
+        solutionBridge: "\"Se implementó un enfoque de diseño centrado en el usuario, combinando metodologías ágiles para iterar rápidamente.\"",
+        methodologyDetails: [
+          {
+            title: "Scrum con sprints semanales para avanzar en bloques claros y priorizados.",
+            desc: "Se trabajó en ciclos cortos de una semana, lo que permitió entregar prototipos funcionales de forma constante y facilitar la integración con el equipo de desarrollo. Esto fue fundamental para cumplir con los plazos ajustados."
+          },
+          {
+            title: "Feedback continuo con desarrollo para asegurar factibilidad técnica.",
+            desc: "Se mantuvieron reuniones regulares con el equipo de desarrollo y otras partes interesadas para asegurar una comunicación fluida, alinear expectativas y resolver cualquier impedimento rápidamente. El feedback constante fue clave para la mejora continua."
+          }
         ]
       },
       acto04: {
