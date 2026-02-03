@@ -143,7 +143,7 @@ export default function VankProject() {
       });
 
       // 8. SCROLL SPY
-      const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
+      const sections = ["hero", "contexto", "acto02", "solucion", "resultado"];
       sections.forEach((section, index) => {
         ScrollTrigger.create({
           trigger: `#${section}`,

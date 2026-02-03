@@ -120,11 +120,6 @@ export const dictionary = {
           "Key screens like Home, Profile, VankPay, Fiat Recharge, and Fiat Send ready for implementation."
         ]
       },
-      impact: {
-        label: "05",
-        title: "Impact & Learnings",
-        description: "Designing the Vank platform not only addressed the initial problems but also generated a measurable positive impact on the user experience and the operational efficiency of the business."
-      },
       footer: {
         title: "AVAILABLE",
         subtitle: "TO CREATE",
@@ -251,11 +246,6 @@ export const dictionary = {
           "Procesos simplificados (por ejemplo, transferencias en tres pasos).",
           "Pantallas clave como Home, Perfil, VankPay, Recarga Fiat y Envío Fiat listas para implementación."
         ]
-      },
-      impact: {
-        label: "05",
-        title: "Impacto y Aprendizajes",
-        description: "El Diseño de la plataforma Vank no solo abordó los problemas iniciales, sino que también generó un impacto positivo medible en la experiencia del usuario y en la eficiencia operativa del negocio."
       },
       footer: {
         title: "DISPONIBLE",
