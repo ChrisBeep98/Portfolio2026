@@ -23,10 +23,13 @@ export default function Footer() {
         ref={footerRef}
         className="fixed bottom-0 left-0 w-full h-screen bg-black dark:bg-[#F2F2F0] text-white dark:text-black flex flex-col justify-between px-frame py-[10vh] z-0 overflow-hidden"
       >
-        {/* Massive Background Title (Cyber/Simulation Style in Dark) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none">
-          <h1 className="text-[20vw] font-black leading-none opacity-5 select-none tracking-tighter">
-            DESIGN
+        {/* Massive Background Title (MotionFlow / Phantom Fade) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none">
+          <h1 className="text-[18vw] font-black leading-none tracking-[-0.05em]
+            text-white/[0.03] dark:text-black/[0.02]
+            [mask-image:radial-gradient(circle_at_center,black_0%,transparent_80%)]
+          ">
+            MOTIONFLOW
           </h1>
         </div>
 
@@ -36,7 +39,7 @@ export default function Footer() {
             <span className="font-mono text-[0.6em] uppercase tracking-[0.4em] text-white/30 dark:text-black/30 font-bold block">
               {t.footer.title}
             </span>
-            <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.8] tracking-tighter max-w-[15em]">
+            <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.9] tracking-tighter max-w-[15em]">
               {t.footer.subtitle.split(' ').map((word, i) => (
                 <span key={i} className="inline-block mr-[0.2em]">{word}</span>
               ))}

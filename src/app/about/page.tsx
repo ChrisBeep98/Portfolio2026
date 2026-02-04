@@ -77,28 +77,28 @@ export default function AboutPage() {
             <div className="slam-left mb-12">
               <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
                 <span className="w-8 h-px bg-orange-500" />
-                [ PROFILE_LOG_2026 ]
+                <span className="italic">{t.about.profile}</span>
               </span>
             </div>
 
             <div className="space-y-4 mb-16">
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase">
-                {t.about.w2}
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
+                Christian
               </h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-transparent dark:[-webkit-text-stroke:1px_rgba(255,255,255,0.4)] [-webkit-text-stroke:1px_rgba(0,0,0,0.4)] italic">
-                UX / UI
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
+                Sandoval
               </h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase">
-                Creative Dev
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
+                Moná
               </h1>
             </div>
 
             <div className="slam-left max-w-xl border-l-2 border-orange-500 pl-8 space-y-8">
-              <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70 italic">
-                &quot;{t.about.w7} {t.about.w8} {t.about.w9} {t.about.w10} {t.about.w11} {t.about.w12}...&quot;
+              <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70">
+                Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="text-foreground font-bold">investigación</span>, <span className="text-foreground font-bold">estructura</span> y <span className="text-foreground font-bold">creatividad</span>.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                {["Investigación", "Estructura", "Creatividad"].map((tag) => (
+                {["UX / UI", "Webflow Dev", "Bilingual"].map((tag) => (
                   <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">
                     {tag}
                   </span>

@@ -25,6 +25,7 @@ export const dictionary = {
       }
     },
     about: {
+      profile: "About",
       w1: "I am a", w2: "UX/UI", w3: "Designer", w4: "and", w5: "Frontend",
       w6: "Developer.", w7: "I transform", w8: "complex", w9: "ideas",
       w10: "into", w11: "clean,", w12: "functional,", w13: "and",
@@ -179,6 +180,7 @@ export const dictionary = {
       }
     },
     about: {
+      profile: "Perfil",
       w1: "Soy", w2: "diseñador", w3: "UX/UI", w4: "y", w5: "desarrollador",
       w6: "frontend.", w7: "Transformo", w8: "ideas", w9: "complejas",
       w10: "en", w11: "experiencias", w12: "digitales", w13: "limpias,",
@@ -188,7 +190,7 @@ export const dictionary = {
     },
     footer: {
       title: "ESTOY DISPONIBLE",
-      subtitle: "CONTÁCTAME SI QUIERES DISEÑAR UNA IDEA",
+      subtitle: "CONTÁCTAME SI QUIERES CREAR UNA IDEA",
       email: "christiansandovaldesign@gmail.com",
       copyright: "© 2025 Christian.",
       links: {
