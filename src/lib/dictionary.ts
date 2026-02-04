@@ -94,6 +94,7 @@ export const dictionary = {
           "Testing: in-person and remote usability testing to iterate quickly."
         ],
         solutionBridge: "\"A user-centered design approach was implemented, combining agile methodologies to iterate quickly.\"",
+        designSystemBridge: "\"The design system became the foundation for visual and functional coherence across the entire platform.\"",
         methodologyDetails: [
           {
             title: "Scrum with weekly sprints to advance in clear and prioritized blocks.",
@@ -234,6 +235,7 @@ export const dictionary = {
           "Pruebas: usabilidad presencial y remota para iterar rápidamente."
         ],
         solutionBridge: "\"Se implementó un enfoque de diseño centrado en el usuario, combinando metodologías ágiles para iterar rápidamente.\"",
+        designSystemBridge: "\"El sistema de diseño se convirtió en la base para la coherencia visual y funcional en toda la plataforma.\"",
         methodologyDetails: [
           {
             title: "Scrum con sprints semanales para avanzar en bloques claros y priorizados.",
