@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
-import { Instagram, Mail, MessageCircle } from "lucide-react";
+import { Instagram, Mail, MessageCircle, Lightbulb } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,21 @@ if (typeof window !== "undefined") {
 export default function Footer() {
   const { t } = useLanguage();
   const footerRef = useRef<HTMLElement>(null);
+  const bulbRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (bulbRef.current) {
+      // Subtle flicker animation
+      gsap.to(bulbRef.current, {
+        opacity: 0.4,
+        duration: 0.1,
+        repeat: -1,
+        yoyo: true,
+        repeatDelay: Math.random() * 2,
+        ease: "rough({ strength: 2, template: none, points: 10, taper: 'none', randomize: true, clamp: false })"
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -29,18 +44,31 @@ export default function Footer() {
           </h1>
         </div>
 
-        {/* SECTION 1: TOP LABEL */}
-        <div className="relative z-10 w-full flex items-center gap-4">
-          <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-          <span className="font-mono text-[0.6em] uppercase tracking-[0.4em] text-white/30 dark:text-black/30 font-bold block">
-            {t.footer.title}
-          </span>
-        </div>
-
-        {/* SECTION 2: MAIN TITLE */}
-        <div className="relative z-10 w-full">
-          <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.85] tracking-tighter max-w-5xl">
+        {/* SECTION 1 & 2: AVAILABILITY + MAIN TITLE (Grouped for closeness) */}
+        <div className="relative z-10 w-full space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+            <span className="font-mono text-[0.6em] uppercase tracking-[0.4em] text-white/30 dark:text-black/30 font-bold block">
+              {t.footer.title}
+            </span>
+          </div>
+          <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.85] tracking-tighter max-w-6xl flex flex-wrap items-end gap-x-4">
             {t.footer.subtitle}
+            
+            {/* Integrated Lightbulb (Always at the right of the last word) */}
+            <span 
+              ref={bulbRef}
+              className="inline-flex mb-1 lg:mb-2 opacity-80 group cursor-pointer transition-all duration-500 hover:opacity-100 hover:scale-110 h-[0.8em]"
+            >
+              <span className="relative flex items-center">
+                <Lightbulb 
+                  size={80} 
+                  strokeWidth={0.5}
+                  className="text-white dark:text-black group-hover:text-yellow-400 transition-colors duration-500" 
+                />
+                <div className="absolute inset-0 bg-yellow-400 blur-3xl rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+              </span>
+            </span>
           </h2>
         </div>
 

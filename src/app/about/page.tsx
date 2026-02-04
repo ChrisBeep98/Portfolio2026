@@ -66,13 +66,14 @@ export default function AboutPage() {
         }
       });
 
+      // Technical Footer: Slides up to meet the content with slightly more inertia
       gsap.to(".tech-specs", {
-        y: -40,
+        y: -100,
         scrollTrigger: {
           trigger: ".parallax-monolith",
-          start: "top center",
+          start: "top bottom",
           end: "bottom top",
-          scrub: true
+          scrub: 1.2
         }
       });
 
@@ -143,7 +144,7 @@ export default function AboutPage() {
             </div>
 
             {/* Insight Image (Printed Photo Aesthetic - Responsive Padding) */}
-            <div className="slam-left parallax-insight absolute -bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[6px] lg:p-4 pb-12 lg:pb-12 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
+            <div className="slam-left parallax-insight absolute -bottom-24 lg:-bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[6px] lg:p-4 pb-12 lg:pb-12 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
               <div className="w-full aspect-square overflow-hidden mb-6 lg:mb-6">
                 <img 
                   src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
@@ -158,11 +159,14 @@ export default function AboutPage() {
             </div>
 
             {/* Technical Specs */}
-            <div className="mt-20 text-right slam-right tech-specs">
-              <p className="font-black text-2xl uppercase tracking-tighter">Christian Sandoval Moná</p>
-              <div className="flex justify-end items-center gap-4 mt-2">
-                <div className="h-px w-12 bg-orange-500" />
-                <p className="font-mono text-[0.65em] uppercase tracking-[0.3em] opacity-40">27 Años / Medellín, COL</p>
+            <div className="mt-32 md:mt-20 text-left lg:text-right slam-right tech-specs">
+              <div className="flex flex-col lg:flex-row lg:justify-end items-start lg:items-center gap-4 mt-2">
+                <div className="h-px w-12 bg-orange-500 hidden lg:block" />
+                <p className="font-mono text-[0.65em] uppercase tracking-[0.3em] opacity-40 leading-loose">
+                  <span className="block lg:inline">27 Años</span>
+                  <span className="hidden lg:inline ml-2">/</span>
+                  <span className="block lg:inline lg:ml-2">Salento, COL</span>
+                </p>
               </div>
             </div>
 
