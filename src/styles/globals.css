@@ -22,7 +22,7 @@
   --surface: rgba(0, 0, 0, 0.03);
   
   /* Core Spacing Scale (Elastic) */
-  --px-frame: 3em;
+  --px-frame: 6em;
   --section-gap: 8em;
   --block-gap: 2em;
   --content-gap: 1em;
