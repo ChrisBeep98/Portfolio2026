@@ -32,6 +32,19 @@ export const dictionary = {
       w18: "work", w19: "lives", w20: "at the", w21: "intersection", w22: "between",
       w23: "aesthetics", w24: "and", w25: "technology.", w26: ""
     },
+    footer: {
+      title: "I AM AVAILABLE",
+      subtitle: "CONTACT ME IF YOU WANT TO DESIGN AN IDEA",
+      email: "christiansandovaldesign@gmail.com",
+      copyright: "© 2025 Christian.",
+      links: {
+        email: "EMAIL",
+        instagram: "INSTAGRAM",
+        whatsapp: "WHATSAPP",
+        phone: "+57 310 713 58 20",
+        instagramUrl: "https://www.instagram.com/christiansandovalmona/"
+      }
+    },
     vank: {
       intro: {
         back: "Projects",
@@ -172,6 +185,19 @@ export const dictionary = {
       w14: "funcionales", w15: "y", w16: "memorables.", w17: "Mi",
       w18: "trabajo", w19: "habita", w20: "en", w21: "la", w22: "intersección",
       w23: "entre", w24: "estética", w25: "y", w26: "tecnología."
+    },
+    footer: {
+      title: "ESTOY DISPONIBLE",
+      subtitle: "CONTÁCTAME SI QUIERES DISEÑAR UNA IDEA",
+      email: "christiansandovaldesign@gmail.com",
+      copyright: "© 2025 Christian.",
+      links: {
+        email: "EMAIL",
+        instagram: "INSTAGRAM",
+        whatsapp: "WHATSAPP",
+        phone: "+57 310 713 58 20",
+        instagramUrl: "https://www.instagram.com/christiansandovalmona/"
+      }
     },
     vank: {
       intro: {
