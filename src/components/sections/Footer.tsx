@@ -30,7 +30,8 @@ export default function Footer() {
         </div>
 
         {/* SECTION 1: TOP LABEL */}
-        <div className="relative z-10 w-full">
+        <div className="relative z-10 w-full flex items-center gap-4">
+          <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
           <span className="font-mono text-[0.6em] uppercase tracking-[0.4em] text-white/30 dark:text-black/30 font-bold block">
             {t.footer.title}
           </span>

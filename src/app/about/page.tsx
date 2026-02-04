@@ -35,7 +35,6 @@ export default function AboutPage() {
       );
 
       // 2. ARCHITECTURAL DEPTH (Straight Parallax Only)
-      // Main Monolith: Subtle lift + Scale (No rotation)
       gsap.to(".parallax-monolith", {
         y: -120,
         scale: 1.05,
@@ -47,7 +46,6 @@ export default function AboutPage() {
         }
       });
 
-      // Insight Image: Faster vertical drift to create layers
       gsap.to(".parallax-insight", {
         y: -220,
         scrollTrigger: {
@@ -58,7 +56,6 @@ export default function AboutPage() {
         }
       });
 
-      // Technical Data: Peeking effect
       gsap.to(".vertical-text", {
         y: -60,
         scrollTrigger: {
@@ -69,7 +66,6 @@ export default function AboutPage() {
         }
       });
 
-      // Technical Footer: Slides up to meet the content
       gsap.to(".tech-specs", {
         y: -40,
         scrollTrigger: {
@@ -96,14 +92,13 @@ export default function AboutPage() {
           <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
           <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
           <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
-          {/* Columnas adicionales solo para Desktop */}
           {[...Array(9)].map((_, i) => (
             <div key={i} className="tech-grid-line hidden lg:block w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
           ))}
         </div>
       </div>
 
-      <section className="relative pt-[14em] pb-[10em] px-frame z-10">
+      <section className="relative pt-[8em] lg:pt-[14em] pb-[10em] px-frame z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
           {/* TEXT CONTENT */}
@@ -134,7 +129,7 @@ export default function AboutPage() {
           </div>
 
           {/* VISUAL EXHIBITION */}
-          <div className="lg:col-span-5 relative mt-32 lg:mt-0">
+          <div className="lg:col-span-5 relative mt-16 lg:mt-0">
             
             {/* Main Monolith */}
             <div className="slam-right parallax-monolith relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group rounded-sm">
@@ -147,16 +142,16 @@ export default function AboutPage() {
               <div className="absolute top-6 right-6 font-mono text-[0.45em] tracking-[0.4em] text-white mix-blend-difference vertical-text">CS_REF_001</div>
             </div>
 
-            {/* Insight Image (Printed Photo Aesthetic) */}
-            <div className="slam-left parallax-insight absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-[1/1.2] z-20 pt-4 px-4 pb-12 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
-              <div className="w-full aspect-square overflow-hidden mb-6">
+            {/* Insight Image (Printed Photo Aesthetic - Responsive Padding) */}
+            <div className="slam-left parallax-insight absolute -bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[6px] lg:p-4 pb-12 lg:pb-12 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
+              <div className="w-full aspect-square overflow-hidden mb-6 lg:mb-6">
                 <img 
                   src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
                   alt="Detail" 
                   className="w-full h-full object-cover opacity-80 grayscale"
                 />
               </div>
-              <div className="flex justify-between items-center opacity-40 font-mono text-[0.5rem] tracking-[0.3em] uppercase">
+              <div className="flex justify-between items-center px-2 lg:px-0 opacity-40 font-mono text-[0.5rem] tracking-[0.3em] uppercase">
                 <span>[ DETAIL_VIEW ]</span>
                 <span>RAW_DATA</span>
               </div>

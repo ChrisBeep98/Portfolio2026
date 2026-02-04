@@ -34,7 +34,7 @@ export const dictionary = {
       w23: "aesthetics", w24: "and", w25: "technology.", w26: ""
     },
     footer: {
-      title: "LET'S TALK",
+      title: "I AM AVAILABLE",
       subtitle: "ELEVATING YOUR NEXT DIGITAL EXPERIENCE",
       email: "christiansandovaldesign@gmail.com",
       copyright: "© 2026 Christian Sandoval.",
@@ -189,7 +189,7 @@ export const dictionary = {
       w23: "entre", w24: "estética", w25: "y", w26: "tecnología."
     },
     footer: {
-      title: "HABLEMOS",
+      title: "ESTOY DISPONIBLE",
       subtitle: "LLEVEMOS TU PROYECTO AL SIGUIENTE NIVEL",
       email: "christiansandovaldesign@gmail.com",
       copyright: "© 2026 Christian Sandoval.",
