@@ -50,7 +50,7 @@ export default function Footer() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center gap-4 px-8 py-5 border rounded-[8px] transition-all duration-500 hover:-translate-y-1 bg-transparent"
+                  className="group relative flex items-center gap-4 px-8 py-5 border rounded-[8px] transition-all duration-500 hover:-translate-y-1 bg-[#141414] dark:bg-white shadow-sm"
                   style={{ borderColor: `${item.color}40` }} // Border con 40% opacidad
                   onMouseEnter={(e) => e.currentTarget.style.borderColor = item.color}
                   onMouseLeave={(e) => e.currentTarget.style.borderColor = `${item.color}40`}
