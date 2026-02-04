@@ -39,9 +39,32 @@ export default function AboutPage() {
         "-=1"
       );
 
-      // 2. SCROLL DEPTH
-      gsap.to(".parallax-element", {
-        y: -50,
+      // 2. SCROLL DEPTH (Parallax & Scale)
+      gsap.to(".parallax-monolith", {
+        y: -100,
+        scale: 1.05,
+        scrollTrigger: {
+          trigger: ".parallax-monolith",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1
+        }
+      });
+
+      gsap.to(".parallax-insight", {
+        y: -180,
+        x: -20,
+        scrollTrigger: {
+          trigger: ".parallax-insight",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5
+        }
+      });
+
+      // Subtle rotation for the sidebar data text
+      gsap.to(".vertical-text", {
+        y: 40,
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
@@ -108,10 +131,10 @@ export default function AboutPage() {
           </div>
 
           {/* LADO DERECHO: LA EXHIBICIÓN (Cols 8-12) */}
-          <div className="lg:col-span-5 relative mt-32 lg:mt-0 parallax-element">
+          <div className="lg:col-span-5 relative mt-32 lg:mt-0">
             
             {/* Imagen Principal (The Monolith) */}
-            <div className="slam-right relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group">
+            <div className="slam-right parallax-monolith relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
                 alt="Portrait" 
@@ -125,7 +148,7 @@ export default function AboutPage() {
             </div>
 
             {/* Imagen Secundaria (The Insight) */}
-            <div className="slam-left absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-square z-20 p-4 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5">
+            <div className="slam-left parallax-insight absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-square z-20 p-4 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5">
               <div className="w-full h-full overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
