@@ -18,30 +18,26 @@ export default function AboutPage() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-      // 1. THE SLAM ENTRY (Cinematic Architect Protocol)
+      // 1. THE SLAM ENTRY (Clean & Direct)
       tl.fromTo(".tech-grid-line", 
         { scaleY: 0 }, 
-        { scaleY: 1, duration: 1.5, stagger: 0.05, transformOrigin: "top" }
+        { scaleY: 1, duration: 1.2, stagger: 0.03, transformOrigin: "top" }
       )
       .fromTo(".slam-left",
-        { x: "-120%", opacity: 0 },
-        { x: "0%", opacity: 1, duration: 1.8, stagger: 0.1 },
-        "-=1.2"
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5, stagger: 0.1 },
+        "-=0.8"
       )
       .fromTo(".slam-right",
-        { x: "120%", opacity: 0 },
-        { x: "0%", opacity: 1, duration: 1.8 },
-        "-=1.6"
-      )
-      .fromTo(".reveal-hollow",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 2, ease: "power2.out" },
-        "-=1"
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5 },
+        "-=1.2"
       );
 
-      // 2. SCROLL DEPTH (Parallax & Scale)
+      // 2. ARCHITECTURAL DEPTH (Straight Parallax Only)
+      // Main Monolith: Subtle lift + Scale (No rotation)
       gsap.to(".parallax-monolith", {
-        y: -100,
+        y: -120,
         scale: 1.05,
         scrollTrigger: {
           trigger: ".parallax-monolith",
@@ -51,9 +47,9 @@ export default function AboutPage() {
         }
       });
 
+      // Insight Image: Faster vertical drift to create layers
       gsap.to(".parallax-insight", {
-        y: -180,
-        x: -20,
+        y: -220,
         scrollTrigger: {
           trigger: ".parallax-insight",
           start: "top bottom",
@@ -62,12 +58,23 @@ export default function AboutPage() {
         }
       });
 
-      // Subtle rotation for the sidebar data text
+      // Technical Data: Peeking effect
       gsap.to(".vertical-text", {
-        y: 40,
+        y: -60,
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
+          trigger: ".parallax-monolith",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.8
+        }
+      });
+
+      // Technical Footer: Slides up to meet the content
+      gsap.to(".tech-specs", {
+        y: -40,
+        scrollTrigger: {
+          trigger: ".parallax-monolith",
+          start: "top center",
           end: "bottom top",
           scrub: true
         }
@@ -82,7 +89,7 @@ export default function AboutPage() {
     <main ref={containerRef} className="bg-[#F2F2F0] dark:bg-[#050505] text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
       <Header />
       
-      {/* GRID ESTRUCTURAL (12 Columnas de Galería) */}
+      {/* GRID ESTRUCTURAL */}
       <div className="fixed inset-0 pointer-events-none z-0 px-frame">
         <div className="grid grid-cols-12 h-full w-full gap-0">
           {[...Array(13)].map((_, i) => (
@@ -92,10 +99,9 @@ export default function AboutPage() {
       </div>
 
       <section className="relative pt-[14em] pb-[10em] px-frame z-10">
-        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
-          {/* LADO IZQUIERDO: EL MANIFIESTO (Cols 1-7) */}
+          {/* TEXT CONTENT */}
           <div className="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-20">
             <div className="slam-left mb-12">
               <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
@@ -105,15 +111,9 @@ export default function AboutPage() {
             </div>
 
             <div className="space-y-4 mb-16">
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
-                Christian
-              </h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
-                Sandoval
-              </h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">
-                Moná
-              </h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
             </div>
 
             <div className="slam-left max-w-xl border-l-2 border-orange-500 pl-8 space-y-8">
@@ -122,33 +122,28 @@ export default function AboutPage() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 {["UX / UI", "Webflow Dev", "Bilingual"].map((tag) => (
-                  <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">
-                    {tag}
-                  </span>
+                  <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">{tag}</span>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* LADO DERECHO: LA EXHIBICIÓN (Cols 8-12) */}
+          {/* VISUAL EXHIBITION */}
           <div className="lg:col-span-5 relative mt-32 lg:mt-0">
             
-            {/* Imagen Principal (The Monolith) */}
-            <div className="slam-right parallax-monolith relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group">
+            {/* Main Monolith */}
+            <div className="slam-right parallax-monolith relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group rounded-sm">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
                 alt="Portrait" 
                 className="w-full h-full object-cover grayscale brightness-110 contrast-110 group-hover:scale-105 transition-all duration-1000"
               />
-              {/* Overlay de Datos en Dark Mode */}
               <div className="absolute inset-0 bg-orange-500/10 mix-blend-overlay opacity-0 dark:opacity-100 transition-opacity" />
-              <div className="absolute top-6 right-6 font-mono text-[0.45em] tracking-[0.4em] text-white mix-blend-difference vertical-text">
-                CS_REF_001
-              </div>
+              <div className="absolute top-6 right-6 font-mono text-[0.45em] tracking-[0.4em] text-white mix-blend-difference vertical-text">CS_REF_001</div>
             </div>
 
-            {/* Imagen Secundaria (The Insight) */}
-            <div className="slam-left parallax-insight absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-square z-20 p-4 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5">
+            {/* Insight Image (Perfectly Upright) */}
+            <div className="slam-left parallax-insight absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-square z-20 p-4 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
               <div className="w-full h-full overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
@@ -162,8 +157,8 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Ficha Técnica */}
-            <div className="mt-20 text-right slam-right">
+            {/* Technical Specs */}
+            <div className="mt-20 text-right slam-right tech-specs">
               <p className="font-black text-2xl uppercase tracking-tighter">Christian Sandoval Moná</p>
               <div className="flex justify-end items-center gap-4 mt-2">
                 <div className="h-px w-12 bg-orange-500" />
@@ -176,13 +171,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* MARCA DE AGUA (Sidebar) */}
       <div className="fixed bottom-12 left-12 mix-blend-difference z-40 hidden lg:block opacity-20 pointer-events-none">
-        <p className="font-mono text-[0.5em] tracking-[1em] uppercase rotate-[-90deg] origin-left">
-          ART_DIRECTION_2026
-        </p>
+        <p className="font-mono text-[0.5em] tracking-[1em] uppercase rotate-[-90deg] origin-left">ART_DIRECTION_2026</p>
       </div>
-
     </main>
   );
 }
