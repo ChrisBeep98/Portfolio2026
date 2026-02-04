@@ -89,11 +89,16 @@ export default function AboutPage() {
     <main ref={containerRef} className="bg-[#F2F2F0] dark:bg-[#050505] text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
       <Header />
       
-      {/* GRID ESTRUCTURAL */}
+      {/* GRID ESTRUCTURAL (12 Cols en Desktop, 4 en Mobile) */}
       <div className="fixed inset-0 pointer-events-none z-0 px-frame">
-        <div className="grid grid-cols-12 h-full w-full gap-0">
-          {[...Array(13)].map((_, i) => (
-            <div key={i} className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+        <div className="grid grid-cols-4 lg:grid-cols-12 h-full w-full gap-0">
+          <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+          <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+          <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+          <div className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+          {/* Columnas adicionales solo para Desktop */}
+          {[...Array(9)].map((_, i) => (
+            <div key={i} className="tech-grid-line hidden lg:block w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
           ))}
         </div>
       </div>
@@ -116,7 +121,7 @@ export default function AboutPage() {
               <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
             </div>
 
-            <div className="slam-left max-w-xl border-l-2 border-orange-500 pl-8 space-y-8">
+            <div className="slam-left max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8">
               <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70">
                 Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="text-foreground font-bold">investigación</span>, <span className="text-foreground font-bold">estructura</span> y <span className="text-foreground font-bold">creatividad</span>.
               </p>
