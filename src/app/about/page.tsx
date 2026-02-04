@@ -13,42 +13,40 @@ if (typeof window !== "undefined") {
 export default function AboutPage() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
-  const imageGroupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-      // 1. ENTRADA DE SEDA (Silk Entry)
-      tl.fromTo(".fade-up", 
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2.5, stagger: 0.15, delay: 0.2 }
+      // 1. THE SLAM ENTRY (Cinematic Architect Protocol)
+      tl.fromTo(".tech-grid-line", 
+        { scaleY: 0 }, 
+        { scaleY: 1, duration: 1.5, stagger: 0.05, transformOrigin: "top" }
       )
-      .fromTo(".image-slide", 
-        { x: 50, opacity: 0, scale: 1.05 },
-        { x: 0, opacity: 1, scale: 1, duration: 3, ease: "power4.out" },
-        "-=2"
+      .fromTo(".slam-left",
+        { x: "-120%", opacity: 0 },
+        { x: "0%", opacity: 1, duration: 1.8, stagger: 0.1 },
+        "-=1.2"
+      )
+      .fromTo(".slam-right",
+        { x: "120%", opacity: 0 },
+        { x: "0%", opacity: 1, duration: 1.8 },
+        "-=1.6"
+      )
+      .fromTo(".reveal-hollow",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 2, ease: "power2.out" },
+        "-=1"
       );
 
-      // 2. PARALLAX ORGÁNICO
-      gsap.to(".parallax-bg", {
-        y: -100,
+      // 2. SCROLL DEPTH
+      gsap.to(".parallax-element", {
+        y: -50,
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1.5
-        }
-      });
-
-      gsap.to(".parallax-fg", {
-        y: -180,
-        rotate: -2,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1
+          scrub: true
         }
       });
 
@@ -58,72 +56,95 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main ref={containerRef} className="bg-[#FAF9F6] dark:bg-[#0a0a0a] text-[#1A1A1A] dark:text-[#EAEAEA] min-h-screen font-sans selection:bg-[#1A1A1A] selection:text-white overflow-x-hidden transition-colors duration-1000">
+    <main ref={containerRef} className="bg-[#F2F2F0] dark:bg-[#050505] text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
       <Header />
       
-      {/* BACKGROUND TEXTURE (Abstracción de Galería) */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none opacity-[0.03] dark:opacity-[0.05] z-0 flex items-center justify-center overflow-hidden">
-        <h1 className="text-[40vw] font-black tracking-tighter leading-none select-none">ABOUT</h1>
+      {/* GRID ESTRUCTURAL (12 Columnas de Galería) */}
+      <div className="fixed inset-0 pointer-events-none z-0 px-frame">
+        <div className="grid grid-cols-12 h-full w-full gap-0">
+          {[...Array(13)].map((_, i) => (
+            <div key={i} className="tech-grid-line w-px h-full bg-foreground/[0.03] dark:bg-white/[0.03] relative" />
+          ))}
+        </div>
       </div>
 
-      <section className="relative pt-[18em] pb-[15em] px-frame z-10">
+      <section className="relative pt-[14em] pb-[10em] px-frame z-10">
         
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
-          {/* INFO SIDE (Estilo Editorial) */}
-          <div className="w-full lg:w-[45%] flex flex-col pt-10">
-            <div className="fade-up mb-16">
-              <p className="font-mono text-[0.6em] uppercase tracking-[0.6em] opacity-40 mb-4">Profile_Exhibit_2026</p>
-              <div className="h-px w-16 bg-current opacity-20" />
+          {/* LADO IZQUIERDO: EL MANIFIESTO (Cols 1-7) */}
+          <div className="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-20">
+            <div className="slam-left mb-12">
+              <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
+                <span className="w-8 h-px bg-orange-500" />
+                [ PROFILE_LOG_2026 ]
+              </span>
             </div>
 
-            <h1 className="fade-up text-5xl md:text-7xl lg:text-[5rem] font-light tracking-tighter leading-[1.05] mb-12 italic">
-              <span className="font-bold not-italic">{t.about.w2}</span> <br/>
-              UX / UI & <br/>
-              <span className="opacity-30">Webflow Dev</span>
-            </h1>
+            <div className="space-y-4 mb-16">
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase">
+                {t.about.w2}
+              </h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase text-transparent dark:[-webkit-text-stroke:1px_rgba(255,255,255,0.4)] [-webkit-text-stroke:1px_rgba(0,0,0,0.4)] italic">
+                UX / UI
+              </h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] uppercase">
+                Creative Dev
+              </h1>
+            </div>
 
-            <div className="fade-up max-w-lg lg:ml-8">
-              <p className="text-xl md:text-2xl font-light leading-[1.6] opacity-70">
-                Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="font-medium opacity-100">investigación</span>, <span className="font-medium opacity-100">estructura</span> y <span className="font-medium opacity-100">creatividad</span>.
+            <div className="slam-left max-w-xl border-l-2 border-orange-500 pl-8 space-y-8">
+              <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70 italic">
+                &quot;{t.about.w7} {t.about.w8} {t.about.w9} {t.about.w10} {t.about.w11} {t.about.w12}...&quot;
               </p>
-              <div className="mt-12 flex items-center gap-6 opacity-30 font-mono text-[0.65em] uppercase tracking-[0.3em]">
-                <span>Bilingual Creative</span>
-                <span className="w-1 h-1 bg-current rounded-full" />
-                <span>Medellín, COL</span>
+              <div className="flex flex-wrap gap-4 pt-4">
+                {["Investigación", "Estructura", "Creatividad"].map((tag) => (
+                  <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* VISUAL SIDE (Estilo Exposición) */}
-          <div ref={imageGroupRef} className="w-full lg:w-[50%] relative aspect-[4/5] lg:aspect-auto lg:h-[85vh]">
+          {/* LADO DERECHO: LA EXHIBICIÓN (Cols 8-12) */}
+          <div className="lg:col-span-5 relative mt-32 lg:mt-0 parallax-element">
             
-            {/* Imagen Grande (The Monolith) */}
-            <div className="image-slide parallax-bg relative w-full lg:w-[90%] h-full lg:h-[90%] bg-neutral-100 dark:bg-neutral-900 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] overflow-hidden">
+            {/* Imagen Principal (The Monolith) */}
+            <div className="slam-right relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
                 alt="Portrait" 
-                className="w-full h-full object-cover grayscale brightness-105 transition-all duration-1000 hover:grayscale-0"
+                className="w-full h-full object-cover grayscale brightness-110 contrast-110 group-hover:scale-105 transition-all duration-1000"
               />
-              
-              {/* Caption Minimalista */}
-              <div className="absolute bottom-10 right-10 text-right mix-blend-difference text-white">
-                <p className="font-bold text-xl uppercase tracking-tighter">Christian Sandoval Moná</p>
-                <p className="font-mono text-[0.6em] uppercase tracking-[0.2em] opacity-60 mt-1">27 Años — Digital Architect</p>
+              {/* Overlay de Datos en Dark Mode */}
+              <div className="absolute inset-0 bg-orange-500/10 mix-blend-overlay opacity-0 dark:opacity-100 transition-opacity" />
+              <div className="absolute top-6 right-6 font-mono text-[0.45em] tracking-[0.4em] text-white mix-blend-difference vertical-text">
+                CS_REF_001
               </div>
             </div>
 
-            {/* Imagen Pequeña (The Floating Detail) */}
-            <div className="image-slide parallax-fg absolute -bottom-16 -left-12 lg:-left-24 w-[50%] aspect-square z-20">
-              <div className="w-full h-full p-3 bg-white dark:bg-[#111] shadow-[0_50px_100px_-15px_rgba(0,0,0,0.2)] rotate-3">
-                <div className="w-full h-full overflow-hidden relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
-                    alt="Detail" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 border border-black/5 pointer-events-none" />
-                </div>
+            {/* Imagen Secundaria (The Insight) */}
+            <div className="slam-left absolute -bottom-16 -left-12 lg:-left-24 w-[55%] aspect-square z-20 p-4 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5">
+              <div className="w-full h-full overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
+                  alt="Detail" 
+                  className="w-full h-full object-cover opacity-80"
+                />
+              </div>
+              <div className="mt-4 flex justify-between items-center opacity-30 font-mono text-[0.5rem] tracking-widest">
+                <span>[ DETAIL_VIEW ]</span>
+                <span>RAW_DATA</span>
+              </div>
+            </div>
+
+            {/* Ficha Técnica */}
+            <div className="mt-20 text-right slam-right">
+              <p className="font-black text-2xl uppercase tracking-tighter">Christian Sandoval Moná</p>
+              <div className="flex justify-end items-center gap-4 mt-2">
+                <div className="h-px w-12 bg-orange-500" />
+                <p className="font-mono text-[0.65em] uppercase tracking-[0.3em] opacity-40">27 Años / Medellín, COL</p>
               </div>
             </div>
 
@@ -132,11 +153,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ELEMENTO DE CIERRE (Ficha de Galería) */}
-      <div className="fixed bottom-12 right-12 fade-up pointer-events-none hidden lg:block">
-        <div className="text-right">
-          <p className="font-mono text-[0.5em] tracking-[0.5em] opacity-20 uppercase">Personal Exhibition / Ver. 2.6</p>
-        </div>
+      {/* MARCA DE AGUA (Sidebar) */}
+      <div className="fixed bottom-12 left-12 mix-blend-difference z-40 hidden lg:block opacity-20 pointer-events-none">
+        <p className="font-mono text-[0.5em] tracking-[1em] uppercase rotate-[-90deg] origin-left">
+          ART_DIRECTION_2026
+        </p>
       </div>
 
     </main>
