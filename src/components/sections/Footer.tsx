@@ -52,11 +52,11 @@ export default function Footer() {
 
         {/* 2. CENTRAL TITLE (With Bulb) */}
         <div className="relative z-10 w-full">
-          <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.85] tracking-tighter max-w-6xl">
+          <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.95] lg:leading-[0.85] tracking-tighter max-w-6xl">
             {t.footer.subtitle}
             <span 
               ref={bulbRef}
-              className="inline-flex items-center justify-center ml-2 lg:-ml-4 lg:mb-[6px] lg:-translate-y-1.5 opacity-80 group cursor-pointer transition-all duration-500 hover:opacity-100 hover:scale-110 align-middle h-[1em] w-[1em]"
+              className="inline-flex items-center justify-center -ml-2.5 -translate-y-1 lg:-ml-4 lg:mb-[6px] lg:-translate-y-1.5 opacity-80 group cursor-pointer transition-all duration-500 hover:opacity-100 hover:scale-110 align-middle h-[1em] w-[1em]"
             >
               <span className="relative flex items-center justify-center">
                 <Lightbulb size="0.8em" strokeWidth={0.5} className="text-white dark:text-black group-hover:text-yellow-400 transition-colors duration-500" />

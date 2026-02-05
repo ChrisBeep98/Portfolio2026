@@ -232,9 +232,9 @@ export default function AboutPage() {
             <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block mb-8">
               [ {t.story.disciplinesTitle} ]
             </span>
-            <div className="space-y-2">
+            <div className="story-reveal space-y-2">
               {t.story.disciplinesList.map((item, i) => (
-                <div key={i} className="story-reveal flex items-center gap-6 py-4 px-6 rounded-xl border border-transparent hover:border-foreground/5 hover:bg-foreground/[0.01] transition-all duration-500 group/item">
+                <div key={i} className="flex items-center gap-6 py-4 px-6 rounded-xl border border-transparent hover:border-foreground/5 hover:bg-foreground/[0.01] transition-all duration-500 group/item">
                   <span className="font-mono text-[0.6em] text-orange-500/40 group-hover/item:text-orange-500 transition-colors">0{i + 1}</span>
                   <span className="text-lg font-bold uppercase tracking-tight text-foreground/80 group-hover/item:text-foreground transition-colors">
                     {item}
