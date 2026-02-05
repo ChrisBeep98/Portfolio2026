@@ -276,58 +276,62 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* SECCIÓN: HERRAMIENTAS (Sticky + ZigZag) */}
-      <section className="relative py-[4em] lg:py-[8em] px-frame border-t border-foreground/5 z-10 bg-background">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[3em] lg:gap-0 items-start">
+      {/* SECCIÓN: HERRAMIENTAS (Sticky + Technical Grid) */}
+      <section className="relative py-[8em] px-frame border-t border-foreground/5 z-10 bg-background overflow-visible">
+        <div className="flex flex-col lg:flex-row items-start gap-20">
           
-          {/* Left Column: Sticky Title & Description */}
-          <div className="lg:col-span-5 relative h-full">
-            <div className="lg:sticky lg:top-32 lg:pb-32 h-fit">
-              <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">
-                03 / {t.tools.title}
-              </span>
-              <h3 className="story-reveal text-5xl md:text-6xl font-extrabold uppercase tracking-tighter leading-none text-foreground mb-8">
-                {t.tools.title}
-              </h3>
-              <p className="story-reveal text-xl font-light leading-relaxed text-foreground/70 max-w-sm">
-                {t.tools.description}
-              </p>
-            </div>
+          {/* Columna Izquierda: Contenido Sticky */}
+          <div className="w-full lg:w-5/12 lg:sticky lg:top-40 h-fit">
+            <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">
+              03 / {t.tools.title}
+            </span>
+            <h3 className="story-reveal text-5xl md:text-6xl font-extrabold uppercase tracking-tighter leading-none text-foreground mb-8">
+              {t.tools.title}
+            </h3>
+            <p className="story-reveal text-xl font-light leading-relaxed text-foreground/70 max-w-sm">
+              {t.tools.description}
+            </p>
           </div>
 
-          {/* Right Column: Single Stream Zig-Zag (Alternating Steps) */}
-          <div className="lg:col-span-7 flex justify-end">
-            <div className="w-full max-w-xl flex flex-col">
-              
-              {t.tools.items.map((tool, i) => (
-                <div 
-                  key={i} 
-                  className={`
-                    story-reveal group relative aspect-square w-1/2 
-                    bg-background border border-foreground/10 
-                    hover:border-orange-500/50 hover:z-10 hover:shadow-2xl hover:shadow-orange-500/10
-                    transition-all duration-500 
-                    flex flex-col items-center justify-center text-center p-8
-                    ${i % 2 === 0 ? 'self-start' : 'self-end'} 
-                    ${i !== 0 ? '-mt-[1px]' : ''} 
-                    ${i % 2 !== 0 ? '-ml-[1px]' : ''}
-                  `}
-                >
-                  <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
-                    {getToolIcon(tool.name)}
-                  </div>
-                  <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
-                    {tool.name}
-                  </span>
-                  <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
-                    {tool.label}
-                  </span>
-                  
-                  {/* Corner Accent */}
-                  <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              ))}
-
+          {/* Columna Derecha: Grilla Técnica en Zig-Zag */}
+          <div className="w-full lg:w-7/12 flex justify-end">
+            <div className="grid grid-cols-2 w-full max-w-xl border-l border-t border-foreground/10">
+              {t.tools.items.map((tool, i) => {
+                const isEven = i % 2 === 0;
+                return (
+                  <React.Fragment key={i}>
+                    {isEven ? (
+                      <>
+                        {/* Herramienta (Izquierda) */}
+                        <div className="story-reveal group relative aspect-square bg-background border-r border-b border-foreground/10 hover:border-orange-500/50 hover:z-20 transition-all duration-500 flex flex-col items-center justify-center text-center p-6 lg:p-10">
+                          <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
+                            {getToolIcon(tool.name)}
+                          </div>
+                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">{tool.name}</span>
+                          <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">{tool.label}</span>
+                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                        {/* Celda Vacía (Derecha) */}
+                        <div className="aspect-square border-r border-b border-foreground/10 bg-foreground/[0.01]" />
+                      </>
+                    ) : (
+                      <>
+                        {/* Celda Vacía (Izquierda) */}
+                        <div className="aspect-square border-r border-b border-foreground/10 bg-foreground/[0.01]" />
+                        {/* Herramienta (Derecha) */}
+                        <div className="story-reveal group relative aspect-square bg-background border-r border-b border-foreground/10 hover:border-orange-500/50 hover:z-20 transition-all duration-500 flex flex-col items-center justify-center text-center p-6 lg:p-10">
+                          <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
+                            {getToolIcon(tool.name)}
+                          </div>
+                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">{tool.name}</span>
+                          <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">{tool.label}</span>
+                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      </>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
 

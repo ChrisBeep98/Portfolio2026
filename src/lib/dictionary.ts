@@ -52,48 +52,43 @@ export const dictionary = {
         { name: "GSAP", label: "Motion", desc: "Advanced programmatic animations and interactions." }
       ]
     },
+    process: {
+      title: "My Process",
+      subtitle: "A methodological approach to digital excellence.",
+      items: [
+        {
+          id: "01",
+          title: "Art Direction",
+          desc: "Defining the visual soul of the project. We establish a unique aesthetic language that resonates with the brand's essence and the desired emotional impact."
+        },
+        {
+          id: "02",
+          title: "UX Focus",
+          desc: "Empathy-driven design. We analyze user behaviors to build intuitive architectures and seamless flows that solve real problems through research and testing."
+        },
+        {
+          id: "03",
+          title: "UI Prototyping",
+          desc: "Bringing ideas to life. From high-fidelity wireframes to interactive prototypes that allow us to validate the experience before the first line of code."
+        },
+        {
+          id: "04",
+          title: "Micro-interactions",
+          desc: "The magic is in the details. We design subtle movements and feedbacks that improve usability and create a deep emotional connection with the user."
+        }
+      ]
+    },
     footer: {
       title: "I AM AVAILABLE",
-      subtitle: "CONTACT ME IF YOU WANT TO CREATE AN IDEA",
+      subtitle: "ELEVATING YOUR DIGITAL EXPERIENCE",
       email: "christiansandovaldesign@gmail.com",
-      copyright: "© 2025 Christian.",
+      copyright: "© 2026 Christian Sandoval.",
       links: {
-        email: "EMAIL",
-        instagram: "INSTAGRAM",
-        whatsapp: "WHATSAPP",
+        email: "Email",
+        instagram: "Instagram",
+        whatsapp: "Whatsapp",
         phone: "+57 310 713 58 20",
         instagramUrl: "https://www.instagram.com/christiansandovalmona/"
-      }
-    },
-    projects: {
-      label: "Project",
-      explore: "Explore",
-      caseStudy: "Case_Study",
-      items: {
-        vank: {
-          title: "VANK",
-          category: "Fintech Platform",
-          description: "A comprehensive fintech platform designed to democratize access to complex financial tools and cryptocurrencies.",
-          tags: ["UX Strategy", "UI Design", "Fintech"]
-        },
-        aura: {
-          title: "Aura Design System",
-          category: "Design System",
-          description: "A comprehensive design system with 50+ components, tokens, and documentation for enterprise applications.",
-          tags: ["React", "Storybook", "Figma"]
-        },
-        pulse: {
-          title: "Pulse Analytics",
-          category: "Data Visualization",
-          description: "Real-time data visualization dashboard for monitoring business metrics with interactive charts and reports.",
-          tags: ["D3.js", "Vue", "WebSocket"]
-        },
-        vertex: {
-          title: "Vertex Commerce",
-          category: "E-commerce",
-          description: "Headless e-commerce solution with seamless checkout, inventory management, and multi-currency support.",
-          tags: ["Next.js", "Stripe", "Prisma"]
-        }
       }
     },
     vank: {
@@ -190,48 +185,43 @@ export const dictionary = {
         { name: "GSAP", label: "Motion", desc: "Animaciones programáticas avanzadas." }
       ]
     },
+    process: {
+      title: "Mi proceso",
+      subtitle: "Un enfoque metodológico hacia la excelencia digital.",
+      items: [
+        {
+          id: "01",
+          title: "Dirección de arte",
+          desc: "Definiendo el alma visual del proyecto. Establecemos un lenguaje estético único que resuene con la esencia de la marca y el desired emotional impact."
+        },
+        {
+          id: "02",
+          title: "Enfoque UX",
+          desc: "Diseño impulsado por la empatía. Analizamos comportamientos de usuario para construir arquitecturas intuitivas y flujos fluidos que resuelvan problemas reales mediante investigación y pruebas."
+        },
+        {
+          id: "03",
+          title: "Prototipado UI",
+          desc: "Dando vida a las ideas. Desde wireframes de alta fidelidad hasta prototipos interactivos que nos permiten validar la experiencia antes de la primera línea de código."
+        },
+        {
+          id: "04",
+          title: "Microinteracciones",
+          desc: "La magia está en los detalles. Diseñamos movimientos sutiles y feedbacks que mejoran la usabilidad y crean una conexión emocional profunda con el usuario."
+        }
+      ]
+    },
     footer: {
       title: "ESTOY DISPONIBLE",
-      subtitle: "CONTÁCTAME SI QUIERES CREAR UNA IDEA",
+      subtitle: "LLEVEMOS TU PROYECTO AL SIGUIENTE NIVEL",
       email: "christiansandovaldesign@gmail.com",
-      copyright: "© 2025 Christian.",
+      copyright: "© 2026 Christian Sandoval.",
       links: {
-        email: "EMAIL",
-        instagram: "INSTAGRAM",
-        whatsapp: "WHATSAPP",
+        email: "Email",
+        instagram: "Instagram",
+        whatsapp: "Whatsapp",
         phone: "+57 310 713 58 20",
         instagramUrl: "https://www.instagram.com/christiansandovalmona/"
-      }
-    },
-    projects: {
-      label: "Proyecto",
-      explore: "Explorar",
-      caseStudy: "Estudio_Caso",
-      items: {
-        vank: {
-          title: "VANK",
-          category: "Plataforma Fintech",
-          description: "Una plataforma fintech integral diseñada para democratizar el acceso a herramientas financieras complejas y criptomonedas.",
-          tags: ["Estrategia UX", "Diseño UI", "Fintech"]
-        },
-        aura: {
-          title: "Sistema de Diseño Aura",
-          category: "Sistema de Diseño",
-          description: "Un sistema de diseño completo con más de 50 componentes, tokens y documentación para aplicaciones empresariales.",
-          tags: ["React", "Storybook", "Figma"]
-        },
-        pulse: {
-          title: "Pulse Analytics",
-          category: "Visualización de Datos",
-          description: "Dashboard de visualización de datos en tiempo real para monitorear métricas de negocio con gráficos e informes interactivos.",
-          tags: ["D3.js", "Vue", "WebSocket"]
-        },
-        vertex: {
-          title: "Vertex Commerce",
-          category: "E-commerce",
-          description: "Solución de comercio electrónico headless con procesos de pago fluidos, gestión de inventario y soporte multimoneda.",
-          tags: ["Next.js", "Stripe", "Prisma"]
-        }
       }
     },
     vank: {

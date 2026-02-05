@@ -18,8 +18,14 @@ export default function Footer() {
   useEffect(() => {
     if (bulbRef.current) {
       const tl = gsap.timeline({ repeat: -1, yoyo: true });
-      tl.to("#bulb-stop-1", { attr: { "stop-color": "#FFD700" }, duration: 2, ease: "sine.inOut" })
-        .to("#bulb-stop-2", { attr: { "stop-color": "#FFA500" }, duration: 2, ease: "sine.inOut" }, "<");
+      // Secuencia de colores: Oro -> Naranja -> Aguamarina -> Cian -> Oro
+      tl.to("#bulb-stop-1", { attr: { "stop-color": "#FFA500" }, duration: 2, ease: "sine.inOut" })
+        .to("#bulb-stop-1", { attr: { "stop-color": "#2DD4BF" }, duration: 2, ease: "sine.inOut" })
+        .to("#bulb-stop-1", { attr: { "stop-color": "#00D2FF" }, duration: 2, ease: "sine.inOut" })
+        
+        .to("#bulb-stop-2", { attr: { "stop-color": "#FFD700" }, duration: 2, ease: "sine.inOut" }, 0)
+        .to("#bulb-stop-2", { attr: { "stop-color": "#00D2FF" }, duration: 2, ease: "sine.inOut" }, 2)
+        .to("#bulb-stop-2", { attr: { "stop-color": "#3a7bd5" }, duration: 2, ease: "sine.inOut" }, 4);
     }
   }, []);
 
@@ -32,9 +38,9 @@ export default function Footer() {
         className="fixed bottom-0 left-0 w-full h-screen bg-[#0A0A0A] dark:bg-[#FAF9F6] text-white dark:text-black flex flex-col justify-between px-frame py-16 md:py-24 z-0 overflow-hidden"
       >
         <svg width="0" height="0" className="absolute">
-          <linearGradient id="bulb-grad" x1="0" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
-            <stop id="bulb-stop-1" offset="0%" stopColor="#FFFACD" />
-            <stop id="bulb-stop-2" offset="100%" stopColor="#FFD700" />
+          <linearGradient id="bulb-grad" x1="0%" y1="0%" x2="0%" y2="24" gradientUnits="userSpaceOnUse">
+            <stop id="bulb-stop-1" offset="0%" stopColor="#FFD700" />
+            <stop id="bulb-stop-2" offset="100%" stopColor="#FFA500" />
           </linearGradient>
         </svg>
 

@@ -3,6 +3,7 @@ import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Projects from "@/components/sections/Projects";
 import Marquee from "@/components/sections/Marquee";
+import Process from "@/components/sections/Process";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <About />
         <Marquee />
         <Projects />
+        <Process />
       </div>
       <Footer />
     </main>
