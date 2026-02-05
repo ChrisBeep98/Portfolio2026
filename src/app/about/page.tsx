@@ -77,6 +77,20 @@ export default function AboutPage() {
         }
       });
 
+      // 3. STORY SECTION REVEAL
+      gsap.from(".story-reveal", {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".story-reveal",
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -175,9 +189,55 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="fixed bottom-12 left-12 mix-blend-difference z-40 hidden lg:block opacity-20 pointer-events-none">
-        <p className="font-mono text-[0.5em] tracking-[1em] uppercase rotate-[-90deg] origin-left">ART_DIRECTION_2026</p>
-      </div>
+      {/* SECCIÓN: MI HISTORIA & DISCIPLINAS (Refactorizada) */}
+      <section className="relative py-[10em] px-frame border-t border-foreground/5 z-10">
+        <h3 className="story-reveal text-[12vw] font-black uppercase tracking-tighter leading-none mb-24 opacity-5 pointer-events-none absolute top-20 left-frame">
+          {t.story.title}
+        </h3>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20 items-start pt-20">
+          
+          {/* Col 1: Párrafo 1 */}
+          <div className="space-y-8">
+            <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block">
+              01 / Genesis
+            </span>
+            <p className="story-reveal text-xl font-light leading-relaxed text-foreground/70">
+              {t.story.p1}
+            </p>
+          </div>
+
+          {/* Col 2: Párrafo 2 */}
+          <div className="space-y-8">
+            <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block">
+              02 / Evolution
+            </span>
+            <p className="story-reveal text-xl font-light leading-relaxed text-foreground/70">
+              {t.story.p2}
+            </p>
+          </div>
+
+          {/* Col 3: Disciplinas */}
+          <div className="bg-foreground/[0.02] dark:bg-white/[0.02] p-8 lg:p-12 rounded-2xl border border-foreground/5">
+            <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-12">
+              03 / {t.story.disciplinesTitle}
+            </span>
+            <div className="space-y-6">
+              {t.story.disciplinesList.map((item, i) => (
+                <div key={i} className="story-reveal flex items-center justify-between border-b border-foreground/5 pb-4 group">
+                  <span className="text-xl font-black uppercase tracking-tighter group-hover:text-orange-500 transition-colors duration-500">
+                    {item}
+                  </span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition-all duration-500" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* MARCA DE AGUA (Sidebar) */}
     </main>
   );
 }

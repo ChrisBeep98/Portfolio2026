@@ -33,6 +33,13 @@ export const dictionary = {
       w18: "work", w19: "lives", w20: "at the", w21: "intersection", w22: "between",
       w23: "aesthetics", w24: "and", w25: "technology.", w26: ""
     },
+    story: {
+      title: "MY STORY",
+      p1: "I started my journey during the pandemic, exploring web development with tools like HTML, CSS, and React. Although my initial focus was purely technical, I soon discovered a strong inclination towards experience and interface design, which led me to gradually migrate towards a more visual approach.",
+      p2: "This evolution encouraged me to experiment with new technologies like Blender and Spline, allowing me to incorporate 3D as an expressive extension in my designs. Since 2021, I have consolidated my profile as a UX/UI designer, focusing on creating functional and coherent digital experiences.",
+      disciplinesTitle: "DISCIPLINES",
+      disciplinesList: ["UI Design", "No-code Development", "3D Modeling", "UX Research"]
+    },
     footer: {
       title: "I AM AVAILABLE",
       subtitle: "CONTACT ME IF YOU WANT TO CREATE AN IDEA",
@@ -152,6 +159,13 @@ export const dictionary = {
       w18: "trabajo", w19: "habita", w20: "en", w21: "la", w22: "intersección",
       w23: "entre", w24: "estética", w25: "y", w26: "tecnología."
     },
+    story: {
+      title: "MI HISTORIA",
+      p1: "Inicié mi camino durante la pandemia, explorando el desarrollo web con herramientas como HTML, CSS y React. Aunque mi enfoque inicial fue puramente técnico, no tardé en descubrir una fuerte inclinación por el diseño de experiencia e interfaz, lo que me llevó a migrar gradualmente hacia un enfoque más visual.",
+      p2: "Esta evolución me animó a experimentar con nuevas tecnologías como Blender y Spline, permitiéndome incorporar el 3D como una extensión expresiva en mis diseños. Desde 2021, he consolidado mi perfil como diseñador UX/UI, centrándome en crear experiencias digitales funcionales y coherentes.",
+      disciplinesTitle: "DISCIPLINAS",
+      disciplinesList: ["Diseño UI", "No code development", "Modelado 3D", "Investigación UX"]
+    },
     footer: {
       title: "ESTOY DISPONIBLE",
       subtitle: "CONTÁCTAME SI QUIERES CREAR UNA IDEA",
@@ -177,7 +191,7 @@ export const dictionary = {
           tags: ["Estrategia UX", "Diseño UI", "Fintech"]
         },
         aura: {
-          title: "Aura Design System",
+          title: "Sistema de Diseño Aura",
           category: "Sistema de Diseño",
           description: "Un sistema de diseño completo con más de 50 componentes, tokens y documentación para aplicaciones empresariales.",
           tags: ["React", "Storybook", "Figma"]

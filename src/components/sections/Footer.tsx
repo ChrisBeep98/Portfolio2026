@@ -52,17 +52,18 @@ export default function Footer() {
               {t.footer.title}
             </span>
           </div>
-          <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.85] tracking-tighter max-w-6xl flex flex-wrap items-end gap-x-4">
+          
+          <h2 className="text-[10vw] lg:text-[7vw] font-black uppercase leading-[0.85] tracking-tighter max-w-6xl">
             {t.footer.subtitle}
             
-            {/* Integrated Lightbulb (Always at the right of the last word) */}
+            {/* Integrated Lightbulb (Stuck to the last letter, visible on all devices) */}
             <span 
               ref={bulbRef}
-              className="inline-flex mb-1 lg:mb-2 opacity-80 group cursor-pointer transition-all duration-500 hover:opacity-100 hover:scale-110 h-[0.8em]"
+              className="inline-flex items-center justify-center ml-2 lg:-ml-4 lg:mb-[6px] lg:-translate-y-1.5 opacity-80 group cursor-pointer transition-all duration-500 hover:opacity-100 hover:scale-110 align-middle h-[1em] w-[1em]"
             >
-              <span className="relative flex items-center">
+              <span className="relative flex items-center justify-center">
                 <Lightbulb 
-                  size={80} 
+                  size="0.8em" 
                   strokeWidth={0.5}
                   className="text-white dark:text-black group-hover:text-yellow-400 transition-colors duration-500" 
                 />
