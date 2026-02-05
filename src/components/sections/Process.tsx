@@ -16,7 +16,7 @@ export default function Process() {
   return (
     <section 
       className="py-24 md:py-32 px-frame bg-[#E5E5E3] dark:bg-[#0D0D0D] text-black dark:text-white border-t border-black/10 dark:border-white/10 relative"
-      style={{ boxShadow: "inset 0 60px 80px -40px rgba(0,0,0,0.15)" }}
+      style={{ boxShadow: "inset 0 60px 80px -40px rgba(0,0,0,0.08)" }}
     >
       <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-32 relative z-10">
         
