@@ -42,7 +42,7 @@ export default function Process() {
                 className="w-full py-8 lg:py-12 flex items-center justify-between group transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02] text-left"
               >
                 <div className="flex items-baseline gap-6 lg:gap-12">
-                  <span className="font-mono text-[0.6em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">
+                  <span className="hidden md:inline font-mono text-[0.9em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">
                     {item.id}
                   </span>
                   <h3 className="text-2xl lg:text-5xl font-bold uppercase tracking-tighter transition-transform duration-500 group-hover:translate-x-2">
@@ -50,7 +50,7 @@ export default function Process() {
                   </h3>
                 </div>
                 
-                <div className={`p-3 rounded-full border border-black/10 dark:border-white/10 transition-transform duration-500 ${openItem === item.id ? 'rotate-45' : ''}`}>
+                <div className={`p-3 rounded-full border-none md:border md:border-black/10 md:dark:border-white/10 transition-transform duration-500 ${openItem === item.id ? 'rotate-45' : ''}`}>
                   <Plus size={24} strokeWidth={1.5} />
                 </div>
               </button>
