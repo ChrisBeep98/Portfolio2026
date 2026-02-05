@@ -295,49 +295,38 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Column: Brutalist Zig-Zag Tools Grid (Smaller & Perfect Offset) */}
+          {/* Right Column: Single Stream Zig-Zag (Alternating Steps) */}
           <div className="lg:col-span-7 flex justify-end">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-2xl">
+            <div className="w-full max-w-xl flex flex-col">
               
-              {/* Column A (Odd items) */}
-              <div className="flex flex-col">
-                {t.tools.items.filter((_, i) => i % 2 === 0).map((tool, i) => (
-                  <div key={`col-a-${i}`} className="story-reveal group relative aspect-square bg-background border border-foreground/10 hover:border-orange-500/50 hover:z-10 transition-colors duration-500 flex flex-col items-center justify-center text-center p-8">
-                    <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
-                      {getToolIcon(tool.name)}
-                    </div>
-                    <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
-                      {tool.name}
-                    </span>
-                    <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
-                      {tool.label}
-                    </span>
-                    
-                    {/* Corner Accent */}
-                    <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {t.tools.items.map((tool, i) => (
+                <div 
+                  key={i} 
+                  className={`
+                    story-reveal group relative aspect-square w-1/2 
+                    bg-background border border-foreground/10 
+                    hover:border-orange-500/50 hover:z-10 hover:shadow-2xl hover:shadow-orange-500/10
+                    transition-all duration-500 
+                    flex flex-col items-center justify-center text-center p-8
+                    ${i % 2 === 0 ? 'self-start' : 'self-end'} 
+                    ${i !== 0 ? '-mt-[1px]' : ''} 
+                    ${i % 2 !== 0 ? '-ml-[1px]' : ''}
+                  `}
+                >
+                  <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
+                    {getToolIcon(tool.name)}
                   </div>
-                ))}
-              </div>
-
-              {/* Column B (Even items) - Full Offset for Perfect Stairs */}
-              <div className="flex flex-col pt-0 md:pt-[100%]">
-                {t.tools.items.filter((_, i) => i % 2 !== 0).map((tool, i) => (
-                  <div key={`col-b-${i}`} className="story-reveal group relative aspect-square bg-background border border-foreground/10 hover:border-orange-500/50 hover:z-10 transition-colors duration-500 flex flex-col items-center justify-center text-center p-8 border-t md:border-t lg:border-t-foreground/10 md:border-l-0 lg:-ml-[1px]">
-                    <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
-                      {getToolIcon(tool.name)}
-                    </div>
-                    <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
-                      {tool.name}
-                    </span>
-                    <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
-                      {tool.label}
-                    </span>
-                    
-                    {/* Corner Accent */}
-                    <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                ))}
-              </div>
+                  <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
+                    {tool.name}
+                  </span>
+                  <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
+                    {tool.label}
+                  </span>
+                  
+                  {/* Corner Accent */}
+                  <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              ))}
 
             </div>
           </div>

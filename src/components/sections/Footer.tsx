@@ -74,7 +74,7 @@ export default function Footer() {
               { id: "wa", label: "Whatsapp", href: `https://wa.me/${t.footer.links.phone.replace(/[^0-9]/g, '')}`, gradient: ["#25D366", "#128C7E"] }
             ].map((item, i) => (
               <a key={i} href={item.href} target="_blank" rel="noopener noreferrer"
-                className="group relative flex items-center justify-between gap-4 px-6 h-[44px] md:h-[48px] md:px-8 border border-white/20 dark:border-black/20 rounded-[12px] transition-all duration-500 hover:-translate-y-1 bg-transparent overflow-hidden w-full max-w-[280px] md:max-w-none md:w-auto"
+                className="group relative flex items-center justify-between gap-4 px-6 h-[44px] md:h-[48px] md:px-8 border border-white/20 dark:border-black/20 rounded-[12px] transition-all duration-500 hover:-translate-y-1 bg-transparent overflow-hidden w-full md:w-auto"
               >
                 <svg width="0" height="0" className="absolute">
                   <linearGradient id={`grad-ft-${item.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
