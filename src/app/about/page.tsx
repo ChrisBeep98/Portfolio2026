@@ -133,7 +133,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <section className="relative pt-[8em] lg:pt-[14em] pb-[4em] lg:pb-[6em] px-frame z-10">
+      <section className="relative pt-[8em] lg:pt-[10em] pb-[4em] lg:pb-[2em] px-frame z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
           {/* TEXT CONTENT */}
@@ -210,7 +210,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECCIÓN: MI HISTORIA & DISCIPLINAS (Refactorizada Clean) */}
-      <section className="story-section relative py-[4em] lg:py-[6em] px-frame border-t border-foreground/5 z-10">
+      <section className="story-section relative py-[4em] lg:pt-[6em] lg:pb-[8em] px-frame border-t border-foreground/5 z-10">
         
         {/* Título Principal */}
         <div className="mb-16">
