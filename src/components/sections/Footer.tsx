@@ -36,11 +36,7 @@ export default function Footer() {
         ref={footerRef}
         className="fixed bottom-0 left-0 w-full h-screen bg-[#0A0A0A] dark:bg-[#FAF9F6] text-white dark:text-black flex flex-col justify-between px-frame py-16 md:py-24 z-0 overflow-hidden"
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none">
-          <h1 className="text-[18vw] font-black leading-none tracking-[-0.05em] text-white/[0.03] dark:text-black/[0.02]">
-            MOTIONFLOW
-          </h1>
-        </div>
+        {/* Massive Background Title Removed */}
 
         {/* 1. TOP INDICATOR */}
         <div className="relative z-10 w-full flex items-center gap-4">
@@ -50,7 +46,7 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* 2. CENTRAL TITLE (With Bulb) */}
+        {/* 2. CENTRAL TITLE */}
         <div className="relative z-10 w-full">
           <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.95] lg:leading-[0.85] tracking-tighter max-w-6xl">
             {t.footer.subtitle}
@@ -67,25 +63,31 @@ export default function Footer() {
         </div>
 
         {/* 3. ACTIONS (Social + Email) */}
-        <div className="relative z-10 w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
-          <div className="flex flex-wrap gap-3 md:gap-4">
+        <div className="relative z-10 w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-12 mb-8">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full md:w-auto">
             {[
-              { icon: Mail, label: "Email", href: `mailto:${t.footer.email}`, color: "#FF4D00" },
-              { icon: Instagram, label: "Instagram", href: t.footer.links.instagramUrl, color: "#FD1D1D" },
-              { icon: MessageCircle, label: "Whatsapp", href: `https://wa.me/${t.footer.links.phone.replace(/[^0-9]/g, '')}`, color: "#25D366" }
+              { id: "mail", icon: Mail, label: "Email", href: `mailto:${t.footer.email}`, gradient: ["#FF4D00", "#FF9000"] },
+              { id: "ig", icon: Instagram, label: "Instagram", href: t.footer.links.instagramUrl, gradient: ["#833AB4", "#FD1D1D", "#FCB045"] },
+              { id: "wa", icon: MessageCircle, label: "Whatsapp", href: `https://wa.me/${t.footer.links.phone.replace(/[^0-9]/g, '')}`, gradient: ["#25D366", "#128C7E"] }
             ].map((item, i) => (
               <a key={i} href={item.href} target="_blank" rel="noopener noreferrer"
-                className="group relative flex items-center gap-4 px-6 h-[44px] md:h-[48px] md:px-8 border rounded-[12px] transition-all duration-500 hover:-translate-y-1 bg-white/[0.02] dark:bg-black/[0.02] overflow-hidden"
-                style={{ borderColor: `${item.color}30` }}
+                className="group relative flex items-center gap-3 px-5 h-[44px] md:h-[48px] md:px-8 border border-white/20 dark:border-black/20 rounded-[12px] transition-all duration-500 hover:-translate-y-1 bg-transparent overflow-hidden w-full max-w-[280px] md:max-w-none md:w-auto"
               >
-                {/* Subtle Hover Fill */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
-                  style={{ bg: item.color }} 
+                {/* SVG Gradient Logic for Icons */}
+                <svg width="0" height="0" className="absolute">
+                  <linearGradient id={`grad-${item.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor={item.gradient[0]} />
+                    <stop offset="100%" stopColor={item.gradient[item.gradient.length - 1]} />
+                  </linearGradient>
+                </svg>
+
+                <item.icon 
+                  size={18} 
+                  style={{ stroke: `url(#grad-${item.id})` }}
+                  className="transition-transform duration-500 group-hover:scale-110" 
                 />
                 
-                <item.icon size={18} style={{ color: item.color }} className="transition-transform duration-500 group-hover:scale-110" />
-                <span className="text-[0.85em] font-medium tracking-tight text-white/60 dark:text-black/60 group-hover:text-white dark:group-hover:text-black transition-colors duration-500">
+                <span className="text-[0.85em] font-medium tracking-tight text-white/80 dark:text-black/80 group-hover:text-white dark:group-hover:text-black transition-colors duration-500">
                   {item.label}
                 </span>
               </a>

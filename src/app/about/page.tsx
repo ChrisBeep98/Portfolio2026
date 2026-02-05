@@ -77,22 +77,39 @@ export default function AboutPage() {
         }
       });
 
-      // 3. STORY SECTION REVEAL (Optimized Group Trigger)
-      const storyTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".story-section",
-          start: "top 75%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      storyTl.from(".story-reveal", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.05,
-        ease: "power3.out"
-      });
+      // 3. STORY SECTION REVEAL (Responsive Logic)
+      const storyElements = gsap.utils.toArray(".story-reveal");
+      
+      if (window.innerWidth < 768) {
+        // MOBILE: Individual triggers for sequential vertical storytelling
+        storyElements.forEach((el: any) => {
+          gsap.from(el, {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
+          });
+        });
+      } else {
+        // DESKTOP: Elegant staggered group reveal
+        gsap.from(storyElements, {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".story-section",
+            start: "top 75%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      }
 
     }, containerRef);
 
@@ -116,7 +133,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <section className="relative pt-[8em] lg:pt-[14em] pb-[10em] px-frame z-10">
+      <section className="relative pt-[8em] lg:pt-[14em] pb-[4em] lg:pb-[6em] px-frame z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
           {/* TEXT CONTENT */}
@@ -129,9 +146,9 @@ export default function AboutPage() {
             </div>
 
             <div className="space-y-4 mb-16">
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
+              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
             </div>
 
             <div className="slam-left max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8">
@@ -193,14 +210,14 @@ export default function AboutPage() {
       </section>
 
       {/* SECCIÓN: MI HISTORIA & DISCIPLINAS (Refactorizada Clean) */}
-      <section className="story-section relative py-[6em] lg:py-[8em] px-frame border-t border-foreground/5 z-10">
+      <section className="story-section relative py-[4em] lg:py-[6em] px-frame border-t border-foreground/5 z-10">
         
         {/* Título Principal */}
         <div className="mb-16">
           <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">
             02 / {t.about.profile === "Perfil" ? "Historia" : "Story"}
           </span>
-          <h3 className="story-reveal text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-foreground">
+          <h3 className="story-reveal text-5xl md:text-7xl font-extrabold uppercase tracking-tighter leading-none text-foreground">
             {t.story.title}
           </h3>
         </div>
