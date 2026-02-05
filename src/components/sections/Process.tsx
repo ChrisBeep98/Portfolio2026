@@ -14,15 +14,18 @@ export default function Process() {
   };
 
   return (
-    <section className="py-24 md:py-32 px-frame bg-[#F2F2F0] dark:bg-[#050505] text-black dark:text-white border-t border-black/5 dark:border-white/5">
-      <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-32">
+    <section 
+      className="py-24 md:py-32 px-frame bg-[#E5E5E3] dark:bg-[#0D0D0D] text-black dark:text-white border-t border-black/10 dark:border-white/10 relative"
+      style={{ boxShadow: "inset 0 60px 80px -40px rgba(0,0,0,0.15)" }}
+    >
+      <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-32 relative z-10">
         
         {/* Left Side: Title & Subtitle */}
         <div className="lg:w-1/3">
           <h2 className="text-[12vw] lg:text-[5vw] font-black uppercase leading-[0.85] tracking-tighter mb-8">
             {t.process.title}
           </h2>
-          <p className="text-xl lg:text-2xl font-light opacity-60 leading-relaxed max-w-md">
+          <p className="text-lg lg:text-xl font-light opacity-60 leading-relaxed max-w-md">
             {t.process.subtitle}
           </p>
         </div>
@@ -61,7 +64,7 @@ export default function Process() {
                     transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
                   >
                     <div className="pb-12 lg:pb-16 pl-[calc(0.6em+1.5rem)] lg:pl-[calc(0.6em+3rem)] pr-12">
-                      <p className="text-lg lg:text-2xl font-light leading-relaxed opacity-70 max-w-2xl">
+                      <p className="text-base lg:text-lg font-light leading-relaxed opacity-70 max-w-2xl">
                         {item.desc}
                       </p>
                     </div>
