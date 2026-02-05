@@ -32,28 +32,26 @@ export default function Footer() {
         className="fixed bottom-0 left-0 w-full h-screen bg-[#0A0A0A] dark:bg-[#FAF9F6] text-white dark:text-black flex flex-col justify-between px-frame py-16 md:py-24 z-0 overflow-hidden"
       >
         <svg width="0" height="0" className="absolute">
-          <linearGradient id="bulb-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="bulb-grad" x1="0" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
             <stop id="bulb-stop-1" offset="0%" stopColor="#FEF3C7" />
-            <stop id="bulb-stop-2" offset="100%" stopColor="#FBBF24" />
+            <stop id="bulb-stop-2" offset="100%" stopColor="#FFD700" />
           </linearGradient>
         </svg>
 
-        {/* 1. TOP INDICATOR */}
-        <div className="relative z-10 w-full flex items-center gap-4">
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-          <span className="font-mono text-[0.55em] md:text-[0.6em] uppercase tracking-[0.4em] text-white/30 dark:text-black/30 font-bold">
-            {t.footer.title}
-          </span>
-        </div>
+        {/* ... indicator ... */}
 
         {/* 2. CENTRAL TITLE */}
         <div className="relative z-10 w-full">
           <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.95] lg:leading-[0.85] tracking-tighter max-w-6xl">
             {t.footer.subtitle}
             <span ref={bulbRef} className="inline-flex items-center justify-center -ml-2.5 -translate-y-1 lg:-ml-4 lg:mb-[6px] lg:-translate-y-1.5 opacity-90 align-middle h-[1em] w-[1em]">
-              <span className="relative flex items-center justify-center">
-                <Lightbulb size="0.8em" strokeWidth={0.5} fill="url(#bulb-grad)" style={{ stroke: "url(#bulb-grad)" }} />
-                <div className="absolute inset-0 bg-yellow-400/10 blur-3xl rounded-full pointer-events-none" />
+              <span className="relative flex items-center justify-center w-full h-full">
+                <svg viewBox="0 0 24 24" className="w-[0.8em] h-[0.8em]" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5" stroke="url(#bulb-grad)" />
+                  <path d="M9 18h6" stroke="url(#bulb-grad)" />
+                  <path d="M10 22h4" stroke="url(#bulb-grad)" />
+                </svg>
+                <div className="absolute inset-0 bg-yellow-400/5 blur-3xl rounded-full pointer-events-none" />
               </span>
             </span>
           </h2>

@@ -117,7 +117,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main ref={containerRef} className="bg-[#F2F2F0] dark:bg-[#050505] text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
+    <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
       <Header />
       
       {/* GRID ESTRUCTURAL (12 Cols en Desktop, 4 en Mobile) */}
@@ -134,7 +134,7 @@ export default function AboutPage() {
       </div>
 
       <section className="relative pt-[8em] lg:pt-[10em] pb-[4em] lg:pb-[2em] px-frame z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[3em] lg:gap-0 items-start">
           
           {/* TEXT CONTENT */}
           <div className="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-20">
@@ -178,7 +178,7 @@ export default function AboutPage() {
             </div>
 
             {/* Insight Image (Printed Photo Aesthetic - Responsive Padding) */}
-            <div className="slam-left parallax-insight absolute -bottom-24 lg:-bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[6px] lg:p-4 pb-12 lg:pb-12 bg-[#F2F2F0] dark:bg-[#050505] shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
+            <div className="slam-left parallax-insight absolute -bottom-24 lg:-bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[0.35em] lg:p-4 pb-12 lg:pb-12 bg-background shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
               <div className="w-full aspect-square overflow-hidden mb-6 lg:mb-6">
                 <img 
                   src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" 
@@ -222,7 +222,7 @@ export default function AboutPage() {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[3em] lg:gap-[5em] items-start">
           
           {/* Col 1: Párrafo 1 */}
           <div className="space-y-6">
