@@ -5,6 +5,7 @@ import Header from "@/components/sections/Header";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
+import { Figma, Globe, Box, Sparkles, Cpu, Move } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +14,17 @@ if (typeof window !== "undefined") {
 export default function AboutPage() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const getToolIcon = (name: string) => {
+    switch (name) {
+      case "FIGMA": return <Figma strokeWidth={1} size={40} />;
+      case "WEBFLOW": return <Globe strokeWidth={1} size={40} />;
+      case "SPLINE": return <Box strokeWidth={1} size={40} />;
+      case "A.I.": return <Sparkles strokeWidth={1} size={40} />;
+      case "GSAP": return <Move strokeWidth={1} size={40} />;
+      default: return <Cpu strokeWidth={1} size={40} />;
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -258,6 +270,75 @@ export default function AboutPage() {
                   </span>
                 </div>
               ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECCIÓN: HERRAMIENTAS (Sticky + ZigZag) */}
+      <section className="relative py-[4em] lg:py-[8em] px-frame border-t border-foreground/5 z-10 bg-background">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[3em] lg:gap-0 items-start">
+          
+          {/* Left Column: Sticky Title & Description */}
+          <div className="lg:col-span-5 relative h-full">
+            <div className="lg:sticky lg:top-32 lg:pb-32 h-fit">
+              <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">
+                03 / {t.tools.title}
+              </span>
+              <h3 className="story-reveal text-5xl md:text-6xl font-extrabold uppercase tracking-tighter leading-none text-foreground mb-8">
+                {t.tools.title}
+              </h3>
+              <p className="story-reveal text-xl font-light leading-relaxed text-foreground/70 max-w-sm">
+                {t.tools.description}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Brutalist Zig-Zag Tools Grid (Smaller & Perfect Offset) */}
+          <div className="lg:col-span-7 flex justify-end">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-2xl">
+              
+              {/* Column A (Odd items) */}
+              <div className="flex flex-col">
+                {t.tools.items.filter((_, i) => i % 2 === 0).map((tool, i) => (
+                  <div key={`col-a-${i}`} className="story-reveal group relative aspect-square bg-background border border-foreground/10 hover:border-orange-500/50 hover:z-10 transition-colors duration-500 flex flex-col items-center justify-center text-center p-8">
+                    <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
+                      {getToolIcon(tool.name)}
+                    </div>
+                    <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
+                      {tool.name}
+                    </span>
+                    <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
+                      {tool.label}
+                    </span>
+                    
+                    {/* Corner Accent */}
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Column B (Even items) - Full Offset for Perfect Stairs */}
+              <div className="flex flex-col pt-0 md:pt-[100%]">
+                {t.tools.items.filter((_, i) => i % 2 !== 0).map((tool, i) => (
+                  <div key={`col-b-${i}`} className="story-reveal group relative aspect-square bg-background border border-foreground/10 hover:border-orange-500/50 hover:z-10 transition-colors duration-500 flex flex-col items-center justify-center text-center p-8 border-t md:border-t lg:border-t-foreground/10 md:border-l-0 lg:-ml-[1px]">
+                    <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">
+                      {getToolIcon(tool.name)}
+                    </div>
+                    <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-2">
+                      {tool.name}
+                    </span>
+                    <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 max-w-[12em] leading-relaxed">
+                      {tool.label}
+                    </span>
+                    
+                    {/* Corner Accent */}
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
 

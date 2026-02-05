@@ -31,7 +31,6 @@ export default function Footer() {
         ref={footerRef}
         className="fixed bottom-0 left-0 w-full h-screen bg-[#0A0A0A] dark:bg-[#FAF9F6] text-white dark:text-black flex flex-col justify-between px-frame py-16 md:py-24 z-0 overflow-hidden"
       >
-        {/* SVG Gradient Definition */}
         <svg width="0" height="0" className="absolute">
           <linearGradient id="bulb-grad" x1="0" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
             <stop id="bulb-stop-1" offset="0%" stopColor="#FFFACD" />
@@ -47,22 +46,20 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* 2. CENTRAL TITLE */}
+        {/* 2. CENTRAL TITLE + BULB */}
         <div className="relative z-10 w-full">
-          <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.95] lg:leading-[0.85] tracking-tighter max-w-6xl">
+          <h2 className="text-[13vw] lg:text-[7.5vw] font-black uppercase leading-[0.95] lg:leading-[0.85] tracking-tighter max-w-6xl relative">
             {t.footer.subtitle}
-            <span ref={bulbRef} className="inline-flex items-center justify-center -ml-2 -translate-y-1.5 lg:-ml-4 lg:mb-[10px] lg:-translate-y-2 opacity-90 align-middle h-[1em] w-[1em]">
+            <span ref={bulbRef} className="inline-flex items-center justify-center -ml-2.5 -translate-y-1 lg:-ml-4 lg:mb-[6px] lg:-translate-y-2 opacity-90 align-middle h-[1em] w-[1em]">
               <span className="relative flex items-center justify-center w-full h-full">
-                {/* Custom Architectural Bulb SVG */}
-                <svg viewBox="0 0 24 24" className="w-[0.85em] h-[0.8em]" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Glass Bulb Body */}
-                  <path d="M9 18h6" stroke="url(#bulb-grad)" />
-                  <path d="M10 22h4" stroke="url(#bulb-grad)" />
-                  <path d="M15.5 12.5c1.1-1 1.8-2.4 1.8-4a5.3 5.3 0 1 0-10.6 0c0 1.6.7 3 1.8 4 .8.8 1.5 1.8 1.5 3.5h4c0-1.7.7-2.7 1.5-3.5z" stroke="url(#bulb-grad)" />
-                  {/* Internal Filament */}
-                  <path d="M11 8l1 2 1-2" stroke="url(#bulb-grad)" strokeWidth="1" opacity="0.6" />
+                {/* Ultra-Minimalist Custom Bulb SVG */}
+                <svg viewBox="0 0 24 24" className="w-[0.8em] h-[0.8em]" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Single Clean Bulb Path */}
+                  <path d="M12 3a6 6 0 0 0-6 6c0 2.5 2 4.5 3 5.5v3h6v-3c1-1 3-3 3-5.5a6 6 0 0 0-6-6z" stroke="url(#bulb-grad)" />
+                  {/* Single Minimal Base Line */}
+                  <path d="M10 21h4" stroke="url(#bulb-grad)" />
                 </svg>
-                <div className="absolute inset-0 bg-yellow-400/10 blur-3xl rounded-full pointer-events-none" />
+                <div className="absolute inset-0 bg-yellow-400/5 blur-3xl rounded-full pointer-events-none" />
               </span>
             </span>
           </h2>
@@ -79,7 +76,15 @@ export default function Footer() {
               <a key={i} href={item.href} target="_blank" rel="noopener noreferrer"
                 className="group relative flex items-center justify-between gap-4 px-6 h-[44px] md:h-[48px] md:px-8 border border-white/20 dark:border-black/20 rounded-[12px] transition-all duration-500 hover:-translate-y-1 bg-transparent overflow-hidden w-full max-w-[280px] md:max-w-none md:w-auto"
               >
-                <span className="text-[0.85em] font-medium tracking-tight text-white/80 dark:text-black/80 group-hover:text-white dark:group-hover:text-black transition-colors duration-500">{item.label}</span>
+                <svg width="0" height="0" className="absolute">
+                  <linearGradient id={`grad-ft-${item.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor={item.gradient[0]} />
+                    <stop offset="100%" stopColor={item.gradient[item.gradient.length - 1]} />
+                  </linearGradient>
+                </svg>
+                <div className="flex items-center gap-3">
+                  <span className="text-[0.85em] font-medium tracking-tight text-white/80 dark:text-black/80 group-hover:text-white dark:group-hover:text-black transition-colors duration-500">{item.label}</span>
+                </div>
                 <ArrowUpRight size={14} className="text-white/30 dark:text-black/30 group-hover:text-white dark:group-hover:text-black transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             ))}

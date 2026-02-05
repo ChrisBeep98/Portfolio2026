@@ -40,6 +40,18 @@ export const dictionary = {
       disciplinesTitle: "DISCIPLINES",
       disciplinesList: ["UI Design", "No-code Development", "3D Modeling", "UX Research"]
     },
+    tools: {
+      title: "TOOLS",
+      description: "Throughout my career, I have strived to develop a diverse set of fundamental skills.",
+      items: [
+        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes for complex products." },
+        { name: "WEBFLOW", label: "Design Systems", desc: "Scalable implementation based on atomic design." },
+        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences for the web." },
+        { name: "WEBFLOW", label: "UI Development", desc: "Pixel-perfect layouts and responsive architecture." },
+        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation and user journey mapping." },
+        { name: "GSAP", label: "Motion", desc: "Advanced programmatic animations and interactions." }
+      ]
+    },
     footer: {
       title: "I AM AVAILABLE",
       subtitle: "CONTACT ME IF YOU WANT TO CREATE AN IDEA",
@@ -165,6 +177,18 @@ export const dictionary = {
       p2: "Esta evolución me animó a experimentar con nuevas tecnologías como Blender y Spline, permitiéndome incorporar el 3D como una extensión expresiva en mis diseños. Desde 2021, he consolidado mi perfil como diseñador UX/UI, centrándome en crear experiencias digitales funcionales y coherentes.",
       disciplinesTitle: "DISCIPLINAS",
       disciplinesList: ["Diseño UI", "No code development", "Modelado 3D", "Investigación UX"]
+    },
+    tools: {
+      title: "HERRAMIENTAS",
+      description: "A lo largo de mi carrera, me he esforzado por desarrollar un conjunto diverso de habilidades fundamentales.",
+      items: [
+        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad para productos complejos." },
+        { name: "WEBFLOW", label: "Design Systems", desc: "Implementación escalable basada en diseño atómico." },
+        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas para la web." },
+        { name: "WEBFLOW", label: "Maquetado UI", desc: "Layouts pixel-perfect y arquitectura responsiva." },
+        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación y flujos de usuario." },
+        { name: "GSAP", label: "Motion", desc: "Animaciones programáticas avanzadas." }
+      ]
     },
     footer: {
       title: "ESTOY DISPONIBLE",
