@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Header from "@/components/sections/Header";
@@ -22,9 +22,14 @@ const STYLING = {
 export default function VankProject() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeSection, setActiveSection] = React.useState(0);
+  const [activeSection, setActiveSection] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener("resize", handleResize);
+
     const ctx = gsap.context(() => {
       // 1. HERO TEXT REVEAL
       gsap.fromTo(".hero-title-mask", 
@@ -178,7 +183,10 @@ export default function VankProject() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      ctx.revert();
+    };
   }, [t]);
 
   const scrollToSection = (id: string) => {
@@ -202,10 +210,10 @@ export default function VankProject() {
       </div>
 
       {/* OVERLAY CONTENT LAYER */}
-      <div className="relative z-10 bg-background shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-visible">
+      <div className="relative z-10 bg-background shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
         <div className="flex flex-col lg:flex-row relative">
           
-          <aside className="hidden lg:flex flex-col w-[15%] h-screen sticky top-0 pt-48 pl-12 justify-start z-40 pointer-events-none">
+          <aside className="hidden lg:flex flex-col w-[15%] h-screen sticky top-0 pt-48 pl-12 justify-start z-40 pointer-events-none self-start">
             <div className="relative pointer-events-auto flex flex-col">
               {/* Refined Indicator Bar */}
               <div 
@@ -306,30 +314,16 @@ export default function VankProject() {
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto01.label}</span>
                 <div className="space-y-2">
-                  <div className="lg:hidden space-y-2">
-                    {t.vank.acto01.titleMobile.map((line, i) => (
-                      <div key={i} className="acto01-title-mask overflow-hidden">
-                        <h2 
-                          className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="hidden lg:block space-y-2">
-                    {t.vank.acto01.title.map((line, i) => (
-                      <div key={i} className="acto01-title-mask overflow-hidden">
-                        <h2 
-                          className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
+                  {(isMobile ? t.vank.acto01.titleMobile : t.vank.acto01.title).map((line: string, i: number) => (
+                    <div key={i} className="acto01-title-mask overflow-hidden">
+                      <h2 
+                        className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="pt-[4em] md:pt-[18em]">
@@ -355,30 +349,16 @@ export default function VankProject() {
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto02.label}</span>
                 <div className="space-y-2">
-                  <div className="lg:hidden space-y-2">
-                    {t.vank.acto02.titleMobile.map((line, i) => (
-                      <div key={i} className="acto02-title-mask overflow-hidden">
-                        <h2 
-                          className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="hidden lg:block space-y-2">
-                    {t.vank.acto02.title.map((line, i) => (
-                      <div key={i} className="acto02-title-mask overflow-hidden">
-                        <h2 
-                          className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
+                  {(isMobile ? t.vank.acto02.titleMobile : t.vank.acto02.title).map((line: string, i: number) => (
+                    <div key={i} className="acto02-title-mask overflow-hidden">
+                      <h2 
+                        className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
+                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                      >
+                        {line}
+                      </h2>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
@@ -389,7 +369,7 @@ export default function VankProject() {
                 <div className="space-y-[2em]">
                   <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">{t.vank.acto02.problemsLabel}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-                    {t.vank.acto02.problemsList.map((text, i) => (
+                    {t.vank.acto02.problemsList.map((text: string, i: number) => (
                       <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
                         <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                         <p className="text-lg md:text-xl font-light leading-snug opacity-80">{text}</p>
@@ -405,7 +385,7 @@ export default function VankProject() {
                 <div className="space-y-[2.5em] pt-[4em] lg:-ml-[66.6%] lg:w-full">
                   <h3 className="acto02-desc text-xl md:text-2xl font-semibold tracking-tight text-foreground will-change-transform">{t.vank.acto02.insightsLabel}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                    {t.vank.acto02.insightsList.map((text, i) => (
+                    {t.vank.acto02.insightsList.map((text: string, i: number) => (
                       <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform">
                         <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                         <p className="text-lg md:text-xl font-light leading-snug opacity-80">{text}</p>
@@ -442,7 +422,7 @@ export default function VankProject() {
                   {t.vank.acto02.objectivesLabel}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
-                  {t.vank.acto02.objectivesList.map((text, i) => (
+                  {t.vank.acto02.objectivesList.map((text: string, i: number) => (
                     <div key={i} className="acto02-desc flex items-start gap-[0.75em] will-change-transform text-left">
                       <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                       <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">
@@ -466,7 +446,7 @@ export default function VankProject() {
                 <span className={STYLING.label}>{t.vank.acto03.label}</span>
                 <div className="space-y-2">
                   <div className="space-y-2">
-                    {t.vank.acto03.title.map((line, i) => (
+                    {t.vank.acto03.title.map((line: string, i: number) => (
                       <div key={i} className="acto03-title-mask overflow-hidden">
                         <h2 
                           className="acto03-title-text font-bold uppercase tracking-tighter will-change-transform"
@@ -485,7 +465,7 @@ export default function VankProject() {
                 </p>
                 
                 <div className="grid grid-cols-1 gap-y-10">
-                  {t.vank.acto03.list.map((text, i) => (
+                  {t.vank.acto03.list.map((text: string, i: number) => (
                     <div key={i} className="acto03-desc flex items-start gap-[1.5em] will-change-transform md:border-l border-foreground/10 md:pl-8">
                       <p className="text-lg md:text-xl font-light leading-snug opacity-80">
                         <span className="font-bold text-foreground opacity-100 block mb-2">
@@ -525,7 +505,7 @@ export default function VankProject() {
 
             <section className="px-[14px] md:px-frame lg:pl-0 lg:pr-[8em] pb-[4em] overflow-hidden text-left">
               <div className="max-w-5xl flex flex-col items-start space-y-[4em] md:space-y-[6em]">
-                {t.vank.acto03.methodologyDetails.map((item, i) => (
+                {t.vank.acto03.methodologyDetails.map((item: any, i: number) => (
                   <div key={i} className="acto03-desc space-y-4 will-change-transform">
                     <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground leading-tight">
                       {item.title}
@@ -556,7 +536,7 @@ export default function VankProject() {
                 <span className={STYLING.label}>{t.vank.acto04.label}</span>
                 <div className="space-y-2">
                   <div className="space-y-2">
-                    {t.vank.acto04.title.map((line, i) => (
+                    {t.vank.acto04.title.map((line: string, i: number) => (
                       <div key={i} className="acto04-title-mask overflow-hidden">
                         <h2 
                           className="acto04-title-text font-bold uppercase tracking-tighter will-change-transform"
@@ -588,7 +568,7 @@ export default function VankProject() {
                   {t.vank.acto04.changesLabel}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
-                  {t.vank.acto04.results.map((text, i) => (
+                  {t.vank.acto04.results.map((text: string, i: number) => (
                     <div key={i} className="acto04-desc flex items-start gap-[0.75em] will-change-transform text-left">
                       <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                       <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">
@@ -619,7 +599,7 @@ export default function VankProject() {
                 <span className={STYLING.label}>{t.vank.impact.label}</span>
                 <div className="space-y-2">
                   <div className="space-y-2">
-                    {t.vank.impact.title.map((line, i) => (
+                    {t.vank.impact.title.map((line: string, i: number) => (
                       <div key={i} className="acto05-title-mask overflow-hidden">
                         <h2 
                           className="acto05-title-text font-bold uppercase tracking-tighter will-change-transform"
@@ -648,7 +628,7 @@ export default function VankProject() {
                     {t.vank.impact.resultsLabel}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 w-full">
-                    {t.vank.impact.resultsList.map((text, i) => (
+                    {t.vank.impact.resultsList.map((text: string, i: number) => (
                       <div key={i} className="acto05-desc flex items-start gap-[0.75em] will-change-transform text-left">
                         <div className="w-[5px] h-[5px] rounded-full bg-foreground/30 mt-[0.6em] flex-shrink-0" />
                         <p className="text-lg md:text-xl font-light leading-snug opacity-80 text-left">

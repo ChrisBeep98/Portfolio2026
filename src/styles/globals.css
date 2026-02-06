@@ -38,7 +38,7 @@
 @media (max-width: 768px) {
   :root {
     --px-frame: 0.75em;
-    --section-gap: 5em;
+    --section-gap: 3.25em;
     --block-gap: 1.5em;
     --content-gap: 0.75em;
   }
@@ -48,7 +48,7 @@
 @layer base {
   body {
     @apply bg-background text-foreground font-display antialiased selection:bg-primary/30;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 
