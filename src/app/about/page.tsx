@@ -126,19 +126,21 @@ export default function AboutPage() {
       </div>
 
       {/* HERO / VISUAL SECTION */}
-      <section className="relative pt-[8em] lg:pt-[10em] pb-[2em] px-frame z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[3em] lg:gap-0 items-start">
-          <div className="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-20">
+      <section className="relative pt-[8em] lg:pt-[12em] pb-[2em] px-frame z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
+          
+          {/* TEXT CONTENT */}
+          <div className="lg:col-span-8 flex flex-col justify-center pr-0 lg:pr-20">
             <div className="slam-left mb-12">
               <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
                 <span className="w-8 h-px bg-orange-500" />
                 <span className="italic">{t.about.profile}</span>
               </span>
             </div>
-            <div className="space-y-4 mb-16">
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
-              <h1 className="slam-left text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
+
+            <div className="space-y-1 mb-16">
+              <h1 className="slam-left text-[2rem] md:text-6xl lg:text-[4rem] font-bold tracking-tighter leading-[0.9] uppercase text-black dark:text-white whitespace-nowrap">Christian Sandoval</h1>
+              <h1 className="slam-left text-[2rem] md:text-6xl lg:text-[4rem] font-bold tracking-tighter leading-[0.9] uppercase text-black dark:text-white">Moná</h1>
             </div>
             <div className="slam-left max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8">
               <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70">
@@ -209,29 +211,33 @@ export default function AboutPage() {
 
           {/* LADO DERECHO: Technical Checkerboard */}
           <div className="w-full lg:w-7/12 flex justify-end pt-12 lg:pt-0">
-            <div className="grid grid-cols-2 w-full max-w-2xl border-l border-t border-foreground/10 bg-background">
+            <div className="grid grid-cols-2 w-full max-w-3xl bg-transparent">
               {t.tools.items.map((tool, i) => {
                 const isEven = i % 2 === 0;
                 return (
                   <React.Fragment key={i}>
                     {isEven ? (
                       <>
-                        <div className="group relative aspect-square bg-background border-r border-b border-foreground/10 hover:border-orange-500/50 hover:z-20 transition-all duration-500 flex flex-col items-center justify-center text-center p-8">
-                          <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">{getToolIcon(tool.name)}</div>
-                          <span className="font-black text-xl tracking-tighter text-foreground mb-2">{tool.name}</span>
-                          <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 leading-relaxed max-w-[10em]">{tool.label}</span>
-                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/10 rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/15 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-center justify-center text-center p-8 lg:p-10">
+                          <div className="mb-6 group-hover:scale-110 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-4">{tool.name}</span>
+                          <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/50 group-hover:text-foreground/80 transition-colors duration-500 line-clamp-3 whitespace-pre-line">
+                            {tool.desc}
+                          </p>
+                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                         </div>
-                        <div className="aspect-square border-r border-b border-foreground/10 bg-foreground/[0.01]" />
+                        <div className="aspect-square" />
                       </>
                     ) : (
                       <>
-                        <div className="aspect-square border-r border-b border-foreground/10 bg-foreground/[0.01]" />
-                        <div className="group relative aspect-square bg-background border-r border-b border-foreground/10 hover:border-orange-500/50 hover:z-20 transition-all duration-500 flex flex-col items-center justify-center text-center p-8">
-                          <div className="mb-6 text-foreground group-hover:text-orange-500 group-hover:scale-110 transition-all duration-500">{getToolIcon(tool.name)}</div>
-                          <span className="font-black text-xl tracking-tighter text-foreground mb-2">{tool.name}</span>
-                          <span className="font-mono text-[0.5em] uppercase tracking-[0.2em] text-foreground/40 leading-relaxed max-w-[10em]">{tool.label}</span>
-                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="aspect-square" />
+                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/10 rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/15 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-center justify-center text-center p-8 lg:p-10">
+                          <div className="mb-6 group-hover:scale-110 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-4">{tool.name}</span>
+                          <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/50 group-hover:text-foreground/80 transition-colors duration-500 line-clamp-3 whitespace-pre-line">
+                            {tool.desc}
+                          </p>
+                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                         </div>
                       </>
                     )}
