@@ -206,10 +206,11 @@ export default function VankProject() {
         <div className="flex flex-col lg:flex-row relative">
           
           <aside className="hidden lg:flex flex-col w-[15%] h-screen sticky top-0 pt-48 pl-12 justify-start z-40 pointer-events-none">
-            <div className="space-y-3 relative pointer-events-auto">
+            <div className="relative pointer-events-auto flex flex-col">
+              {/* Refined Indicator Bar */}
               <div 
-                className="absolute left-[-1rem] w-[2px] h-4 bg-black dark:bg-white transition-all duration-500 ease-out"
-                style={{ top: `${activeSection * 1.75 + 0.25}rem` }}
+                className="absolute left-[-1rem] w-[2px] h-5 bg-black dark:bg-white transition-all duration-500 ease-out"
+                style={{ transform: `translateY(${activeSection * 2.25}rem)` }}
               />
               {[
                 { id: "hero", label: "Intro" },
@@ -229,13 +230,12 @@ export default function VankProject() {
 
                 return (
                   <button key={item.id} onClick={() => scrollToSection(item.id)}
-                    className={`text-left text-[12px] italic font-bold tracking-tight transition-opacity duration-300 block w-full pl-6 ${
+                    className={`text-left text-[12px] font-normal tracking-tight transition-all duration-300 block w-full pl-6 h-[2.25rem] flex items-center ${
                       activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"
                     }`}
-                    style={{ height: "1.5rem", lineHeight: "1.5rem" }}
                   >
-                    <span className="font-mono text-[0.8em] mr-2 opacity-50 not-italic">0{index}</span>
-                    {label}
+                    <span className="font-mono text-[0.8em] mr-3 opacity-50">0{index}</span>
+                    <span className="uppercase tracking-[0.1em]">{label}</span>
                   </button>
                 );
               })}
