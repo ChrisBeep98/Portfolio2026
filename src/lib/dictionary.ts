@@ -45,12 +45,12 @@ export const dictionary = {
       title: "TOOLS",
       description: "Throughout my career, I have strived to develop a diverse set of fundamental skills.",
       items: [
-        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes for complex products." },
-        { name: "WEBFLOW", label: "Design Systems", desc: "Scalable implementation based on atomic design." },
-        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences for the web." },
-        { name: "WEBFLOW", label: "UI Development", desc: "Pixel-perfect layouts and responsive architecture." },
-        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation and user journey mapping." },
-        { name: "GSAP", label: "Motion", desc: "Advanced programmatic animations and interactions." }
+        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes for complex products.", img: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" },
+        { name: "WEBFLOW", label: "Design Systems", desc: "Scalable implementation based on atomic design.", img: "https://upload.wikimedia.org/wikipedia/commons/9/94/Webflow_logo.svg" },
+        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences for the web.", img: "https://avatars.githubusercontent.com/u/74924350?s=200&v=4" },
+        { name: "REACT", label: "UI Development", desc: "Pixel-perfect layouts and responsive architecture.", img: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" },
+        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation and user journey mapping.", img: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" },
+        { name: "GSAP", label: "Motion", desc: "Advanced programmatic animations and interactions.", img: "https://cdn.worldvectorlogo.com/logos/gsap.svg" }
       ]
     },
     process: {
@@ -227,7 +227,7 @@ export const dictionary = {
     },
     about: {
       profile: "Perfil",
-      intro: "Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina investigación, estructura y creativa.",
+      intro: "Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina investigación, estructura y creatividad.",
       w1: "Soy", w2: "diseñador", w3: "UX/UI", w4: "y", w5: "desarrollador",
       w6: "frontend.", w7: "Transformo", w8: "ideas", w9: "complejas",
       w10: "en", w11: "experiencias", w12: "digitales", w13: "limpias,",
@@ -246,11 +246,12 @@ export const dictionary = {
       title: "HERRAMIENTAS",
       description: "A lo largo de mi carrera, me he esforzado por desarrollar un conjunto diverso de habilidades fundamentales.",
       items: [
-        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos." },
-        { name: "WEBFLOW", label: "Desarrollo Visual", desc: "Layouts pixel-perfect\n y arquitectura responsiva." },
-        { name: "REACT", label: "Arquitectura Frontend", desc: "Sistemas de componentes\n escalables y lógica." },
-        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web." },
-        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario." }
+        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos.", img: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" },
+        { name: "WEBFLOW", label: "Desarrollo Visual", desc: "Layouts pixel-perfect\n y arquitectura responsiva.", img: "https://upload.wikimedia.org/wikipedia/commons/9/94/Webflow_logo.svg" },
+        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web.", img: "https://avatars.githubusercontent.com/u/74924350?s=200&v=4" },
+        { name: "REACT", label: "Arquitectura Frontend", desc: "Sistemas de componentes\n escalables y lógica.", img: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" },
+        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario.", img: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" },
+        { name: "GSAP", label: "Motion", desc: "Animaciones programáticas avanzadas.", img: "https://cdn.worldvectorlogo.com/logos/gsap.svg" }
       ]
     },
     process: {
@@ -393,6 +394,12 @@ export const dictionary = {
           "El trabajo en equipo y la comunicación con los developers son la clave para entregar algo realmente usable."
         ],
         insightMessage: "\"Este proyecto fue una experiencia enriquecedora que dejó importantes lecciones.\""
+      },
+      footer: {
+        title: "ESTOY DISPONIBLE",
+        subtitle: "LLEVEMOS TU PROYECTO AL SIGUIENTE NIVEL",
+        email: "christiansandovaldesign@gmail.com",
+        copyright: "© 2026 Christian Sandoval."
       }
     }
   }
