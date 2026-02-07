@@ -122,19 +122,19 @@ export default function AboutPage() {
           
           {/* TEXT CONTENT */}
           <div className="lg:col-span-7 flex flex-col pr-0 lg:pr-20">
-            <div className="hero-text-reveal mb-12">
+            <div className="mb-6 lg:mb-12">
               <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
                 <span className="w-8 h-px bg-orange-500" />
                 <span className="italic">{t.about.profile}</span>
               </span>
             </div>
-            <div className="space-y-4 mb-16">
-              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
-              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
-              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
+            <div className="mb-8 lg:mb-16 max-w-4xl">
+              <h1 className="text-4xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[1.1] uppercase text-black dark:text-white">
+                Christian Sandoval Moná
+              </h1>
             </div>
-            <div className="hero-text-reveal max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8 text-2xl md:text-3xl font-light leading-snug text-foreground/70">
-              <p>Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="text-foreground font-bold">investigación</span>, <span className="text-foreground font-bold">estructura</span> y <span className="text-foreground font-bold">creatividad</span>.</p>
+            <div className="hero-text-reveal max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8 text-xl md:text-2xl font-light leading-snug text-foreground/70">
+              <p>{t.about.intro}</p>
               <div className="flex flex-wrap gap-4 pt-4">
                 {["UX / UI", "Webflow Dev", "Bilingual"].map((tag) => (
                   <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">{tag}</span>
@@ -174,7 +174,7 @@ export default function AboutPage() {
       <section className="story-section relative py-[6em] lg:pt-[8em] lg:pb-[10em] px-frame border-t border-foreground/5 z-10 bg-background">
         <div className="mb-16 story-reveal-item">
           <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">02 / Historia</span>
-          <h3 className="text-5xl md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-none text-foreground">{t.story.title}</h3>
+          <h3 className="text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-none text-foreground">{t.story.title}</h3>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[3em] lg:gap-[5em] items-start">
           <div className="space-y-6 story-reveal-item"><span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_ORIGIN ]</span><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p1}</p></div>
@@ -200,7 +200,7 @@ export default function AboutPage() {
           {/* LADO IZQUIERDO: Sticky Nativo */}
           <div className="w-full lg:w-5/12 lg:sticky lg:top-32 mb-20 lg:mb-0">
             <div className="lg:pr-24">
-              <h3 className="text-5xl md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">{t.tools.title}</h3>
+              <h3 className="text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">{t.tools.title}</h3>
               <p className="text-xl font-light leading-relaxed text-foreground/60 max-w-sm">{t.tools.description}</p>
             </div>
           </div>

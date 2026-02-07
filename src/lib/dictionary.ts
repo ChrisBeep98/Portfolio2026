@@ -26,6 +26,7 @@ export const dictionary = {
     },
     about: {
       profile: "About",
+      intro: "I am dedicated to designing digital experiences that put people at the center. My approach combines research, structure, and creativity.",
       w1: "I am a", w2: "UX/UI", w3: "Designer", w4: "and", w5: "Frontend",
       w6: "Developer.", w7: "I transform", w8: "complex", w9: "ideas",
       w10: "into", w11: "clean,", w12: "functional,", w13: "and",
@@ -226,6 +227,7 @@ export const dictionary = {
     },
     about: {
       profile: "Perfil",
+      intro: "Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina investigación, estructura y creatividad.",
       w1: "Soy", w2: "diseñador", w3: "UX/UI", w4: "y", w5: "desarrollador",
       w6: "frontend.", w7: "Transformo", w8: "ideas", w9: "complejas",
       w10: "en", w11: "experiencias", w12: "digitales", w13: "limpias,",
@@ -373,7 +375,7 @@ export const dictionary = {
         resultBridge: "\"La solución final, fue una plataforma con flujos completos, visual coherente y preparada para escalar.\"",
         changesLabel: "Cambios Clave",
         results: [
-          "Flujos diseñados de principio a fin para todas las operaciones clave.",
+          "Flows diseñados de principio a fin para todas las operaciones clave.",
           "Sistema de diseño documentado.",
           "Comisiones visibles desde el primer paso.",
           "Procesos simplificados (por ejemplo, transferencias en tres pasos).",
@@ -387,7 +389,7 @@ export const dictionary = {
         description: "El Diseño de la plataforma Vank no solo abordó los problemas iniciales, sino que también generó un impacto positivo medible y proporcionó valiosas lecciones para futuros proyectos.",
         resultsLabel: "Resultados.",
         resultsList: [
-          "Crear estructuras desde cero obliga a decidir muchas cosas pequeñas pero decisivas.",
+          "Crear estructuras desde cero obliga a decidir many small but decisive things.",
           "Priorizar arquitectura y sistema antes del detalle visual acelera todo el proceso.",
           "El trabajo en equipo y la comunicación con los developers son la clave para entregar algo realmente usable."
         ],
