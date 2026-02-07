@@ -195,10 +195,12 @@ export default function Projects() {
 }
 
 function ProjectMedia({ project, isMobile = false }: { project: Project; isMobile?: boolean }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLHTMLDivElement>(null);
   const magneticRef = useRef<HTMLDivElement>(null);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    // Only magnetic logic for desktop
     if (isMobile) return;
 
     const ctx = gsap.context(() => {
@@ -209,26 +211,25 @@ function ProjectMedia({ project, isMobile = false }: { project: Project; isMobil
       const xTo = gsap.quickTo(magnetic, "x", { duration: 0.3, ease: "power3" });
       const yTo = gsap.quickTo(magnetic, "y", { duration: 0.3, ease: "power3" });
 
-      const onMouseMove = (e: MouseEvent) => {
-        const rect = container.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const dx = e.clientX - centerX;
-        const dy = e.clientY - centerY;
-        
-        // Efecto magnético (0.3 de fuerza)
-        xTo(dx * 0.3);
-        yTo(dy * 0.3);
-
-        // Detección de colisión para feedback visual
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 60) {
-          gsap.to(magnetic, { backgroundColor: "#fff", color: "#000", scale: 1.15, duration: 0.3, overwrite: "auto" });
-        } else {
-          gsap.to(magnetic, { backgroundColor: "#000", color: "#fff", scale: 1, duration: 0.3, overwrite: "auto" });
-        }
-      };
-
+          const onMouseMove = (e: MouseEvent) => {
+            if (isMobile) return; // Prevent any movement calculation on mobile
+            
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+            
+            xTo(dx * 0.3);
+            yTo(dy * 0.3);
+      
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 60) {
+              gsap.to(magnetic, { backgroundColor: "#fff", color: "#000", scale: 1.15, duration: 0.3, overwrite: "auto" });
+            } else {
+              gsap.to(magnetic, { backgroundColor: "#000", color: "#fff", scale: 1, duration: 0.3, overwrite: "auto" });
+            }
+          };
       const onMouseEnter = () => {
         gsap.to(magnetic, { scale: 1, opacity: 1, duration: 0.4, ease: "expo.out" });
       };
@@ -245,10 +246,27 @@ function ProjectMedia({ project, isMobile = false }: { project: Project; isMobil
     return () => ctx.revert();
   }, [isMobile]);
 
+  // Handle tap animation for mobile
+  const handleTap = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isMobile) return;
+    
+    if (magneticRef.current) {
+      gsap.fromTo(magneticRef.current, 
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.2, ease: "power4.out", onComplete: () => {
+          gsap.to(magneticRef.current, { scale: 0, opacity: 0, duration: 0.2, delay: 0.1 });
+        }}
+      );
+    }
+  };
+
   const mediaContent = (
     <div 
       ref={containerRef}
       className={`w-full h-full relative overflow-hidden group ${isMobile ? '' : 'bg-background p-12 lg:p-24'}`}
+      onMouseEnter={() => !isMobile && setIsHovering(true)}
+      onMouseDown={handleTap}
+      onTouchStart={handleTap}
     >
       <div className={`w-full h-full relative overflow-hidden ${isMobile ? '' : 'rounded-sm shadow-2xl'}`}>
         {project.video ? (
@@ -259,17 +277,15 @@ function ProjectMedia({ project, isMobile = false }: { project: Project; isMobil
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
       </div>
 
-      {!isMobile && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div 
-            ref={magneticRef}
-            className="w-28 h-28 bg-black text-white rounded-full flex flex-col items-center justify-center origin-center scale-0 opacity-0 shadow-2xl"
-          >
-            <span className="text-[10px] font-black uppercase tracking-wider mb-1">Ver más</span>
-            <ArrowUpRight size={16} />
-          </div>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div 
+          ref={magneticRef}
+          className="w-28 h-28 bg-black text-white rounded-full flex flex-col items-center justify-center origin-center scale-0 opacity-0 shadow-2xl"
+        >
+          <span className="text-[10px] font-black uppercase tracking-wider mb-1">Ver más</span>
+          <ArrowUpRight size={16} />
         </div>
-      )}
+      </div>
     </div>
   );
 
