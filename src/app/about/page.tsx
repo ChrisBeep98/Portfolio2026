@@ -16,96 +16,87 @@ export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const getToolIcon = (name: string) => {
+    const iconClass = "transition-all duration-700 ease-out";
     switch (name) {
-      case "FIGMA": return <Figma strokeWidth={1} size={40} />;
-      case "WEBFLOW": return <Globe strokeWidth={1} size={40} />;
-      case "SPLINE": return <Box strokeWidth={1} size={40} />;
-      case "A.I.": return <Sparkles strokeWidth={1} size={40} />;
-      case "GSAP": return <Move strokeWidth={1} size={40} />;
-      default: return <Cpu strokeWidth={1} size={40} />;
+      case "FIGMA": return <Figma strokeWidth={1} size={42} className={`${iconClass} text-[#F24E1E] group-hover:animate-pulse`} />;
+      case "WEBFLOW": return <Globe strokeWidth={1} size={42} className={`${iconClass} text-[#146EF5] animate-[spin_8s_linear_infinite]`} />;
+      case "SPLINE": return <Box strokeWidth={1} size={42} className={`${iconClass} text-[#FF3366] animate-[bounce_4s_ease-in-out_infinite]`} />;
+      case "A.I.": return <Sparkles strokeWidth={1} size={42} className={`${iconClass} text-[#7000FF] animate-pulse`} />;
+      case "GSAP": return <Move strokeWidth={1} size={42} className={`${iconClass} text-[#88CE02] group-hover:translate-x-2 transition-transform`} />;
+      default: return <Cpu strokeWidth={1} size={42} className={`${iconClass} text-orange-500`} />;
     }
   };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // 1. ENTRY ANIMATIONS
+      // 1. INITIAL LOAD ANIMATION (Grow & Reveal)
       tl.fromTo(".tech-grid-line", 
         { scaleY: 0 }, 
-        { scaleY: 1, duration: 1.2, stagger: 0.03, transformOrigin: "top" }
+        { scaleY: 1, duration: 1.5, stagger: 0.05, transformOrigin: "top" }
       )
-      .fromTo(".slam-left",
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.5, stagger: 0.1 },
-        "-=0.8"
+      .fromTo(".hero-text-reveal",
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 },
+        "-=1.0"
       )
-      .fromTo(".slam-right",
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.5 },
+      // Optimized Image Reveal (GPU Accelerated)
+      .fromTo(".reveal-monolith", 
+        { scale: 1.1, opacity: 0, filter: "blur(10px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.8, ease: "expo.out", force3D: true },
         "-=1.2"
+      )
+      .fromTo(".reveal-insight",
+        { scale: 0.8, opacity: 0, y: 40 },
+        { scale: 1, opacity: 1, y: 0, duration: 1.5, ease: "elastic.out(1, 0.75)", force3D: true },
+        "-=1.4"
       );
 
-      // 2. PARALLAX EFFECTS
-      gsap.to(".parallax-monolith", {
+      // 2. PARALLAX SCROLL (Optimized Scrub)
+      gsap.to(".parallax-monolith-layer", {
         y: -120,
-        scale: 1.05,
+        ease: "none",
         scrollTrigger: {
-          trigger: ".parallax-monolith",
+          trigger: ".parallax-monolith-layer",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.5 // Smoother scrubbing
+        }
+      });
+
+      gsap.to(".parallax-insight-layer", {
+        y: -250, // Faster movement for depth
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".parallax-insight-layer",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.8
+        }
+      });
+
+      gsap.to(".vertical-text", {
+        y: -80,
+        scrollTrigger: {
+          trigger: ".parallax-monolith-layer",
           start: "top bottom",
           end: "bottom top",
           scrub: 1
         }
       });
 
-      gsap.to(".parallax-insight", {
-        y: -220,
+      // 3. STORY ANIMATION
+      gsap.from(".story-reveal-item", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.1,
         scrollTrigger: {
-          trigger: ".parallax-insight",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5
+          trigger: ".story-section",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
         }
       });
-
-      // 3. STORY SECTION REVEAL
-      const storyElements = gsap.utils.toArray(".story-reveal");
-      if (window.innerWidth < 768) {
-        storyElements.forEach((el: any) => {
-          gsap.from(el, {
-            y: 40,
-            opacity: 0,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          });
-        });
-      } else {
-        gsap.from(storyElements, {
-          y: 40,
-          opacity: 0,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: ".story-section",
-            start: "top 75%",
-            toggleActions: "play none none reverse"
-          }
-        });
-      }
-
-      // 4. THE MASTER PIN (Tools Section Fix)
-      if (window.innerWidth >= 1024) {
-        ScrollTrigger.create({
-          trigger: ".tools-section",
-          start: "top 15%",
-          end: "bottom 85%",
-          pin: ".tools-pin-container",
-          pinSpacing: false,
-          anticipatePin: 1
-        });
-      }
 
     }, containerRef);
 
@@ -113,7 +104,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans selection:bg-orange-500 selection:text-white transition-colors duration-1000 overflow-x-hidden">
+    <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans transition-colors duration-1000">
       <Header />
       
       {/* GRID ESTRUCTURAL */}
@@ -125,27 +116,25 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* HERO / VISUAL SECTION */}
+      {/* HERO SECTION */}
       <section className="relative pt-[8em] lg:pt-[12em] pb-[2em] px-frame z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
           
           {/* TEXT CONTENT */}
-          <div className="lg:col-span-8 flex flex-col justify-center pr-0 lg:pr-20">
-            <div className="slam-left mb-12">
+          <div className="lg:col-span-7 flex flex-col pr-0 lg:pr-20">
+            <div className="hero-text-reveal mb-12">
               <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold flex items-center gap-4">
                 <span className="w-8 h-px bg-orange-500" />
                 <span className="italic">{t.about.profile}</span>
               </span>
             </div>
-
-            <div className="space-y-1 mb-16">
-              <h1 className="slam-left text-[2rem] md:text-6xl lg:text-[4rem] font-bold tracking-tighter leading-[0.9] uppercase text-black dark:text-white whitespace-nowrap">Christian Sandoval</h1>
-              <h1 className="slam-left text-[2rem] md:text-6xl lg:text-[4rem] font-bold tracking-tighter leading-[0.9] uppercase text-black dark:text-white">Moná</h1>
+            <div className="space-y-4 mb-16">
+              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Christian</h1>
+              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Sandoval</h1>
+              <h1 className="hero-text-reveal text-5xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[0.85] uppercase text-black dark:text-white">Moná</h1>
             </div>
-            <div className="slam-left max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8">
-              <p className="text-2xl md:text-3xl font-light leading-snug text-foreground/70">
-                Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="text-foreground font-bold">investigación</span>, <span className="text-foreground font-bold">estructura</span> y <span className="text-foreground font-bold">creatividad</span>.
-              </p>
+            <div className="hero-text-reveal max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8 text-2xl md:text-3xl font-light leading-snug text-foreground/70">
+              <p>Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina <span className="text-foreground font-bold">investigación</span>, <span className="text-foreground font-bold">estructura</span> y <span className="text-foreground font-bold">creatividad</span>.</p>
               <div className="flex flex-wrap gap-4 pt-4">
                 {["UX / UI", "Webflow Dev", "Bilingual"].map((tag) => (
                   <span key={tag} className="px-4 py-1 border border-foreground/10 rounded-full font-mono text-[0.55em] uppercase tracking-widest opacity-40">{tag}</span>
@@ -154,37 +143,45 @@ export default function AboutPage() {
             </div>
           </div>
 
+          {/* VISUAL EXHIBITION (Refactored) */}
           <div className="lg:col-span-5 relative mt-16 lg:mt-0">
-            <div className="slam-right parallax-monolith relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden group rounded-sm">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="Portrait" className="w-full h-full object-cover grayscale brightness-110 contrast-110 group-hover:scale-105 transition-all duration-1000" />
+            
+            {/* Main Monolith */}
+            <div className="reveal-monolith parallax-monolith-layer relative w-full aspect-[3/4.2] bg-neutral-200 dark:bg-neutral-900 shadow-2xl overflow-hidden rounded-sm will-change-transform">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="Portrait" className="w-full h-full object-cover grayscale brightness-110 contrast-110" />
               <div className="absolute inset-0 bg-orange-500/10 mix-blend-overlay opacity-0 dark:opacity-100 transition-opacity" />
+              <div className="absolute top-6 right-6 font-mono text-[0.45em] tracking-[0.4em] text-white mix-blend-difference vertical-text">CS_REF_001</div>
             </div>
-            <div className="slam-left parallax-insight absolute -bottom-24 lg:-bottom-16 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[0.35em] lg:p-4 pb-12 bg-background shadow-2xl border border-foreground/5 rounded-sm overflow-hidden">
-              <div className="w-full aspect-square overflow-hidden mb-6 grayscale"><img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" alt="Detail" className="w-full h-full object-cover opacity-80" /></div>
+
+            {/* Insight Image (Elevated Position & Optimized) */}
+            <div className="reveal-insight parallax-insight-layer absolute -bottom-12 lg:-bottom-8 right-0 lg:right-auto lg:-left-24 w-[55%] aspect-[1/1.2] z-20 p-[0.35em] lg:p-4 pb-12 bg-background shadow-2xl border border-foreground/5 rounded-sm overflow-hidden will-change-transform">
+              <div className="w-full aspect-square overflow-hidden mb-6 grayscale">
+                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop" alt="Detail" className="w-full h-full object-cover opacity-80" />
+              </div>
               <div className="flex justify-between items-center px-2 lg:px-0 opacity-40 font-mono text-[0.5rem] tracking-[0.3em] uppercase"><span>[ DETAIL_VIEW ]</span><span>RAW_DATA</span></div>
             </div>
-            <div className="mt-32 md:mt-20 text-left lg:text-right slam-right">
-              <div className="flex flex-col lg:flex-row lg:justify-end items-start lg:items-center gap-4 mt-2">
-                <div className="h-px w-12 bg-orange-500 hidden lg:block" />
-                <p className="font-mono text-[0.65em] uppercase tracking-[0.3em] opacity-40 leading-loose"><span className="block lg:inline">27 Años</span><span className="hidden lg:inline ml-2">/</span><span className="block lg:inline lg:ml-2">Salento, COL</span></p>
-              </div>
+
+            {/* Tech Specs */}
+            <div className="mt-32 md:mt-20 text-left lg:text-right hero-text-reveal">
+              <p className="font-mono text-[0.65em] uppercase tracking-[0.3em] opacity-40 leading-loose">27 Años / Salento, COL</p>
             </div>
           </div>
+
         </div>
       </section>
 
       {/* STORY SECTION */}
-      <section className="story-section relative py-[4em] lg:pt-[6em] lg:pb-[8em] px-frame border-t border-foreground/5 z-10 bg-background">
-        <div className="mb-16">
-          <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">02 / {t.about.profile === "Perfil" ? "Historia" : "Story"}</span>
-          <h3 className="story-reveal text-5xl md:text-7xl font-extrabold uppercase tracking-tighter leading-none text-foreground">{t.story.title}</h3>
+      <section className="story-section relative py-[6em] lg:pt-[8em] lg:pb-[10em] px-frame border-t border-foreground/5 z-10 bg-background">
+        <div className="mb-16 story-reveal-item">
+          <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">02 / Historia</span>
+          <h3 className="text-5xl md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-none text-foreground">{t.story.title}</h3>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[3em] lg:gap-[5em] items-start">
-          <div className="space-y-6"><span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_ORIGIN ]</span><p className="story-reveal text-xl font-light leading-relaxed text-foreground/70">{t.story.p1}</p></div>
-          <div className="space-y-6"><span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_EVOLUTION ]</span><p className="story-reveal text-xl font-light leading-relaxed text-foreground/70">{t.story.p2}</p></div>
-          <div className="relative group">
-            <span className="story-reveal font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block mb-8">[ {t.story.disciplinesTitle} ]</span>
-            <div className="story-reveal space-y-2">
+          <div className="space-y-6 story-reveal-item"><span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_ORIGIN ]</span><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p1}</p></div>
+          <div className="space-y-6 story-reveal-item"><span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_EVOLUTION ]</span><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p2}</p></div>
+          <div className="relative group story-reveal-item">
+            <span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block mb-8">[ {t.story.disciplinesTitle} ]</span>
+            <div className="space-y-2">
               {t.story.disciplinesList.map((item, i) => (
                 <div key={i} className="flex items-center gap-6 py-4 px-6 rounded-xl border border-transparent hover:border-foreground/5 hover:bg-foreground/[0.01] transition-all duration-500 group/item">
                   <span className="font-mono text-[0.6em] text-orange-500/40 group-hover/item:text-orange-500 transition-colors">0{i + 1}</span>
@@ -196,48 +193,51 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TOOLS SECTION (The Master Fix) */}
-      <section className="tools-section relative py-[2em] lg:py-[4em] px-frame border-t border-foreground/5 z-10 bg-background overflow-visible">
-        <div className="flex flex-col lg:flex-row items-start relative min-h-screen">
+      {/* TOOLS SECTION (Refactored & Stable) */}
+      <section className="tools-section relative py-[6em] lg:py-[10em] px-frame border-t border-foreground/5 z-10 bg-background overflow-visible">
+        <div className="flex flex-col lg:flex-row items-start">
           
-          {/* LADO IZQUIERDO: Pinning Zone */}
-          <div className="w-full lg:w-5/12 relative lg:h-full">
-            <div className="tools-pin-container py-12 lg:pr-24">
-              <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">03 / {t.tools.title}</span>
-              <h3 className="text-5xl lg:text-7xl font-extrabold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">{t.tools.title}</h3>
+          {/* LADO IZQUIERDO: Sticky Nativo */}
+          <div className="w-full lg:w-5/12 lg:sticky lg:top-32 mb-20 lg:mb-0">
+            <div className="lg:pr-24">
+              <h3 className="text-5xl md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">{t.tools.title}</h3>
               <p className="text-xl font-light leading-relaxed text-foreground/60 max-w-sm">{t.tools.description}</p>
             </div>
           </div>
 
-          {/* LADO DERECHO: Technical Checkerboard */}
-          <div className="w-full lg:w-7/12 flex justify-end pt-12 lg:pt-0">
-            <div className="grid grid-cols-2 w-full max-w-3xl bg-transparent">
+          {/* LADO DERECHO: Checkerboard Real */}
+          <div className="w-full lg:w-7/12 flex justify-end">
+            <div className="grid grid-cols-2 w-full max-w-2xl bg-transparent">
               {t.tools.items.map((tool, i) => {
                 const isEven = i % 2 === 0;
                 return (
                   <React.Fragment key={i}>
                     {isEven ? (
                       <>
-                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/10 rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/15 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-center justify-center text-center p-8 lg:p-10">
-                          <div className="mb-6 group-hover:scale-110 transition-transform duration-700">{getToolIcon(tool.name)}</div>
-                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-4">{tool.name}</span>
-                          <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/50 group-hover:text-foreground/80 transition-colors duration-500 line-clamp-3 whitespace-pre-line">
-                            {tool.desc}
-                          </p>
-                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
+                          <div className="w-full flex justify-between items-start">
+                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                            <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                          </div>
+                          <div>
+                            <span className="font-black text-2xl lg:text-3xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
+                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-medium">{tool.desc}</p>
+                          </div>
                         </div>
                         <div className="aspect-square" />
                       </>
                     ) : (
                       <>
                         <div className="aspect-square" />
-                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/10 rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/15 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-center justify-center text-center p-8 lg:p-10">
-                          <div className="mb-6 group-hover:scale-110 transition-transform duration-700">{getToolIcon(tool.name)}</div>
-                          <span className="font-black text-xl lg:text-2xl tracking-tighter text-foreground mb-4">{tool.name}</span>
-                          <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/50 group-hover:text-foreground/80 transition-colors duration-500 line-clamp-3 whitespace-pre-line">
-                            {tool.desc}
-                          </p>
-                          <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                        <div className="group relative aspect-square bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
+                          <div className="w-full flex justify-between items-start">
+                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                            <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                          </div>
+                          <div>
+                            <span className="font-black text-2xl lg:text-3xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
+                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-medium">{tool.desc}</p>
+                          </div>
                         </div>
                       </>
                     )}
