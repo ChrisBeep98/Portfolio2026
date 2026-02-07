@@ -13,19 +13,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const storedLang = localStorage.getItem('language') as Language;
+    
     if (storedLang && (storedLang === 'en' || storedLang === 'es')) {
       setLanguage(storedLang);
-    } else {
-      // Detect browser language
-      if (typeof navigator !== 'undefined') {
-         const browserLang = navigator.language.split('-')[0];
-         if (browserLang === 'es') {
-           setLanguage('es');
-         }
-      }
+    } else if (typeof navigator !== 'undefined') {
+      const browserLang = navigator.language.split('-')[0];
+      const initialLang = browserLang === 'es' ? 'es' : 'en';
+      setLanguage(initialLang);
+      localStorage.setItem('language', initialLang);
     }
   }, []);
 
@@ -36,7 +36,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t: dictionary[language] }}>
-      {children}
+      <div style={{ visibility: mounted ? "visible" : "hidden" }}>
+        {children}
+      </div>
     </LanguageContext.Provider>
   );
 }
