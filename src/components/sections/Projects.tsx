@@ -15,6 +15,7 @@ interface Project {
   category: string;
   description: string;
   image: string;
+  video?: string; // New field for video support
   tags: string[];
   link?: string;
   github?: string;
@@ -30,6 +31,7 @@ const projects: Project[] = [
     category: "Fintech Platform",
     description: "Una plataforma fintech integral diseñada para democratizar el acceso a herramientas financieras complejas y criptomonedas.",
     image: "https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg",
+    video: "https://res.cloudinary.com/dnx0dmhq3/video/upload/v1770498001/684d06174bbd508a8dcbc859_68a02c4efff9efe6193d79dd_showcase_09-transcode_kezu6n.mp4",
     lightBg: "#FEF08A", 
     darkBg: "#713F12",  
     accent: "#facc15",
@@ -250,7 +252,18 @@ export default function Projects() {
                 </a>
               </div>
               <div className="h-[55vh] w-full relative">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                {project.video ? (
+                  <video 
+                    src={project.video} 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                )}
                 
                 {/* Floating Chips (Mobile Only) */}
                 <div className="absolute top-6 right-6 flex flex-wrap gap-2 justify-end max-w-[260px]">
@@ -307,7 +320,18 @@ function DesktopImage({ project }: { project: Project }) {
   return (
     <div className="w-full h-full p-12 lg:p-24 bg-background">
       <div className="w-full h-full relative overflow-hidden rounded-sm">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        {project.video ? (
+          <video 
+            src={project.video} 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        )}
         <div className="absolute inset-0 bg-black/10" />
       </div>
     </div>
