@@ -31,156 +31,34 @@ export default function VankProject() {
     window.addEventListener("resize", handleResize);
 
     const ctx = gsap.context(() => {
-      // 1. HERO TEXT REVEAL
-      gsap.fromTo(".hero-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.5 }
-      );
-      
-      gsap.fromTo(".hero-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.5, ease: "power4.out", delay: 0.5 }
-      );
+      // reveal animations
+      gsap.fromTo(".hero-title-mask", { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out", delay: 0.5 });
+      gsap.fromTo(".hero-title-text", { y: "100%" }, { y: "0%", duration: 1.5, ease: "power4.out", delay: 0.5 });
+      gsap.from(".hero-subtitle", { y: 40, opacity: 0, duration: 1.2, delay: 0.9, ease: "power3.out" });
+      gsap.from(".meta-reveal", { y: 20, opacity: 0, duration: 0.8, stagger: 0.05, delay: 0.4, ease: "power2.out" });
 
-      gsap.from(".hero-subtitle", {
-        y: 40, opacity: 0, duration: 1.2, delay: 0.9, ease: "power3.out"
-      });
-
-      // 2. METADATA STAGGER
-      gsap.from(".meta-reveal", {
-        y: 20, opacity: 0, duration: 0.8, stagger: 0.05, delay: 0.4, ease: "power2.out"
-      });
-
-      // 3. CINEMATIC IMAGES REVEAL
-      const imageContainers = gsap.utils.toArray(".hero-img-container") as HTMLElement[];
-      imageContainers.forEach((container) => {
-        gsap.fromTo(container, 
-          { y: 40, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 1.2, ease: "power3.out", force3D: true,
-            scrollTrigger: {
-              trigger: container, start: "top 92%", toggleActions: "play none none reverse", fastScrollEnd: true
-            }
-          }
-        );
-      });
-
-      // 4. ACTO 01 REVEAL
-      const acto01Tl = gsap.timeline({
-        scrollTrigger: { trigger: "#contexto", start: "top 80%", toggleActions: "play none none reverse" }
-      });
-
-      acto01Tl.fromTo(".acto01-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
-      )
-      .fromTo(".acto01-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
-      )
-      .from(".acto01-desc", {
-        y: 40, opacity: 0, duration: 1, ease: "power3.out"
-      }, "-=0.8");
-
-      // 5. ACTO 02 REVEAL
-      const acto02TitleTl = gsap.timeline({
-        scrollTrigger: { trigger: "#acto02", start: "top 80%", toggleActions: "play none none reverse" }
-      });
-
-      acto02TitleTl.fromTo(".acto02-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
-      )
-      .fromTo(".acto02-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
-      );
-
-      const acto02DescElements = gsap.utils.toArray(".acto02-desc") as HTMLElement[];
-      acto02DescElements.forEach((el) => {
-        gsap.from(el, {
-          y: 40, opacity: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
+      const imgContainers = gsap.utils.toArray(".hero-img-container");
+      imgContainers.forEach((container: any) => {
+        gsap.fromTo(container, { y: 40, opacity: 0 }, {
+          y: 0, opacity: 1, duration: 1.2, ease: "power3.out",
+          scrollTrigger: { trigger: container, start: "top 92%", toggleActions: "play none none reverse" }
         });
       });
 
-      // 6. ACTO 03 REVEAL
-      const acto03TitleTl = gsap.timeline({
-        scrollTrigger: { trigger: "#solucion", start: "top 80%", toggleActions: "play none none reverse" }
-      });
-
-      acto03TitleTl.fromTo(".acto03-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
-      )
-      .fromTo(".acto03-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
-      );
-
-      const acto03DescElements = gsap.utils.toArray(".acto03-desc") as HTMLElement[];
-      acto03DescElements.forEach((el) => {
-        gsap.from(el, {
-          y: 40, opacity: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
+      ["01", "02", "03", "04", "05"].forEach(num => {
+        const tl = gsap.timeline({ scrollTrigger: { trigger: num === "01" ? "#contexto" : num === "02" ? "#acto02" : num === "03" ? "#solucion" : num === "04" ? "#resultado" : "#impacto", start: "top 80%", toggleActions: "play none none reverse" }});
+        tl.fromTo(`.acto${num}-title-mask`, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" })
+          .fromTo(`.acto${num}-title-text`, { y: "100%" }, { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<");
+        
+        gsap.utils.toArray(`.acto${num}-desc`).forEach((el: any) => {
+          gsap.from(el, { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }});
         });
       });
 
-      // 7. ACTO 04 REVEAL
-      const acto04TitleTl = gsap.timeline({
-        scrollTrigger: { trigger: "#resultado", start: "top 80%", toggleActions: "play none none reverse" }
-      });
-
-      acto04TitleTl.fromTo(".acto04-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
-      )
-      .fromTo(".acto04-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
-      );
-
-      const acto04DescElements = gsap.utils.toArray(".acto04-desc") as HTMLElement[];
-      acto04DescElements.forEach((el) => {
-        gsap.from(el, {
-          y: 40, opacity: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
-        });
-      });
-
-      // 8. ACTO 05 REVEAL
-      const acto05TitleTl = gsap.timeline({
-        scrollTrigger: { trigger: "#impacto", start: "top 80%", toggleActions: "play none none reverse" }
-      });
-
-      acto05TitleTl.fromTo(".acto05-title-mask", 
-        { clipPath: "inset(0% 0% 100% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, stagger: 0.1, ease: "power4.out" }
-      )
-      .fromTo(".acto05-title-text", 
-        { y: "100%" },
-        { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" }, "<"
-      );
-
-      const acto05DescElements = gsap.utils.toArray(".acto05-desc") as HTMLElement[];
-      acto05DescElements.forEach((el) => {
-        gsap.from(el, {
-          y: 40, opacity: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" }
-        });
-      });
-
-      // 9. SCROLL SPY
       const sections = ["hero", "contexto", "acto02", "solucion", "resultado", "impacto"];
       sections.forEach((section, index) => {
-        ScrollTrigger.create({
-          trigger: `#${section}`,
-          start: "top center", end: "bottom center",
-          onEnter: () => setActiveSection(index),
-          onEnterBack: () => setActiveSection(index)
-        });
+        ScrollTrigger.create({ trigger: `#${section}`, start: "top center", end: "bottom center", onEnter: () => setActiveSection(index), onEnterBack: () => setActiveSection(index) });
       });
-
     }, containerRef);
 
     return () => {
@@ -190,16 +68,33 @@ export default function VankProject() {
   }, [t]);
 
   const scrollToSection = (id: string) => {
-    gsap.to(window, {
-      duration: 1.5, scrollTo: { y: `#${id}`, autoKill: false }, ease: "power4.inOut"
-    });
+    gsap.to(window, { duration: 1.5, scrollTo: { y: `#${id}`, autoKill: false }, ease: "power4.inOut" });
   };
+
+  const renderTitle = (titleArray: string[], mobileTitleArray: string[], actoNum: string) => (
+    <div className="space-y-2">
+      <div className="lg:hidden">
+        <div className={`${actoNum}-title-mask overflow-hidden pt-2 -mt-2`}>
+          <h2 className={`${actoNum}-title-text font-bold uppercase tracking-tighter will-change-transform text-[clamp(2.5rem,8vw,4.5em)] leading-[0.9]`}>
+            {mobileTitleArray.join(" ")}
+          </h2>
+        </div>
+      </div>
+      <div className="hidden lg:block space-y-2">
+        {titleArray.map((line, i) => (
+          <div key={i} className={`${actoNum}-title-mask overflow-hidden pt-2 -mt-2`}>
+            <h2 className={`${actoNum}-title-text font-bold uppercase tracking-tighter will-change-transform text-[clamp(2.5rem,4.5vw,6em)] leading-[0.85]`}>
+              {line}
+            </h2>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background overflow-x-clip">
-      
       <Header hideLogo={true} />
-      
       <div className="fixed top-8 left-6 md:left-12 lg:left-20 z-[110] mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
           <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
@@ -209,17 +104,12 @@ export default function VankProject() {
         </Link>
       </div>
 
-      {/* OVERLAY CONTENT LAYER */}
       <div className="relative z-10 bg-background shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
         <div className="flex flex-col lg:flex-row relative">
           
           <aside className="hidden lg:flex flex-col w-[15%] h-screen sticky top-0 pt-48 pl-12 justify-start z-40 pointer-events-none self-start">
             <div className="relative pointer-events-auto flex flex-col">
-              {/* Refined Indicator Bar */}
-              <div 
-                className="absolute left-[-1rem] w-[2px] h-5 bg-black dark:bg-white transition-all duration-500 ease-out"
-                style={{ transform: `translateY(${activeSection * 2.25}rem)` }}
-              />
+              <div className="absolute left-[-1rem] w-[2px] h-5 bg-black dark:bg-white transition-all duration-500 ease-out" style={{ transform: `translateY(${activeSection * 2.25}rem)` }} />
               {[
                 { id: "hero", label: "Intro" },
                 { id: "contexto", label: t.vank.intro.contextLabel.split(' ')[0] },
@@ -227,26 +117,12 @@ export default function VankProject() {
                 { id: "solucion", label: t.vank.intro.back === "Projects" ? "Solution" : "Solución" },
                 { id: "resultado", label: t.vank.intro.back === "Projects" ? "Result" : "Resultado" },
                 { id: "impacto", label: t.vank.intro.back === "Projects" ? "Impact" : "Impacto" }
-              ].map((item, index) => {
-                let label = "";
-                if (item.id === "hero") label = "Intro";
-                else if (item.id === "contexto") label = t.vank.intro.contextLabel.split(' ')[0];
-                else if (item.id === "acto02") label = t.vank.intro.back === "Projects" ? "Challenge" : "Desafío";
-                else if (item.id === "solucion") label = t.vank.intro.back === "Projects" ? "Solution" : "Solución";
-                else if (item.id === "resultado") label = t.vank.intro.back === "Projects" ? "Result" : "Resultado";
-                else if (item.id === "impacto") label = t.vank.intro.back === "Projects" ? "Impact" : "Impacto";
-
-                return (
-                  <button key={item.id} onClick={() => scrollToSection(item.id)}
-                    className={`text-left text-[12px] font-normal tracking-tight transition-all duration-300 block w-full pl-6 h-[2.25rem] flex items-center ${
-                      activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"
-                    }`}
-                  >
-                    <span className="font-mono text-[0.8em] mr-3 opacity-50">0{index}</span>
-                    <span className="uppercase tracking-[0.1em]">{label}</span>
-                  </button>
-                );
-              })}
+              ].map((item, index) => (
+                <button key={index} onClick={() => scrollToSection(item.id)} className={`text-left text-[12px] font-normal tracking-tight transition-all duration-300 block w-full pl-6 h-[2.25rem] flex items-center ${activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"}`}>
+                  <span className="font-mono text-[0.8em] mr-3 opacity-50">0{index}</span>
+                  <span className="uppercase tracking-[0.1em]">{item.label}</span>
+                </button>
+              ))}
             </div>
           </aside>
 
@@ -255,10 +131,7 @@ export default function VankProject() {
             <header id="hero" className="px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
               <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em] px-[14px] md:px-0">
                 <div className="hero-title-mask overflow-hidden pb-4 -mb-4">
-                  <h1 
-                    className="hero-title-text font-black tracking-[-0.08em] uppercase will-change-transform"
-                    style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                  >
+                  <h1 className="hero-title-text font-black tracking-[-0.08em] uppercase will-change-transform text-[clamp(2.5rem,4.5vw,6em)] leading-[0.85]">
                     {t.vank.intro.title}<span className="text-yellow-300 ml-[0.05em]">.</span>
                   </h1>
                 </div>
@@ -284,7 +157,6 @@ export default function VankProject() {
                     { l: t.vank.intro.meta.services, v: "UX / UI Strategy" },
                     { l: t.vank.intro.meta.date, v: "2023 - 2024" },
                     { l: t.vank.intro.meta.deliverables, v: "MVP, UI Kit" },
-                    { l: t.vank.intro.meta.deliverables, v: "MVP, UI Kit" },
                     { l: t.vank.intro.meta.ecosystem, v: "Fintech" }
                   ].map((item, i) => (
                     <div key={i} className="meta-reveal space-y-[0.5em] will-change-transform">
@@ -296,6 +168,7 @@ export default function VankProject() {
               </div>
             </header>
 
+            {/* CINEMATIC IMAGE 1 */}
             <section className="hidden md:block w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98ffcf18c76db9ce92b_MacBook%20Air%20M4%20-%20Sky%20Blue-2.jpg" 
@@ -303,6 +176,7 @@ export default function VankProject() {
               </div>
             </section>
 
+            {/* CINEMATIC IMAGE 2 */}
             <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98c8b356cc505bff059_iPad%20Mockup%20Light-2.jpg" 
@@ -313,24 +187,14 @@ export default function VankProject() {
             <section id="contexto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto01.label}</span>
-                <div className="space-y-2">
-                  {(isMobile ? t.vank.acto01.titleMobile : t.vank.acto01.title).map((line: string, i: number) => (
-                    <div key={i} className="acto01-title-mask overflow-hidden">
-                      <h2 
-                        className="acto01-title-text font-bold uppercase tracking-tighter will-change-transform"
-                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                      >
-                        {line}
-                      </h2>
-                    </div>
-                  ))}
-                </div>
+                {renderTitle(t.vank.acto01.title, t.vank.acto01.titleMobile, "acto01")}
               </div>
               <div className="pt-[4em] md:pt-[18em]">
                 <p className="acto01-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">{t.vank.acto01.description}</p>
               </div>
             </section>
 
+            {/* CINEMATIC IMAGE 3 */}
             <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98d47f23eece986b74c_Layout%205.jpg" 
@@ -338,6 +202,7 @@ export default function VankProject() {
               </div>
             </section>
 
+            {/* CINEMATIC IMAGE 4 */}
             <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98de492f2b844c5bf3a_Frame%201171275577.jpg" 
@@ -348,18 +213,7 @@ export default function VankProject() {
             <section id="acto02" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto02.label}</span>
-                <div className="space-y-2">
-                  {(isMobile ? t.vank.acto02.titleMobile : t.vank.acto02.title).map((line: string, i: number) => (
-                    <div key={i} className="acto02-title-mask overflow-hidden">
-                      <h2 
-                        className="acto02-title-text font-bold uppercase tracking-tighter will-change-transform"
-                        style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                      >
-                        {line}
-                      </h2>
-                    </div>
-                  ))}
-                </div>
+                {renderTitle(t.vank.acto02.title, t.vank.acto02.titleMobile, "acto02")}
               </div>
               <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
                 <div className="space-y-[1.5em]">
@@ -396,6 +250,7 @@ export default function VankProject() {
               </div>
             </section>
 
+            {/* CINEMATIC IMAGE 5 */}
             <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98fac1c6a1592b34c6c_MacBook%20Air%20M4%20-%20Sky%20Blue-1.jpg" 
@@ -403,6 +258,7 @@ export default function VankProject() {
               </div>
             </section>
 
+            {/* CINEMATIC IMAGE 6 */}
             <section className="w-full px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] py-[1em]">
               <div className="hero-img-container md:rounded-[2em] overflow-hidden bg-surface md:shadow-sm will-change-transform aspect-square md:aspect-auto md:h-[90vh] relative flex items-center justify-center translate-z-0">
                 <img src="https://cdn.prod.website-files.com/684d06174bbd508a8dcbc859/68acd98e7d50442728168c29_MacBook%20Air%20M4%20-%20Sky%20Blue.jpg" 
@@ -444,19 +300,7 @@ export default function VankProject() {
             <section id="solucion" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto03.label}</span>
-                <div className="space-y-2">
-                                  <div className="space-y-2">
-                                    {t.vank.acto03.title.map((line: string, i: number) => (
-                                      <div key={i} className="acto03-title-mask overflow-hidden pt-2 -mt-2">
-                                        <h2 
-                                          className="acto03-title-text font-bold uppercase tracking-tighter will-change-transform"
-                                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                                        >
-                                          {line}
-                                        </h2>
-                                      </div>
-                                    ))}
-                                  </div>                </div>
+                {renderTitle(t.vank.acto03.title, t.vank.acto03.titleMobile, "acto03")}
               </div>
               <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
                 <p className="acto03-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
@@ -533,22 +377,9 @@ export default function VankProject() {
             <section id="resultado" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden">
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto04.label}</span>
-                <div className="space-y-2">
-                  <div className="space-y-2">
-                    {t.vank.acto04.title.map((line: string, i: number) => (
-                      <div key={i} className="acto04-title-mask overflow-hidden">
-                        <h2 
-                          className="acto04-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                {renderTitle(t.vank.acto04.title, t.vank.acto04.titleMobile, "acto04")}
               </div>
-              <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
+              <div className="pt-[4em] md:pt-[18em]">
                 <p className="acto04-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
                   {t.vank.acto04.description}
                 </p>
@@ -596,20 +427,7 @@ export default function VankProject() {
             <section id="impacto" className="grid grid-cols-1 lg:grid-cols-[40%_60%] content-gap lg:pl-0 lg:pr-[8em] px-[14px] md:px-[6em] section-gap overflow-hidden border-t border-foreground/5">
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.impact.label}</span>
-                <div className="space-y-2">
-                  <div className="space-y-2">
-                    {t.vank.impact.title.map((line: string, i: number) => (
-                      <div key={i} className="acto05-title-mask overflow-hidden">
-                        <h2 
-                          className="acto05-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                {renderTitle(t.vank.impact.title, t.vank.impact.titleMobile, "acto05")}
               </div>
               <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
                 <p className="acto05-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">

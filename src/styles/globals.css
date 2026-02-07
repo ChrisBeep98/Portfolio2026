@@ -46,12 +46,6 @@
 
 /* Base Styles */
 @layer base {
-  html, body {
-    @media (min-width: 1024px) {
-      cursor: none;
-    }
-  }
-  
   body {
     @apply bg-background text-foreground font-display antialiased selection:bg-primary/30;
     overflow-x: clip;
