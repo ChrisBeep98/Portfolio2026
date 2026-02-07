@@ -445,19 +445,18 @@ export default function VankProject() {
               <div className="lg:pr-10">
                 <span className={STYLING.label}>{t.vank.acto03.label}</span>
                 <div className="space-y-2">
-                  <div className="space-y-2">
-                    {t.vank.acto03.title.map((line: string, i: number) => (
-                      <div key={i} className="acto03-title-mask overflow-hidden">
-                        <h2 
-                          className="acto03-title-text font-bold uppercase tracking-tighter will-change-transform"
-                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
-                        >
-                          {line}
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                                  <div className="space-y-2">
+                                    {t.vank.acto03.title.map((line: string, i: number) => (
+                                      <div key={i} className="acto03-title-mask overflow-hidden pt-2 -mt-2">
+                                        <h2 
+                                          className="acto03-title-text font-bold uppercase tracking-tighter will-change-transform"
+                                          style={{ fontSize: "clamp(2.5rem, 4.5vw, 6em)", lineHeight: 0.85 }}
+                                        >
+                                          {line}
+                                        </h2>
+                                      </div>
+                                    ))}
+                                  </div>                </div>
               </div>
               <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
                 <p className="acto03-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
