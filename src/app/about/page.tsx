@@ -257,7 +257,11 @@ export default function AboutPage() {
                           <div className="w-full flex justify-between items-start">
                             <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
                               {/* @ts-ignore */}
-                              <img src={tool.img} alt={tool.name} className="w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500" />
+                              <img 
+                                src={tool.img} 
+                                alt={tool.name} 
+                                className={`w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500 ${tool.name === 'A.I.' ? 'dark:brightness-0 dark:invert' : ''}`} 
+                              />
                             </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
@@ -275,7 +279,11 @@ export default function AboutPage() {
                           <div className="w-full flex justify-between items-start">
                             <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
                               {/* @ts-ignore */}
-                              <img src={tool.img} alt={tool.name} className="w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500" />
+                              <img 
+                                src={tool.img} 
+                                alt={tool.name} 
+                                className={`w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500 ${tool.name === 'A.I.' ? 'dark:brightness-0 dark:invert' : ''}`} 
+                              />
                             </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
