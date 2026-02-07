@@ -41,6 +41,17 @@ export default function AboutPage() {
         { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 },
         "-=1.0"
       )
+      // Name Mask Reveal
+      .fromTo(".name-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power4.out" },
+        "-=1.2"
+      )
+      .fromTo(".name-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.5, ease: "power4.out" },
+        "<"
+      )
       // Optimized Image Reveal (GPU Accelerated)
       .fromTo(".reveal-monolith", 
         { scale: 1.1, opacity: 0, filter: "blur(10px)" },
@@ -87,16 +98,47 @@ export default function AboutPage() {
       });
 
       // 3. STORY ANIMATION
-      gsap.from(".story-reveal-item", {
-        y: 40,
-        opacity: 0,
-        stagger: 0.1,
+      const storyTl = gsap.timeline({
         scrollTrigger: {
           trigger: ".story-section",
           start: "top 80%",
           toggleActions: "play none none reverse"
         }
       });
+
+      storyTl.fromTo(".story-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: "power4.out" }
+      )
+      .fromTo(".story-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, ease: "power4.out" }, "<"
+      )
+      .from(".story-reveal-item", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8");
+
+      // 4. TOOLS MASTER PINNING & REVEAL
+      const toolsTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".tools-section",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      toolsTl.fromTo(".tools-title-mask", 
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: "power4.out" }
+      )
+      .fromTo(".tools-title-text", 
+        { y: "100%" },
+        { y: "0%", duration: 1.2, ease: "power4.out" }, "<"
+      );
 
     }, containerRef);
 
@@ -129,9 +171,11 @@ export default function AboutPage() {
               </span>
             </div>
             <div className="mb-8 lg:mb-16 max-w-4xl">
-              <h1 className="text-4xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[1.1] uppercase text-black dark:text-white">
-                Christian Sandoval Moná
-              </h1>
+              <div className="name-title-mask overflow-hidden">
+                <h1 className="name-title-text text-4xl md:text-7xl lg:text-[4.5rem] font-bold tracking-tighter leading-[1.1] uppercase text-black dark:text-white">
+                  Christian Sandoval Moná
+                </h1>
+              </div>
             </div>
             <div className="hero-text-reveal max-w-xl border-l-0 lg:border-l-2 border-orange-500 pl-0 lg:pl-8 space-y-8 text-xl md:text-2xl font-light leading-snug text-foreground/70">
               <p>{t.about.intro}</p>
@@ -172,13 +216,17 @@ export default function AboutPage() {
 
       {/* STORY SECTION */}
       <section className="story-section relative py-[6em] lg:pt-[8em] lg:pb-[10em] px-frame border-t border-foreground/5 z-10 bg-background">
-        <div className="mb-16 story-reveal-item">
-          <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4">02 / Historia</span>
-          <h3 className="text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-none text-foreground">{t.story.title}</h3>
+        <div className="mb-16">
+          <span className="font-mono text-[0.6em] uppercase tracking-[0.5em] text-orange-500 font-bold block mb-4 story-reveal-item">02 / Historia</span>
+          <div className="story-title-mask overflow-hidden">
+            <h3 className="story-title-text text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-none text-foreground">
+              {t.story.title}
+            </h3>
+          </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[3em] lg:gap-[5em] items-start">
-          <div className="space-y-6 story-reveal-item"><span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_ORIGIN ]</span><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p1}</p></div>
-          <div className="space-y-6 story-reveal-item"><span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block">[ THE_EVOLUTION ]</span><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p2}</p></div>
+          <div className="story-reveal-item"><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p1}</p></div>
+          <div className="story-reveal-item"><p className="text-xl font-light leading-relaxed text-foreground/70">{t.story.p2}</p></div>
           <div className="relative group story-reveal-item">
             <span className="font-mono text-[0.6em] uppercase tracking-[0.3em] text-foreground/20 font-bold block mb-8">[ {t.story.disciplinesTitle} ]</span>
             <div className="space-y-2">
@@ -200,7 +248,11 @@ export default function AboutPage() {
           {/* LADO IZQUIERDO: Sticky Nativo */}
           <div className="w-full lg:w-5/12 lg:sticky lg:top-32 mb-20 lg:mb-0">
             <div className="lg:pr-24">
-              <h3 className="text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">{t.tools.title}</h3>
+              <div className="tools-title-mask overflow-hidden">
+                <h3 className="tools-title-text text-[2.5rem] md:text-7xl lg:text-[4.5rem] font-bold uppercase tracking-tighter leading-[0.85] text-foreground mb-8">
+                  {t.tools.title}
+                </h3>
+              </div>
               <p className="text-xl font-light leading-relaxed text-foreground/60 max-w-sm">{t.tools.description}</p>
             </div>
           </div>
