@@ -2,13 +2,14 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ChevronUp, X } from "lucide-react";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useLanguage } from "@/context/LanguageContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -24,6 +25,7 @@ export default function VankProject() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isIndexOpen, setIsIndexOpen] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 1024);
@@ -69,6 +71,7 @@ export default function VankProject() {
 
   const scrollToSection = (id: string) => {
     gsap.to(window, { duration: 1.5, scrollTo: { y: `#${id}`, autoKill: false }, ease: "power4.inOut" });
+    setIsIndexOpen(false);
   };
 
   const renderTitle = (titleArray: string[], mobileTitleArray: string[], actoNum: string) => (
@@ -92,9 +95,20 @@ export default function VankProject() {
     </div>
   );
 
+  const navigationItems = [
+    { id: "hero", label: "Intro" },
+    { id: "contexto", label: t.vank.intro.contextLabel.split(' ')[0] },
+    { id: "acto02", label: t.vank.intro.back === "Projects" ? "Challenge" : "Desafío" },
+    { id: "solucion", label: t.vank.intro.back === "Projects" ? "Solution" : "Solución" },
+    { id: "resultado", label: t.vank.intro.back === "Projects" ? "Result" : "Resultado" },
+    { id: "impacto", label: t.vank.intro.back === "Projects" ? "Impact" : "Impacto" }
+  ];
+
   return (
     <main ref={containerRef} className="bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background overflow-x-clip">
       <Header hideLogo={true} />
+      
+      {/* Back Button */}
       <div className="fixed top-8 left-6 md:left-12 lg:left-20 z-[110] mix-blend-difference pointer-events-none">
         <Link href="/#projects" className="pointer-events-auto group flex items-center gap-[0.75em] text-white">
           <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
@@ -104,20 +118,49 @@ export default function VankProject() {
         </Link>
       </div>
 
+      {/* MOBILE FLOATING INDEX */}
+      <div className="lg:hidden fixed bottom-8 right-6 z-[120] flex flex-col items-end gap-4">
+        <AnimatePresence>
+          {isIndexOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              className="flex flex-col items-end gap-2 pointer-events-none"
+            >
+              {navigationItems.map((item, index) => (
+                <button 
+                  key={item.id} 
+                  onClick={() => scrollToSection(item.id)}
+                  className={`pointer-events-auto px-4 h-9 rounded-[4px] backdrop-blur-2xl transition-all duration-500 flex items-center gap-3 border ${
+                    activeSection === index 
+                      ? "bg-foreground text-background border-foreground shadow-lg" 
+                      : "bg-background/40 text-foreground border-foreground/10"
+                  }`}
+                >
+                  <span className="font-mono text-[0.65em] opacity-50">0{index}</span>
+                  <span className="text-[9px] font-bold uppercase tracking-[0.15em] whitespace-nowrap">{item.label}</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        <button 
+          onClick={() => setIsIndexOpen(!isIndexOpen)}
+          className="w-10 h-10 bg-foreground text-background rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-transform"
+        >
+          {isIndexOpen ? <X size={18} /> : <ChevronUp size={18} />}
+        </button>
+      </div>
+
       <div className="relative z-10 bg-background shadow-[0_20px_50px_rgba(0,0,0,0.2)]">
         <div className="flex flex-col lg:flex-row relative">
           
           <aside className="hidden lg:flex flex-col w-[15%] h-screen sticky top-0 pt-48 pl-12 justify-start z-40 pointer-events-none self-start">
             <div className="relative pointer-events-auto flex flex-col">
               <div className="absolute left-[-1rem] w-[2px] h-5 bg-black dark:bg-white transition-all duration-500 ease-out" style={{ transform: `translateY(${activeSection * 2.25}rem)` }} />
-              {[
-                { id: "hero", label: "Intro" },
-                { id: "contexto", label: t.vank.intro.contextLabel.split(' ')[0] },
-                { id: "acto02", label: t.vank.intro.back === "Projects" ? "Challenge" : "Desafío" },
-                { id: "solucion", label: t.vank.intro.back === "Projects" ? "Solution" : "Solución" },
-                { id: "resultado", label: t.vank.intro.back === "Projects" ? "Result" : "Resultado" },
-                { id: "impacto", label: t.vank.intro.back === "Projects" ? "Impact" : "Impacto" }
-              ].map((item, index) => (
+              {navigationItems.map((item, index) => (
                 <button key={index} onClick={() => scrollToSection(item.id)} className={`text-left text-[12px] font-normal tracking-tight transition-all duration-300 block w-full pl-6 h-[2.25rem] flex items-center ${activeSection === index ? "opacity-100 text-foreground" : "opacity-30 hover:opacity-60 text-foreground"}`}>
                   <span className="font-mono text-[0.8em] mr-3 opacity-50">0{index}</span>
                   <span className="uppercase tracking-[0.1em]">{item.label}</span>
@@ -379,7 +422,7 @@ export default function VankProject() {
                 <span className={STYLING.label}>{t.vank.acto04.label}</span>
                 {renderTitle(t.vank.acto04.title, t.vank.acto04.titleMobile, "acto04")}
               </div>
-              <div className="pt-[4em] md:pt-[18em]">
+              <div className="pt-[4em] md:pt-[18em] space-y-[4em]">
                 <p className="acto04-desc text-xl md:text-2xl font-light leading-snug tracking-normal max-w-3xl opacity-80 will-change-transform">
                   {t.vank.acto04.description}
                 </p>
