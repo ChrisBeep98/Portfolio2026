@@ -6,11 +6,19 @@ import { Menu } from "lucide-react";
 import gsap from "gsap";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Header({ hideLogo = false }: { hideLogo?: boolean }) {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLDivElement>(null);
+
+  const navLinks = [
+    { label: t.header.work, href: "/#projects" },
+    { label: t.header.about, href: "/about" },
+    { label: t.header.contact, href: "#footer" }
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,14 +74,14 @@ export default function Header({ hideLogo = false }: { hideLogo?: boolean }) {
           
           {/* Technical Navigation */}
           <nav className="hidden md:flex items-center gap-10">
-            {["Work", "About", "Contact"].map((item) => (
+            {navLinks.map((item) => (
               <Link 
-                key={item} 
-                href={`#${item.toLowerCase()}`}
+                key={item.label} 
+                href={item.href}
                 className="relative group py-1"
               >
                 <span className="font-mono uppercase tracking-[0.3em] text-white font-bold text-[11px]">
-                  {item}
+                  {item.label}
                 </span>
                 <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-500 group-hover:w-full" />
               </Link>
