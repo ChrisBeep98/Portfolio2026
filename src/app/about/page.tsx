@@ -262,8 +262,8 @@ export default function AboutPage() {
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
                           <div>
-                            <span className="font-black text-2xl lg:text-3xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
-                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-medium">{tool.desc}</p>
+                            <span className="font-bold text-xl lg:text-2xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
+                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-light">{tool.desc}</p>
                           </div>
                         </div>
                         <div className="aspect-square lg:aspect-[1.3/1]" />
@@ -280,8 +280,8 @@ export default function AboutPage() {
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
                           <div>
-                            <span className="font-black text-2xl lg:text-3xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
-                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-medium">{tool.desc}</p>
+                            <span className="font-bold text-xl lg:text-2xl tracking-tighter text-foreground block mb-2">{tool.name}</span>
+                            <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-light">{tool.desc}</p>
                           </div>
                         </div>
                       </>
