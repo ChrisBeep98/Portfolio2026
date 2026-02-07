@@ -230,7 +230,7 @@ export default function Projects() {
               {/* Subtle Glow Shadow: Dark depth paired with a faint light rim for separation */}
               <div className="absolute inset-0 -top-[1px] -z-10 shadow-[0_-15px_40px_rgba(0,0,0,0.6),0_-2px_10px_rgba(255,255,255,0.05)] pointer-events-none" />
               
-              <div className="flex-1 px-6 pt-24 pb-8 flex flex-col justify-center relative">
+              <div className="flex-1 px-[14px] pt-24 pb-8 flex flex-col justify-center relative">
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-foreground/30 mb-4 block">
                   Project {String(index + 1).padStart(2, '0')}
                 </span>
@@ -245,19 +245,21 @@ export default function Projects() {
                 <p className="text-sm text-foreground/60 leading-relaxed mb-8 font-medium">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="px-3 py-1 text-[9px] font-mono border border-foreground/10 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
                 <a href={project.link} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] w-fit border-b border-foreground/20 pb-1">
                   Explore <ArrowUpRight size={14} />
                 </a>
               </div>
-              <div className="h-[40vh] w-full">
+              <div className="h-[55vh] w-full relative">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                
+                {/* Floating Chips (Mobile Only) */}
+                <div className="absolute top-6 right-6 flex flex-wrap gap-2 justify-end max-w-[260px]">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="px-3 py-1.5 text-[8px] font-bold uppercase tracking-wider bg-background/60 backdrop-blur-md border border-foreground/10 rounded-full text-foreground shadow-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
