@@ -41,6 +41,18 @@ export const dictionary = {
       disciplinesTitle: "DISCIPLINES",
       disciplinesList: ["UI Design", "No-code Development", "3D Modeling", "UX Research"]
     },
+    tools: {
+      title: "TOOLS",
+      description: "Throughout my career, I have strived to develop a diverse set of fundamental skills.",
+      items: [
+        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes for complex products." },
+        { name: "WEBFLOW", label: "Design Systems", desc: "Scalable implementation based on atomic design." },
+        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences for the web." },
+        { name: "WEBFLOW", label: "UI Development", desc: "Pixel-perfect layouts and responsive architecture." },
+        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation and user journey mapping." },
+        { name: "GSAP", label: "Motion", desc: "Advanced programmatic animations and interactions." }
+      ]
+    },
     process: {
       title: "My Process",
       subtitle: "A methodological approach to digital excellence.",
@@ -65,17 +77,6 @@ export const dictionary = {
           title: "Micro-interactions",
           desc: "The magic is in the details. We design subtle movements and feedbacks that improve usability and create a deep emotional connection with the user."
         }
-      ]
-    },
-    tools: {
-      title: "TOOLS",
-      description: "Throughout my career, I have strived to develop a diverse set of fundamental skills.",
-      items: [
-        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes\n for complex products.", img: "/images/logos/figma.png" },
-        { name: "WEBFLOW", label: "Visual Development", desc: "Pixel-perfect layouts\n and responsive architecture.", img: "/images/logos/webflow.png" },
-        { name: "REACT", label: "Frontend Architecture", desc: "Scalable component\n systems and logic.", img: "/images/logos/react.png" },
-        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences\n for the web.", img: "/images/logos/spline.png" },
-        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation\n and user journey mapping.", img: "/images/logos/ai.png" }
       ]
     },
     footer: {
@@ -107,14 +108,14 @@ export const dictionary = {
       },
       acto01: {
         label: "01",
-        title: ["The", "Origin", "of the Challenge"],
-        titleMobile: ["The Origin", "of the Challenge"],
+        title: ["The", "Starting", "Point"],
+        titleMobile: ["The", "Starting Point"],
         description: "When we arrived at the project, there was no defined product. There were a couple of loose Figma files, disconnected screens, no UI kit, and no complete flows. Our mission was to take that chaos and turn it into a functional, coherent experience ready for the development team to build upon —all within very tight deadlines."
       },
       acto02: {
         label: "02",
-        title: ["The", "Problem", "The Challenge"],
-        titleMobile: ["The Problem", "The Challenge"],
+        title: ["Anatomy", "of", "the", "Problem"],
+        titleMobile: ["Anatomy of", "the Problem"],
         contextLabel: "Initial Context",
         contextDesc: "Vank's existing business model presented significant challenges that generated frustration among its users. The main issues revolved around efficiency, transparency, and ease of use in a sector as sensitive as finance and cryptocurrencies.",
         problemsLabel: "Identified Problems",
@@ -142,8 +143,8 @@ export const dictionary = {
       },
       acto03: {
         label: "03",
-        title: ["How we", "solved it"],
-        titleMobile: ["How we", "solved it"],
+        title: ["The", "Design", "Strategy", "Approach"],
+        titleMobile: ["The Design", "Strategy Approach"],
         description: "We worked as a multidisciplinary team with continuous communication between design, product, and development.",
         list: [
           "Research: fintech benchmark, usability heuristics.",
@@ -167,8 +168,8 @@ export const dictionary = {
       },
       acto04: {
         label: "04",
-        title: ["The", "Result"],
-        titleMobile: ["The", "Result"],
+        title: ["Results", "& Delivery"],
+        titleMobile: ["Results", "& Delivery"],
         description: "The implementation of a comprehensive design system was fundamental to ensuring visual and functional coherence throughout the Vank platform. This system covered everything from the web version to the mobile app, facilitating collaboration between the design and development teams and guaranteeing the future scalability of the product.",
         resultBridge: "\"The final solution was a platform with complete flows, coherent visuals, and ready to scale.\"",
         changesLabel: "Key Changes",
@@ -182,10 +183,10 @@ export const dictionary = {
       },
       impact: {
         label: "05",
-        title: ["Impact", "& Learnings"],
-        titleMobile: ["Impact", "& Learnings"],
+        title: ["Impact", "& Evolution"],
+        titleMobile: ["Impact", "& Evolution"],
         description: "Designing the Vank platform not only addressed the initial problems but also generated a measurable positive impact and provided valuable lessons for future projects.",
-        resultsLabel: "Results.",
+        resultsLabel: "Outcome.",
         resultsList: [
           "Building structures from scratch forces you to decide many small but decisive things.",
           "Prioritizing architecture and systems before visual detail accelerates the whole process.",
@@ -196,7 +197,7 @@ export const dictionary = {
       footer: {
         title: "I AM AVAILABLE",
         subtitle: "ELEVATING YOUR DIGITAL EXPERIENCE",
-        email: "hello@csandoval.design",
+        email: "christiansandovaldesign@gmail.com",
         copyright: "© 2026 Christian Sandoval."
       }
     }
@@ -226,7 +227,7 @@ export const dictionary = {
     },
     about: {
       profile: "Perfil",
-      intro: "Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina investigación, estructura y creatividad.",
+      intro: "Me dedico a diseñar experiencias digitales que ponen a las personas en el centro. Mi enfoque combina investigación, estructura y creativa.",
       w1: "Soy", w2: "diseñador", w3: "UX/UI", w4: "y", w5: "desarrollador",
       w6: "frontend.", w7: "Transformo", w8: "ideas", w9: "complejas",
       w10: "en", w11: "experiencias", w12: "digitales", w13: "limpias,",
@@ -240,6 +241,17 @@ export const dictionary = {
       p2: "Esta evolución me animó a experimentar con nuevas tecnologías como Blender y Spline, permitiéndome incorporar el 3D como una extensión expresiva en mis diseños. Desde 2021, he consolidado mi perfil como diseñador UX/UI, centrándome en crear experiencias digitales funcionales y coherentes.",
       disciplinesTitle: "DISCIPLINAS",
       disciplinesList: ["Diseño UI", "No code development", "Modelado 3D", "Investigación UX"]
+    },
+    tools: {
+      title: "HERRAMIENTAS",
+      description: "A lo largo de mi carrera, me he esforzado por desarrollar un conjunto diverso de habilidades fundamentales.",
+      items: [
+        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos." },
+        { name: "WEBFLOW", label: "Desarrollo Visual", desc: "Layouts pixel-perfect\n y arquitectura responsiva." },
+        { name: "REACT", label: "Arquitectura Frontend", desc: "Sistemas de componentes\n escalables y lógica." },
+        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web." },
+        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario." }
+      ]
     },
     process: {
       title: "Mi proceso",
@@ -265,17 +277,6 @@ export const dictionary = {
           title: "Microinteracciones",
           desc: "La magia está en los detalles. Diseñamos movimientos sutiles y feedbacks que mejoran la usabilidad y crean una conexión emocional profunda con el usuario."
         }
-      ]
-    },
-    tools: {
-      title: "HERRAMIENTAS",
-      description: "A lo largo de mi carrera, me he esforzado por desarrollar un conjunto diverso de habilidades fundamentales.",
-      items: [
-        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos.", img: "/images/logos/figma.png" },
-        { name: "WEBFLOW", label: "Desarrollo Visual", desc: "Layouts pixel-perfect\n y arquitectura responsiva.", img: "/images/logos/webflow.png" },
-        { name: "REACT", label: "Arquitectura Frontend", desc: "Sistemas de componentes\n escalables y lógica.", img: "/images/logos/react.png" },
-        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web.", img: "/images/logos/spline.png" },
-        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario.", img: "/images/logos/ai.png" }
       ]
     },
     footer: {
@@ -307,16 +308,16 @@ export const dictionary = {
       },
       acto01: {
         label: "01",
-        title: ["El", "Origen", "del Reto"],
-        titleMobile: ["El origen", "del reto"],
+        title: ["Punto", "de", "Partida"],
+        titleMobile: ["Punto", "de Partida"],
         description: "Cuando llegamos al proyecto, no había un producto definido. Había un par de archivos de Figma sueltos, pantallas desconectadas, sin UI kit y sin flujos completos. Nuestra misión fue tomar ese caos y convertirlo en una experiencia funcional, coherente y lista para que el equipo de desarrollo pudiera construir sobre ella —y todo en plazos muy ajustados."
       },
       acto02: {
         label: "02",
-        title: ["El", "Problema", "El Desafío"],
-        titleMobile: ["El Problema", "El Desafío"],
+        title: ["Anatomía", "del", "Problema"],
+        titleMobile: ["Anatomía", "del Problema"],
         contextLabel: "Contexto inicial",
-        contextDesc: "El modelo de negocio de Vank existente presentaba desafíos significativos que generaban frustración entre sus usuarios. Las problemáticas principales giraban en torno a la eficiencia, la transparencia y la facilidad de uso en un sector tan sensible como el financiero y de criptomonedas.",
+        contextDesc: "El modelo de negocio de Vank existente presentaba desafíos significativos que generaban frustración entre sus usuarios. Las problemáticas principales giraban en torno a la eficiencia, la transparencia y la facilidad de uso en un sector tan sensible como el financiero y de criptonocedas.",
         problemsLabel: "Problemas identificados",
         problemsList: [
           "Pantallas sueltas sin conexión entre sí.",
@@ -342,8 +343,8 @@ export const dictionary = {
       },
       acto03: {
         label: "03",
-        title: ["Cómo lo", "resolvimos"],
-        titleMobile: ["Cómo lo", "resolvimos"],
+        title: ["La", "Estrategia", "del", "Diseño"],
+        titleMobile: ["La Estrategia", "del Diseño"],
         description: "Trabajamos como un equipo multidisciplinario con comunicación continua entre diseño, producto y desarrollo.",
         list: [
           "Investigación: benchmark de fintechs, heurísticas de usabilidad.",
@@ -367,8 +368,8 @@ export const dictionary = {
       },
       acto04: {
         label: "04",
-        title: ["El", "Resultado"],
-        titleMobile: ["El", "Resultado"],
+        title: ["Resultados", "& Entrega"],
+        titleMobile: ["Resultados", "& Entrega"],
         description: "La implementación de un sistema de diseño integral fue fundamental para asegurar la coherencia visual y funcional en toda la plataforma Vank. Este sistema abarcó desde la versión web hasta la aplicación móvil, facilitando la colaboración entre el equipo de diseño y desarrollo y garantizando la escalabilidad futura del producto.",
         resultBridge: "\"La solución final, fue una plataforma con flujos completos, visual coherente y preparada para escalar.\"",
         changesLabel: "Cambios Clave",
@@ -382,22 +383,16 @@ export const dictionary = {
       },
       impact: {
         label: "05",
-        title: ["Impacto", "y Aprendizajes"],
-        titleMobile: ["Impacto", "y Aprendizajes"],
+        title: ["Impacto", "& Evolución"],
+        titleMobile: ["Impacto", "& Evolución"],
         description: "El Diseño de la plataforma Vank no solo abordó los problemas iniciales, sino que también generó un impacto positivo medible y proporcionó valiosas lecciones para futuros proyectos.",
-        resultsLabel: "Resultados.",
+        resultsLabel: "Logros.",
         resultsList: [
           "Crear estructuras desde cero obliga a decidir many small but decisive things.",
           "Priorizar arquitectura y sistema antes del detalle visual acelera todo el proceso.",
           "El trabajo en equipo y la comunicación con los developers son la clave para entregar algo realmente usable."
         ],
         insightMessage: "\"Este proyecto fue una experiencia enriquecedora que dejó importantes lecciones.\""
-      },
-      footer: {
-        title: "ESTOY DISPONIBLE",
-        subtitle: "LLEVEMOS TU PROYECTO AL SIGUIENTE NIVEL",
-        email: "hello@csandoval.design",
-        copyright: "© 2026 CHRISTIAN SANDOVAL"
       }
     }
   }

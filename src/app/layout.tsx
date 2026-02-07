@@ -3,6 +3,7 @@ import { Manrope, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
       </head>
       <body className={`${manrope.variable} ${jetbrains.variable}`}>
         <div className="noise-bg" />
+        <CustomCursor />
         <ThemeProvider>
           <LanguageProvider>
             {children}
