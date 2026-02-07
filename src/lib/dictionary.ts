@@ -71,12 +71,11 @@ export const dictionary = {
       title: "TOOLS",
       description: "Throughout my career, I have strived to develop a diverse set of fundamental skills.",
       items: [
-        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes\n for complex products." },
-        { name: "WEBFLOW", label: "Design Systems", desc: "Scalable implementation\n based on atomic design." },
-        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences\n for the web." },
-        { name: "WEBFLOW", label: "UI Development", desc: "Pixel-perfect layouts\n and responsive architecture." },
-        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation\n and user journey mapping." },
-        { name: "GSAP", label: "Motion", desc: "Advanced programmatic\n animations and interactions." }
+        { name: "FIGMA", label: "Interactive Prototyping", desc: "High-fidelity prototypes\n for complex products.", img: "/images/logos/figma.png" },
+        { name: "WEBFLOW", label: "Visual Development", desc: "Pixel-perfect layouts\n and responsive architecture.", img: "/images/logos/webflow.png" },
+        { name: "REACT", label: "Frontend Architecture", desc: "Scalable component\n systems and logic.", img: "/images/logos/react.png" },
+        { name: "SPLINE", label: "3D Modeling", desc: "Interactive 3D experiences\n for the web.", img: "/images/logos/spline.png" },
+        { name: "A.I.", label: "Research & Flows", desc: "Accelerating ideation\n and user journey mapping.", img: "/images/logos/ai.png" }
       ]
     },
     footer: {
@@ -272,12 +271,11 @@ export const dictionary = {
       title: "HERRAMIENTAS",
       description: "A lo largo de mi carrera, me he esforzado por desarrollar un conjunto diverso de habilidades fundamentales.",
       items: [
-        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos." },
-        { name: "WEBFLOW", label: "Design Systems", desc: "Implementación escalable\n basada en diseño atómico." },
-        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web." },
-        { name: "WEBFLOW", label: "Maquetado UI", desc: "Layouts pixel-perfect\n y arquitectura responsiva." },
-        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario." },
-        { name: "GSAP", label: "Motion", desc: "Animaciones programáticas\n avanzadas." }
+        { name: "FIGMA", label: "Prototipado Interactivo", desc: "Prototipos de alta fidelidad\n para productos complejos.", img: "/images/logos/figma.png" },
+        { name: "WEBFLOW", label: "Desarrollo Visual", desc: "Layouts pixel-perfect\n y arquitectura responsiva.", img: "/images/logos/webflow.png" },
+        { name: "REACT", label: "Arquitectura Frontend", desc: "Sistemas de componentes\n escalables y lógica.", img: "/images/logos/react.png" },
+        { name: "SPLINE", label: "Modelado 3D", desc: "Experiencias 3D interactivas\n para la web.", img: "/images/logos/spline.png" },
+        { name: "A.I.", label: "Investigación", desc: "Aceleración de ideación\n y flujos de usuario.", img: "/images/logos/ai.png" }
       ]
     },
     footer: {

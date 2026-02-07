@@ -5,7 +5,6 @@ import Header from "@/components/sections/Header";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
-import { Figma, Globe, Box, Sparkles, Cpu, Move } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -14,18 +13,6 @@ if (typeof window !== "undefined") {
 export default function AboutPage() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const getToolIcon = (name: string) => {
-    const iconClass = "transition-all duration-700 ease-out";
-    switch (name) {
-      case "FIGMA": return <Figma strokeWidth={1} size={42} className={`${iconClass} text-[#F24E1E] group-hover:animate-pulse`} />;
-      case "WEBFLOW": return <Globe strokeWidth={1} size={42} className={`${iconClass} text-[#146EF5] animate-[spin_8s_linear_infinite]`} />;
-      case "SPLINE": return <Box strokeWidth={1} size={42} className={`${iconClass} text-[#FF3366] animate-[bounce_4s_ease-in-out_infinite]`} />;
-      case "A.I.": return <Sparkles strokeWidth={1} size={42} className={`${iconClass} text-[#7000FF] animate-pulse`} />;
-      case "GSAP": return <Move strokeWidth={1} size={42} className={`${iconClass} text-[#88CE02] group-hover:translate-x-2 transition-transform`} />;
-      default: return <Cpu strokeWidth={1} size={42} className={`${iconClass} text-orange-500`} />;
-    }
-  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -268,7 +255,10 @@ export default function AboutPage() {
                       <>
                         <div className="group relative aspect-square lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
                           <div className="w-full flex justify-between items-start">
-                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
+                              {/* @ts-ignore */}
+                              <img src={tool.img} alt={tool.name} className="w-10 h-10 object-contain transition-all duration-500" />
+                            </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
                           <div>
@@ -283,7 +273,10 @@ export default function AboutPage() {
                         <div className="aspect-square lg:aspect-[1.3/1]" />
                         <div className="group relative aspect-square lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
                           <div className="w-full flex justify-between items-start">
-                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700">{getToolIcon(tool.name)}</div>
+                            <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
+                              {/* @ts-ignore */}
+                              <img src={tool.img} alt={tool.name} className="w-10 h-10 object-contain transition-all duration-500" />
+                            </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
                           <div>
