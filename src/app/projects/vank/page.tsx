@@ -126,7 +126,7 @@ export default function VankProject() {
             </div>
           </aside>
 
-          <div className="w-full lg:w-[85%]">
+          <div className="w-full lg:w-[85%] pb-[15vh]">
             
             <header id="hero" className="px-0 md:px-[6em] lg:pl-0 lg:pr-[8em] pt-[8em] md:pt-[8em] pb-0">
               <div className="flex flex-col mb-0 pb-[1.5em] md:mb-0 md:pb-[4em] px-[14px] md:px-0">
