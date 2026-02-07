@@ -244,20 +244,20 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* LADO DERECHO: Checkerboard Real */}
+          {/* LADO DERECHO: Checkerboard Real (Zig-Zag solo en Desktop) */}
           <div className="w-full lg:w-7/12 flex justify-end">
-            <div className="grid grid-cols-2 w-full max-w-3xl bg-transparent">
+            <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-3xl bg-transparent gap-2 lg:gap-0">
               {t.tools.items.map((tool, i) => {
                 const isEven = i % 2 === 0;
                 return (
                   <React.Fragment key={i}>
                     {isEven ? (
                       <>
-                        <div className="group relative aspect-square lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
+                        <div className="group relative aspect-[1.8/1] lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-[14px] lg:p-8">
                           <div className="w-full flex justify-between items-start">
                             <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
                               {/* @ts-ignore */}
-                              <img src={tool.img} alt={tool.name} className="w-10 h-10 object-contain transition-all duration-500" />
+                              <img src={tool.img} alt={tool.name} className="w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500" />
                             </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
@@ -266,16 +266,16 @@ export default function AboutPage() {
                             <p className="text-[0.8em] lg:text-[0.9em] leading-relaxed text-foreground/70 group-hover:text-foreground transition-colors duration-500 font-light">{tool.desc}</p>
                           </div>
                         </div>
-                        <div className="aspect-square lg:aspect-[1.3/1]" />
+                        <div className="hidden lg:block aspect-[1.8/1] lg:aspect-[1.3/1]" />
                       </>
                     ) : (
                       <>
-                        <div className="aspect-square lg:aspect-[1.3/1]" />
-                        <div className="group relative aspect-square lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-8">
+                        <div className="hidden lg:block aspect-[1.8/1] lg:aspect-[1.3/1]" />
+                        <div className="group relative aspect-[1.8/1] lg:aspect-[1.3/1] bg-white dark:bg-[#0A0A0A] border border-foreground/[0.06] dark:border-white/[0.04] rounded-[3px] shadow-[0_20px_60px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-orange-500/10 hover:border-orange-500/40 hover:z-20 transition-all duration-700 flex flex-col items-start justify-between text-left p-[14px] lg:p-8">
                           <div className="w-full flex justify-between items-start">
                             <div className="group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out">
                               {/* @ts-ignore */}
-                              <img src={tool.img} alt={tool.name} className="w-10 h-10 object-contain transition-all duration-500" />
+                              <img src={tool.img} alt={tool.name} className="w-8 lg:w-10 h-8 lg:h-10 object-contain transition-all duration-500" />
                             </div>
                             <div className="w-2 h-2 bg-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                           </div>
